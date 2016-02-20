@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>A.L.I.S.</title>
+</head>
+<body>
+<h1>ALIS</h1>
+<h2 id='signal'></h2>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io();
+	  var aux =  document.getElementById("signal");
+	  socket.on('signal',function(s){
+	  	console.log(s);
+	  	aux.innerHTML=s;
+	  });
+	</script>
+</body>
+</html>
