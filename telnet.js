@@ -1,8 +1,9 @@
 var net = require('net');
- 
-var server = net.createServer(function (socket) {
-	socket.write('Welcome to the Telnet server!');
-	socket.on('data',function(data){
-		console.log(data);
-	});
-}).listen(8888);
+
+function onConect(socket) {
+    socket.on('data', function (data) {
+        socket.write('echo: ' + data);
+    });
+}
+//forma abreviada.
+net.createServer(onConect).listen(1337, '0.0.0.0')
