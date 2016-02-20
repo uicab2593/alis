@@ -5,5 +5,9 @@ function onConect(socket) {
         socket.write('echo: ' + data);
     });
 }
-//forma abreviada.
-net.createServer(onConect).listen(1337, '0.0.0.0')
+
+module.export = {
+	runTcpServer: function(){
+		net.createServer(onConect).listen(1337,'0.0.0.0')
+	}
+}
