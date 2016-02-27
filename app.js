@@ -5,9 +5,9 @@ var telnet = require('./telnet');
 var io = require('socket.io')(http);
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname+'/views/index.html');
+  res.sendFile(__dirname+'/web/index.html');
 });
-
+app.use(express.static('web'));
 // io.on('connection', function(socket){
 // });
 
