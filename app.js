@@ -11,7 +11,7 @@ app.use(express.static('web'));
 // io.on('connection', function(socket){
 // });
 
-// telnet.runTcpServer(io);
+telnet.runTcpServer(io);
 
 http.listen(3000, function () {
   console.log('Example app listening on port 3000!');
