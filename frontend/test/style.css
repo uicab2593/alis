@@ -1,0 +1,111 @@
+@import url('materialize.min.css');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.container{padding: 20px 0}
+.option-button{width: 14em;height: 9em}
+.option-button i{font-size: 7em;margin-top: 32%}
+
+	
+.dialog-panel {
+	background: rgba(190, 207, 219, 0.64);
+	border-radius: 15px;
+	height: 35em;
+	margin-top: 5%;
+	margin-left: 13em;
+	margin-right: 12em;
+}
+
+.menu-row{height: 15em}
+
+.first-row-menu {
+	width: 19%; height:60%; margin-right: 10%; margin-left: 10%; margin-top: 5%
+}
+
+.first2-row-menu{
+	width: 19%; 
+	height:60%; 
+	margin-right: 10%; 
+	margin-top: 5%
+}
+
+.second-row-menu{width: 19%; height:60%; margin-right: 10%; margin-left: 10%; margin-top: 7%}
+.second2-row-menu{width: 19%; height:60%; margin-right: 10%; margin-top: 7%}
+
+.module-menu{font-size: 5em; margin: 0.3em; margin-top: 0.4em}
+.md100-img{width:4em;height:4em; margin-top: 0.3em}
+.md90-img{width:3.5em;height:4em; margin-top: 0.3em}
+.md80-img{width:3em;height:3em;  margin-top: 0.3em}
+.md110-img{width:4.5em;height:4em; margin-top: 0.3em}
+.md70-img{width:2.5em;height:2.5em; margin-top: 0.2em}
+.md60-img{width:2em;height:2em; margin-top: 0.15em}
+
+.md50-img{width:2em;height:2em; margin: 0.5em}
+
+
+.config-audio{
+	width: 10em;
+	height: 9em;
+	margin-left: 3em;
+	margin-right: 4%; 
+	margin-top: 3%
+}
+
+.option-escritura{	
+	width: 11.5em;
+	height: 9.5em;
+	margin-left: 2em;
+	margin-right: 3em; 
+	margin-top: 0.5em
+}
+
+.modal-escritura{
+	height: 31em	
+}
+
+.name-option{
+	font: 100;
+	font-size:1.18em;
+	color: black;
+}
+
+.name-extend{
+	font: 100;
+	font-size:1.17em;
+	color: black;	
+}
+
+.texto-escritura {
+	background: rgba(190, 207, 219, 0.64);		
+	margin-top: 2%;
+	margin-left: 10em;
+	margin-right: 9em;		
+}
+
+.text-size{
+	font: 100;	
+	font-size: 20em;
+	/*falta usar*/
+}
+
+.div-sugerencia{
+	background: rgba(190, 207, 219, 0.64);		
+	margin-top: 2%;
+	margin-left: 10em;
+	margin-right: 9em;	
+}
+
+.letter-div{
+	background: white;
+	width: 0.6em;
+	height: 0.4em;
+	font: 100;	
+	font-size: 10em;
+	color: black;
+	margin: 0.03em;
+	float: left
+}
+
+
+.center-letter{
+	margin-left: 2em;
+}
