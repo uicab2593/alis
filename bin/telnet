@@ -1,0 +1,12 @@
+var net = require('net');
+
+module.exports = function(io){
+		var onConect = 
+		function onConect(socket) {
+			socket.on('data', function (data) {
+				console.log(data.toString());
+				io.emit('signal',data.toString());
+			});
+		}
+		net.createServer(onConect).listen(1337,'0.0.0.0')
+	};

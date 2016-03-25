@@ -1,0 +1,163 @@
+/*bower*/
+@import url('../bower_components/Materialize/dist/css/materialize.min.css');
+/*fonts*/
+/*@import url('https://fonts.googleapis.com/icon?family=Material+Icons');*/
+
+.container{padding: 20px 0}
+.option-button{width: 14em;height: 9em}
+.option-button i{font-size: 7em;margin-top: 32%}
+header{padding: 15px 0}
+a.menu-option.option-selected{background-color: #26a69a !important}
+.dialog-panel {
+	background: rgba(190, 207, 219, 0.64);
+	border-radius: 15px;
+	height: 35em;
+	margin-left: 13em;
+	margin-right: 12em;
+}
+
+/*.menu-row{height: 15em}*/
+
+.first-row-menu {
+	width: 19%; height:60%; margin-right: 10%; margin-left: 10%; margin-top: 5%
+}
+
+.first2-row-menu{
+	width: 19%; 
+	height:60%; 
+	margin-right: 10%; 
+	margin-top: 5%
+}
+
+.second-row-menu{width: 19%; height:60%; margin-right: 10%; margin-left: 10%; margin-top: 7%}
+.second2-row-menu{width: 19%; height:60%; margin-right: 10%; margin-top: 7%}
+
+.module-menu{font-size: 5em; margin: 0.3em; margin-top: 0.4em}
+.md100-img{width:4em;height:4em; margin-top: 0.3em}
+.md90-img{width:3.5em;height:4em; margin-top: 0.3em}
+.md80-img{width:3em;height:3em;  margin-top: 0.3em}
+.md110-img{width:4.5em;height:4em; margin-top: 0.3em}
+.md70-img{width:2.5em;height:2.5em; margin-top: 0.2em}
+.md60-img{width:2em;height:2em; margin-top: 0.15em}
+
+.md50-img{width:2em;height:2em; margin: 0.5em}
+
+
+.config-audio{
+	width: 10em;
+	height: 9em;
+	margin-left: 3em;
+	margin-right: 4%; 
+	margin-top: 3%
+}
+
+.option-escritura{	
+	width: 11.5em;
+	height: 9.5em;
+	margin-left: 2em;
+	margin-right: 3em; 
+	margin-top: 0.5em
+}
+
+.modal-escritura{
+	height: 31em	
+}
+
+.name-option{
+	font: 100;
+	font-size:1.18em;
+	color: black;
+}
+
+.name-extend{
+	font: 100;
+	font-size:1.17em;
+	color: black;	
+}
+
+.texto-escritura {	
+	background: rgba(176, 202, 221, 0.68);
+	margin-top: 1.5em;
+	margin-left: 10em;
+	margin-right: 9em
+}
+
+.sugenrencia{
+	background:	rgba(131, 190, 199, 0.37);
+	margin-top: 0em;
+	margin-left: 10em;
+	margin-right: 9em;		
+	height: 7em;
+	border: 5px;
+}
+
+.text-size{
+	font: 100;	
+	font-size: 20em;
+	/*falta usar*/
+}
+
+.div-sugerencia{
+	background: rgba(190, 207, 219, 0.64);		
+	margin-top: 2em;
+	margin-left: 10em;
+	margin-right: 9em;	
+}
+
+.div-letter {	
+	background: white;
+	margin-top: 2%;
+	margin-left: 10em;
+	margin-right: 9em
+}
+
+.letter_me {
+	background: white;
+	width: 1.9em;
+	height: 1.3em;
+	font: 100;	
+	font-size: 3em;
+	color: black;
+	margin-left: 0.08em;
+	margin-right: 0.08em;
+	margin-top: 0.01em; 			
+	float: left
+}
+
+.letter_number {
+	background: rgba(0, 137, 236, 0.34);
+	width: 3.3em;
+	height: 2.3em;
+	font: 100;	
+	font-size: 1.8em;
+	color: black;
+	margin-left: 0.08em;
+	margin-right: 0.08em;
+	margin-top: 0.01em; 			
+	float: left
+}
+
+.i-letter{
+	margin-top: 0.1em; 
+}
+
+.center-letter{
+	margin-left: 4em;
+}
+
+.opt-suprimir{
+	background: white;
+	width: 4.3em;
+	height: 3em;
+	font: 30;	
+	font-size: 1.3em;
+	color: black;
+	margin-left: 0.08em;
+	margin-right: 0.08em;
+	margin-top: 0.01em; 			
+	float: left
+}
+
+.row-em{
+	margin-bottom: 10px;
+}
