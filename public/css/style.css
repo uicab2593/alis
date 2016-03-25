@@ -75,6 +75,12 @@ a.menu-option.option-selected{background-color: #26a69a !important}
 	color: black;	
 }
 
+.name-msg{
+	font: 100;
+	font-size:1.10em;
+	color: black;	
+}
+
 .texto-escritura {	
 	background: rgba(176, 202, 221, 0.68);
 	margin-top: 1.5em;
@@ -160,4 +166,71 @@ a.menu-option.option-selected{background-color: #26a69a !important}
 
 .row-em{
 	margin-bottom: 10px;
+}
+
+/***********************/
+.option-sugerencia{color: black}
+.modal-salida{
+	height: 19em;
+	width: 50em;
+	margin-top: 7em;
+	margin-left: 4em;
+}
+
+.modal-msj-public{
+	background: rgb(194, 245, 194);
+	width:35em;
+	height: 18em;	
+	margin-top: 6em
+}
+.img-msj-monitor{margin-top: 0.2em}
+.back-msj-monitor{margin-top: 3em}
+.back-msj-contactos{margin-top: 0.1em}
+
+.segunda-pantalla{
+	height: 38em
+}
+.text-second-monitor{
+	font: 100;	
+	font-size: 3em;	
+}
+
+.modal-msj-private{
+	background: white;
+	width:35em;
+	height: 18em;	
+	margin-top: 6em
+}
+
+.modal-contactos{
+	height: 31.5em;
+	width: 57em;		
+}
+
+.option-contactos{	
+	width: 9.5em;
+	height: 8.5em;
+	margin-left: 1em;
+	margin-right: 2em; 
+	margin-top: 0.15em	
+}
+.first-row-contact{margin-top: 0.5em}
+.name-enviar-msj{margin-left: 2em; margin-right: 3.5em}
+.modal-enviar-msj{
+	background: white;
+	width:45em;	
+	margin-top: 3.5em;
+}
+
+.modal-msj-success{
+	background: rgb(194, 245, 194);
+	width:25em;
+	height: 15em;	
+	margin-top: 6em	
+}
+.modal-msj-warnning{
+	background: rgb(255, 244, 202);
+	width:25em;
+	height: 15em;	
+	margin-top: 6em	
 }
