@@ -1,0 +1,49 @@
+<% include header.html %>
+<div class="menuContext text-center">
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-2">
+      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default'>
+        <img src="/images/escritura_modulo.png">
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <a href='' class='btn menuOption btn-default'>
+        <img src="/images/necesidades_modulo.png">
+      </a>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-4">
+      <a href='' class='btn menuOption btn-default'>
+        <img src="/images/notifications-modulo.png">
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <a href='' class='btn menuOption btn-default'>
+        <img src="/images/entretenimiento_modulo.png">
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <a href='' class='btn menuOption btn-default'>
+        <img src="/images/mensajesg_modulo.png">
+      </a>
+    </div>
+  </div>
+</div>
+<div id="audioConfigModal" class="modal fade" tabindex="-1">
+  <div class="modal-body">
+    <div class="text-center">
+      <div class="menuContext text-center">
+        <h3>Doble click para desactivar el audio o espera para continuar</h3>
+        <a id='disableAudio' href="/dictado" class='menuOption optionSelected btn btn-defaut'>
+            <img src="/images/config_no_audio.png" >
+        </a>
+        <br>
+        <br>
+        <p><i class='fa fa-refresh fa-spin fa-3x'></i></p>
+      </div>
+    </div>
+  </div>
+</div>
+<% include footer.html %>
