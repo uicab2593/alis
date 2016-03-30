@@ -24,15 +24,15 @@ $(document).ready(function(){
 			setTimeout(function(){m.remove();},310);	
 		});
 	});
-	$("#audioConfigModal").on('shown.bs.modal',function(){
+	$(document.body).on('shown.bs.modal','#audioConfigModal',function(){
 		redirectTimer =  setTimeout(function(){
 			window.location.href = $("#disableAudio").attr('href');
 		},3000);
 	});
-	$('.modal').on('hidden.bs.modal', function (e) {
+	$(document.body).on('hidden.bs.modal','.modal',function (e) {
 		setMenuContext();
 	});
-	$('.modal').on('shown.bs.modal', function (e) {
+	$(document.body).on('shown.bs.modal','.modal',function (e) {
 		setMenuContext();
 	});
 	$("#disableAudio").click(function(e){
@@ -51,15 +51,19 @@ $(document).ready(function(){
 	setMenuContext();
 
 	// para pruebas
-	$("#testSignal1").click(function(e){press1();});
-	$("#testSignal2").click(function(e){press2();});
-	$("#testSignal3").click(function(e){press3();});
+	$("#testSignal1").click(function(e){e.preventDefault(); press1();});
+	$("#testSignal2").click(function(e){e.preventDefault(); press2();});
+	$("#testSignal3").click(function(e){e.preventDefault(); press3();});
 });
-function setMenuContext(){
-	menuContext = getCurrentModal();
+function setMenuContext(container){
+	menuContext = container;
+	if(menuContext==null){
+		menuContext = getCurrentModal();
+	}
 	if(menuContext==null){
 		menuContext = $(".menuContext").eq(0);
 	}
+	console.log(menuContext);
 	menuOptions = menuContext.find('.menuOption');
 	optionSelected = -1;
 	menuOptions.each(function(i,o){
@@ -86,7 +90,12 @@ function press2(){
 function press3(){
 	blinkSignal(3);
 	clearTimeout(redirectTimer);
-	closeCurrentModal();
+	var returnButton = menuContext.find('.returnButton');
+	if(returnButton.attr('href')){
+		window.location.href = returnButton.attr('href');
+	}else{
+		returnButton.click();
+	}
 	callbackPress3();
 }
 function blinkSignal(signal){

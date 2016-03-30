@@ -1,6 +1,6 @@
 <% include header.html %>
 <%
-	var letters =[
+	var keys =[
 		['q','w','e','r','t','y','u','i','o','p'],
 	 	['a','s','d','f','g','h','j','k','l','ñ'],
 		['z','x','c','v','b','n','m'],
@@ -33,24 +33,25 @@
   </div> -->
 	<!-- teclado -->
 	<div id="keyboard">
-		<% for(var f in letters){ %>
+		<% for(var f in keys){ %>
 		<div class='text-center'>
-			<% for(var l in letters[f]){ %>
-				<button data-letter='<%= letters[f][l] %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
-					<%= letters[f][l] %>
+			<% for(var l in keys[f]){ %>
+				<button data-key='<%= keys[f][l] %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
+					<%= keys[f][l] %>
 				</button>
 			<% } %>
 		</div>
 		<% } %>
 		<div class="text-center">
 			<% for(var n=0;n<10;n++){ %>
-				<button data-letter='<%= n %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
+				<button data-key='<%= n %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
 					<%= n %>
 				</button>
 			<% } %>
 		</div>
 	</div>
 </div>
+	<a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
   </div>
 
 <% include footer.html %>
