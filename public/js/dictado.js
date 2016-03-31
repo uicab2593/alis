@@ -1,16 +1,18 @@
-var msg="";
-var keyboardTimer;
-var startDictation = false;
+var msg = '';
+var currentWord = '';
 $(document).ready(function(){
-	callbackPress1 = function(){
-		startDictation  = true;
-		// addLetter($(this).data('letter'));
-	}
-	keyboardTimer = setTimeout(press1,2000);
-	$("#keyboard .menuOption").click(function(e){
+	$("button[data-key]").click(function(e){
+		currentWord+=$(this).data('key');
+		if(var suggests = findSuggest()){
+			
+		}else{
+			
+		}
 	});
 });
-function addLetter(letter){
-	msg+=letter;
-	$("#textArea").text(msg + "<span class='pipe'></span>");
+function setMsg () {
+	$("#textArea").html(msg);
+}
+function findSuggest (word) {
+	return false;
 }

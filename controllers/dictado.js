@@ -1,3 +1,3 @@
 exports.index = function(req, res){
-  res.render('dictado');
+  res.render('dictado',{extraJs:'dictado'});
 };

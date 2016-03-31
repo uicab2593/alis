@@ -1,7 +1,5 @@
 var redirectTimer;
-var menuContext=null;
-var menuAuto=false;
-var menuAutoTimer;
+var menuContext;
 var menuOptions;
 var optionSelected = -1;
 var callbackSignal1 = function(){};
@@ -51,7 +49,6 @@ $(document).ready(function(){
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
 	});
-	// setMenuContext();
 
 	// para pruebas
 	$("#testSignal1").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal1();});
@@ -71,31 +68,18 @@ function setMenuContext(container){
 	menuOptions.each(function(i,o){
 		if($(o).hasClass('optionSelected')) optionSelected = i;
 	});
-	menuAuto = menuContext.hasClass('menuAuto');
-	if(menuAuto) initMenuAuto();
 }
 function signal1(){
-	if(!menuAuto || optionSelected==-1){
-		blinkSignal(1);
-		nextOption();
-		callbackSignal1();
-	}else{
-		signal2();
-	}
-}
-function nextOption(){
+	blinkSignal(1);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	menuOptions.eq(newOptionSelected).addClass('optionSelected');
 	if(optionSelected>=0){
 		menuOptions.eq(optionSelected).removeClass('optionSelected');
 	}
-	optionSelected = newOptionSelected;	
-}
-function initMenuAuto() {
-	menuAutoTimer = setInterval(nextOption,1000);
+	optionSelected = newOptionSelected;
+	callbackSignal1();
 }
 function signal2(){
-	if(menuAuto) clearTimeout(menuAutoTimer);
 	blinkSignal(2);
 	if(optionSelected>=0){
 		menuOptions.eq(optionSelected).click();
