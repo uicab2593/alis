@@ -16,9 +16,9 @@ body{background: #DDDDDD}
 .menuContext .btn img{width: 115px;height: 115px}
 header .navbar .navbar-nav>li>a{padding: 11px}
 /*header .btn-default{color: black !important}*/
-.menuContext .btn-default{background: white;color: black; }
-.menuContext .btn-default:active,.menuContext .btn-default:focus{background: white;border-color: black}
-.menuContext .btn-default:hover, .menuContext .btn-default.hover,.menuContext .optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
+.menuContext .menuOption{background: white;color: black; }
+.menuContext .menuOption:active,.menuContext .menuOption:focus{background: white;border-color: black}
+.menuContext .menuOption.optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
 @media (min-width: 768px) {
     .navbar-centered .navbar-nav {float: none;text-align: center;}
     .navbar-centered .navbar-nav > li {float: none;}

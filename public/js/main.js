@@ -84,12 +84,18 @@ function signal1(){
 	}
 }
 function nextOption(){
+	console.log(optionSelected);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	menuOptions.eq(newOptionSelected).addClass('optionSelected');
 	if(optionSelected>=0){
 		menuOptions.eq(optionSelected).removeClass('optionSelected');
 	}
 	optionSelected = newOptionSelected;	
+}
+function setMenuOption (index) {
+	menuOptions.removeClass('optionSelected');
+	menuOptions.eq(index).addClass('optionSelected');
+	optionSelected = index;
 }
 function initMenuAuto() {
 	menuAutoTimer = setInterval(nextOption,1000);

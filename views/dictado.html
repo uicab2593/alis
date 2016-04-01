@@ -6,7 +6,7 @@
 		['z','x','c','v','b','n','m'],
 	];
 %>
-<div class="menuContext menuAuto">
+<div id='keyboard'>
   <div class="well">
   	<p class='alert text-center h3'>Has click para comenzar el dictado</p>
     <p id="textArea">|</p>
@@ -37,7 +37,7 @@
 		<% for(var f in keys){ %>
 		<div class='text-center'>
 			<% for(var l in keys[f]){ %>
-				<button data-key='<%= keys[f][l] %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
+				<button data-key='<%= keys[f][l] %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
 					<%= keys[f][l] %>
 				</button>
 			<% } %>
@@ -45,7 +45,7 @@
 		<% } %>
 		<div class="text-center">
 			<% for(var n=0;n<10;n++){ %>
-				<button data-key='<%= n %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
+				<button data-key='<%= n %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
 					<%= n %>
 				</button>
 			<% } %>
@@ -54,7 +54,35 @@
 </div>
 	<a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
   </div>
-<div id='' class="modal fade">
+<div id='keyboardMenu' class="modal fade menuContext">
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-6">
+				<a href="#" class='btn btn-default menuOption'>
+					<img src="/images/sugerencias.png" class="md80-img">
+					Sugerencias
+				</a>
+			</div>
+			<div class="col-xs-6">
+				<a href="#" class='btn btn-default menuOption'>
+		        	<img src="/images/terminar_palabra.png" class="md80-img">
+		        	Terminar P
+				</a>
+			</div>
+			<div class="col-xs-6">
+				<a href="#" class='btn btn-default menuOption'>
+					<img src="/images/finalizar_mensaje.png" class="md80-img">
+					Finalizar M
+				</a>
+			</div>
+			<div class="col-xs-6">
+				<a href="#" class='btn btn-default menuOption'>
+		        	<img src="/images/eliminar_palabra.png" class="md80-img">
+		        	Eliminar P
+				</a>
+			</div>
+		</div>
+	</div>
 </div>
 <% var extraJs = extraJs; %>
 <% include footer.html %>
