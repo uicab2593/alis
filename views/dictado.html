@@ -1,12 +1,12 @@
 <% include header.html %>
 <%
 	var keys =[
-		['q','w','e','r','t','y','u','i','o','p'],
-	 	['a','s','d','f','g','h','j','k','l','ñ'],
-		['z','x','c','v','b','n','m'],
+		{'q':17,'w':23,'e':4,'r':18,'t':20,'y':25,'u':21,'i':8,'o':15,'p':16},
+	 	{'a':0,'s':19,'d':3,'f':5,'g':6,'h':7,'j':9,'k':10,'l':11,'ñ':14},
+		{'z':26,'x':24,'c':2,'v':22,'b':1,'n':13,'m':12},
 	];
 %>
-<div id='keyboard'>
+<div class='menuContext menuAuto menuOrder'>
   <div class="well">
   	<p class='alert text-center h3'>Has click para comenzar el dictado</p>
     <p id="textArea">|</p>
@@ -36,16 +36,16 @@
 	<div id="keyboard">
 		<% for(var f in keys){ %>
 		<div class='text-center'>
-			<% for(var l in keys[f]){ %>
-				<button data-key='<%= keys[f][l] %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
-					<%= keys[f][l] %>
+			<% for(var key in keys[f]){ %>
+				<button data-key='<%= key %>' data-order='<%= keys[f][key] %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
+					<%= key %>
 				</button>
 			<% } %>
 		</div>
 		<% } %>
 		<div class="text-center">
 			<% for(var n=0;n<10;n++){ %>
-				<button data-key='<%= n %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
+				<button data-key='<%= n %>' data-order='<%= n+27 %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
 					<%= n %>
 				</button>
 			<% } %>

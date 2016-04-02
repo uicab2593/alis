@@ -3,6 +3,7 @@ var menuContext=null;
 var menuAuto=false;
 var menuAutoTimer;
 var menuOptions;
+var menuOrder=false;
 var optionSelected = -1;
 var callbackSignal1 = function(){};
 var callbackSignal2 = function(){};
@@ -72,6 +73,7 @@ function setMenuContext(container){
 		if($(o).hasClass('optionSelected')) optionSelected = i;
 	});
 	menuAuto = menuContext.hasClass('menuAuto');
+	menuOrder = menuContext.hasClass('menuOrder');
 	if(menuAuto) initMenuAuto();
 }
 function signal1(){
@@ -86,15 +88,21 @@ function signal1(){
 function nextOption(){
 	console.log(optionSelected);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
-	menuOptions.eq(newOptionSelected).addClass('optionSelected');
-	if(optionSelected>=0){
-		menuOptions.eq(optionSelected).removeClass('optionSelected');
+	menuOptions.removeClass('optionSelected');
+	if(menuOrder){
+		menuContext.find("[data-order='"+newOptionSelected+"']").addClass('optionSelected');
+	}else{
+		menuOptions.eq(newOptionSelected).addClass('optionSelected');
 	}
 	optionSelected = newOptionSelected;	
 }
 function setMenuOption (index) {
 	menuOptions.removeClass('optionSelected');
-	menuOptions.eq(index).addClass('optionSelected');
+	if(menuOrder){
+		menuContext.find("[data-order='"+index+"']").addClass('optionSelected');
+	}else{
+		menuOptions.eq(index).addClass('optionSelected');
+	}
 	optionSelected = index;
 }
 function initMenuAuto() {

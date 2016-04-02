@@ -5,11 +5,10 @@
 <script src='/js/bootstrap-modal.js'></script>
 <script src='/js/bootstrap-modalmanager.js'></script>
 <script src="/socket.io/socket.io.js"></script>
-<% console.log(typeof extraJs != 'undefined'); %>
+<script src='/js/main.js'></script>
 <% if(typeof extraJs != 'undefined'){ %>
 	<script src='/js/<%= extraJs %>.js'></script>
 <% }else{ %>
-	<script src='/js/main.js'></script>
 <% } %>
 </body>
 </html>
