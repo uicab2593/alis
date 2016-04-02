@@ -65,5 +65,5 @@ function setMsg () {
 	textArea.html(msg.join(' '));
 }
 function findSuggest (word) {
-	return true;
+	return false;
 }
