@@ -6,38 +6,15 @@
 		{'z':26,'x':24,'c':2,'v':22,'b':1,'n':13,'m':12},
 	];
 %>
-<div class='menuContext menuAuto menuOrder'>
+<div class='menuAuto'>
   <div class="well">
   	<p class='alert text-center h3'>Has click para comenzar el dictado</p>
-    <p id="textArea">|</p>
-<!--   <div id="suggestions">
-  	<table class='table table-bordered'>
-  		<tbody>
-  			<tr>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  			</tr>
-  			<tr>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  				<td>Sugerencia</td>
-  			</tr>
-  		</tbody>
-  	</table>
-  </div> -->
-	<!-- teclado -->
+    <p id="textArea" class='text-uppercase'>|</p>
 	<div id="keyboard">
 		<% for(var f in keys){ %>
 		<div class='text-center'>
 			<% for(var key in keys[f]){ %>
-				<button data-key='<%= key %>' data-order='<%= keys[f][key] %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
+				<button data-key='<%= key %>' data-order='<%= keys[f][key] %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
 					<%= key %>
 				</button>
 			<% } %>
@@ -45,7 +22,7 @@
 		<% } %>
 		<div class="text-center">
 			<% for(var n=0;n<10;n++){ %>
-				<button data-key='<%= n %>' data-order='<%= n+27 %>' type='button' class='menuOption text-uppercase btn btn-sm btn-default'>
+				<button data-key='<%= n %>' data-order='<%= n+27 %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
 					<%= n %>
 				</button>
 			<% } %>
@@ -53,36 +30,44 @@
 	</div>
 </div>
 	<a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
-  </div>
-<div id='keyboardMenu' class="modal fade menuContext">
+</div>
+<div id='keyboardMenuModal' class="modal fade menuContext">
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-xs-6">
 				<a href="#" class='btn btn-default menuOption'>
-					<img src="/images/sugerencias.png" class="md80-img">
-					Sugerencias
+					<img src="/images/sugerencias.png" >
+					<span>Sugerencias</span>
 				</a>
 			</div>
 			<div class="col-xs-6">
 				<a href="#" class='btn btn-default menuOption'>
-		        	<img src="/images/terminar_palabra.png" class="md80-img">
-		        	Terminar P
+		        	<img src="/images/terminar_palabra.png" >
+		        	<span>Terminar P</span>
+				</a>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-xs-6">
+				<a href="#" class='btn btn-default menuOption'>
+					<img src="/images/finalizar_mensaje.png" >
+					<span>Finalizar M</span>
 				</a>
 			</div>
 			<div class="col-xs-6">
 				<a href="#" class='btn btn-default menuOption'>
-					<img src="/images/finalizar_mensaje.png" class="md80-img">
-					Finalizar M
-				</a>
-			</div>
-			<div class="col-xs-6">
-				<a href="#" class='btn btn-default menuOption'>
-		        	<img src="/images/eliminar_palabra.png" class="md80-img">
-		        	Eliminar P
+		        	<img src="/images/eliminar_palabra.png" >
+		        	<span>Eliminar P</span>
 				</a>
 			</div>
 		</div>
 	</div>
+	<div class="modal-footer">
+    <div class="text-center">
+        <button type='button' class='returnButton btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    </div>
+  </div>
 </div>
-<% var extraJs = extraJs; %>
+<% var extraJs = 'dictado'; %>
 <% include footer.html %>

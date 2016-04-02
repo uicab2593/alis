@@ -16,7 +16,8 @@ body{background: #DDDDDD}
 .menuContext .btn img{width: 115px;height: 115px}
 header .navbar .navbar-nav>li>a{padding: 11px}
 /*header .btn-default{color: black !important}*/
-.menuContext .menuOption{background: white;color: black; }
+.menuContext .menuOption{text-align: center;background: white;color: black; }
+.menuContext .menuOption span{display: block;font-size: 18px}
 .menuContext .menuOption:active,.menuContext .menuOption:focus{background: white;border-color: black}
 .menuContext .menuOption.optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
 @media (min-width: 768px) {
@@ -29,3 +30,6 @@ header .navbar .navbar-nav>li>a{padding: 11px}
 #keyboard > div{margin-bottom: 10px}
 #keyboard button {font-size: 45px;padding: 2px 30px}
 #textArea{padding: 10px;background: white;font-size: 30px}
+#keyboard .keyOption{background: white;color: black; }
+#keyboard .keyOption:active,#keyboard .keyOption:focus{background: white;border-color: black}
+#keyboard .keyOption.optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
