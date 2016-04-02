@@ -12,8 +12,8 @@ $(document).ready(function(){
 			keyboardModal.modal('show');
 		}else{
 			setMenuOption(0);
-			initMenuAuto();
 			setMsg();
+			setTimeout(nextOption,1000);
 		}
 	});
 });
