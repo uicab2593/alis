@@ -40,7 +40,7 @@ function setMenuContext(container){
 	if(menuContext==null){
 		menuContext = $(".menuContext").eq(0);
 	}
-	menuOptions = menuContext.find('.menuOption');
+	menuOptions = menuContext.find('.menuOption').not('.disabled');
 	optionSelected = -1;
 	menuOptions.each(function(i,o){
 		if($(o).hasClass('optionSelected')) optionSelected = i;
