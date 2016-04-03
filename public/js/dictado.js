@@ -8,11 +8,13 @@ var keyboard;
 var keyboardKeys;
 var onKeyboard;
 var suggestsModal;
+var confirmSuggestModal;
 $(document).ready(function(){
 	suggestsModal = $("#suggestsModal");
 	textArea = $("#textArea");
 	keyboardMenuModal = $("#keyboardMenuModal");
 	keyboard = $("#keyboard");
+	confirmSuggestModal = $("#confirmSuggest");
 	loadArrayKeys();
 	$("#showSuggests").click(function(){		
 		suggestsModal.modal('show');
@@ -34,9 +36,15 @@ $(document).ready(function(){
 		// closeCurrentModal(startKeyboard);
 	});
 	$("#suggestsModal").on('click','.menuOption',function(){
+		var word = $(this).data('word');
+		confirmSuggestModal.find("h2").text('"'+word+'"');
+		confirmSuggestModal.find('.menuOption').data('word',word);
+		confirmSuggestModal.modal('show');
+	});
+	$("#confirmSuggest .modal-body button").click(function(){
 		msg[currentWord]=$(this).data('word');
 		setMsg();
-		closeCurrentModal(closeCurrentModal);//cierra los 2 modales
+		closeCurrentModal(closeCurrentModal); //cierra 2 modales		
 	});
 	// $("#keyboardMenuModal .returnButton").click(function(){
 		// setTimeout(startKeyboard,500);

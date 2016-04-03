@@ -64,8 +64,8 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-    <div class="text-center">
-        <button type='button' class='returnButton btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
     </div>
   </div>
 </div>
@@ -77,10 +77,55 @@
 		<button type='button' class='menuOption btn btn-default btn-xs' data-word='hola'>hola</button>
 	</div>
 	<div class="modal-footer">
-    <div class="text-center">
-        <button type='button' class='returnButton btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
     </div>
   </div>
 </div>
+<div id='confirmSuggest' class="modal fade menuContext">
+ 	<div class="modal-body text-center">
+		<h3 class='modal-title'>Confirma sugerencia</h3>
+		<h2>"HOLA"</h2>
+		<button type='button' class='btn btn-lg btn-default menuOption optionSelected'><i class='fa fa-check fa-3x'></i><br>Confirmar</button>
+	</div>
+	<div class="modal-footer">
+	    <div class="text-left">
+	        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+	    </div>
+	</div>
+</div>
+<div id='outputMenuModal' class="modal fade menuContext">
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-6">
+				<button id='showMonitor' type='button' class='btn btn-default menuOption'>
+					<img src="/images/sugerencias.png" >
+					<span>Sugerencias</span>
+				</button>
+			</div>
+			<div class="col-xs-6">
+				<button id='sendTelegram' type='button' class='btn btn-default menuOption'>
+		        	<img src="/images/terminar_palabra.png" >
+		        	<span>Terminar P</span>
+				</button>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-xs-6">
+				<button id='saveMessage' type='button' class='btn btn-default menuOption'>
+					<img src="/images/finalizar_mensaje.png" >
+					<span>Finalizar M</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    </div>
+  </div>
+</div>
+
 <% var extraJs = 'dictado'; %>
 <% include footer.html %>
