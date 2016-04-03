@@ -34,6 +34,7 @@ $(document).ready(function(){
 	$("#keyboardMenuModal .returnButton").click(function(){
 		setTimeout(startKeyboard,500);
 	});
+	setTimeout("playTextToSpeech('Haz click para comenzar el dictado')",500);	
 });
 signal1 = function (){
 	if(onKeyboard){
@@ -58,7 +59,7 @@ function pushKey () {
 	}
 	keyboardMenuModal.modal('show');
 	setMenuContext(keyboardMenuModal);
-	setMenuOption(0);
+	setMenuOption(0);	
 }
 function loadArrayKeys () {
 	auxKeyboardKeys = $("#keyboard .keyOption");
@@ -74,19 +75,29 @@ function startKeyboard() {
 	keyboardKeys[keyOrderSelected].removeClass('optionSelected');
 	keyOrderSelected=0;
 	keyboardKeys[keyOrderSelected].addClass('optionSelected');
-	keyboardTimer = setInterval(nextKey,1000);
+	keyboardTimer = setInterval(nextKey,2000);	
+	playTextToSpeech('A');
 }
 function nextKey () {
-	console.log(keyOrderSelected);
-	keyboardKeys[keyOrderSelected].removeClass('optionSelected');
-	// console.log(keyOrderSelected);
+	console.log(keyOrderSelected+' - '+keyboardKeys[keyOrderSelected].data('key'));
+	keyboardKeys[keyOrderSelected].removeClass('optionSelected');	
 	keyOrderSelected = (keyOrderSelected+1)%keyboardKeys.length;
 	keyboardKeys[keyOrderSelected].addClass('optionSelected');
+	playTextToSpeech(keyboardKeys[keyOrderSelected].data('key'));
+
 }
 function setMsg () {
-	textArea.html(msg.join(' '));
+	textArea.html(msg.join(' '));	
+}
+function waitFunc() {
+    if (!GlobalFlag) {
+        console.log('--->');
+    }
 }
 function setSuggest () {
-	var word = msg['currentWord'];
-	return false;
+	/*obtengo la sugerencias*/	
+	var word = msg[currentWord];
+	console.log('buscando sugerencias de'+word);
+	playSugerencias(word);	
+	return true;
 }

@@ -8,7 +8,7 @@
 %>
 <div class='menuAuto'>
   <div class="well">
-  	<p class='alert text-center h3'>Has click para comenzar el dictado</p>
+  	<p class='alert text-center h3'>Haz click para comenzar el dictado</p>
     <p id="textArea" class='text-uppercase'>|</p>
 	<div id="keyboard">
 		<% for(var f in keys){ %>
@@ -35,13 +35,13 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-xs-6">
-				<button id='showSuggests' type='button' class='btn btn-default menuOption'>
+				<button id='showSuggests' type='button' class='btn btn-default menuOption' data-textAudio="Sugerencias">
 					<img src="/images/sugerencias.png" >
 					<span>Sugerencias</span>
 				</button>
 			</div>
 			<div class="col-xs-6">
-				<button id='finishWord' type='button' class='btn btn-default menuOption'>
+				<button id='finishWord' type='button' class='btn btn-default menuOption' data-textAudio="Terminar palabra">
 		        	<img src="/images/terminar_palabra.png" >
 		        	<span>Terminar P</span>
 				</button>
@@ -50,13 +50,13 @@
 		<hr>
 		<div class="row">
 			<div class="col-xs-6">
-				<button id='finishMessage' type='button' class='btn btn-default menuOption'>
+				<button id='finishMessage' type='button' class='btn btn-default menuOption' data-textAudio="Finalizar mensaje">
 					<img src="/images/finalizar_mensaje.png" >
 					<span>Finalizar M</span>
 				</button>
 			</div>
 			<div class="col-xs-6">
-				<button id='deleteWord' type='button' class='btn btn-default menuOption'>
+				<button id='deleteWord' type='button' class='btn btn-default menuOption' data-textAudio="Eliminar palabra">
 		        	<img src="/images/eliminar_palabra.png" >
 		        	<span>Eliminar P</span>
 				</button>

@@ -30,9 +30,9 @@ $(document).ready(function(){
 	 	if(signal==1) signal1();
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
-	});	
+	});		
 });
-function setMenuContext(container){
+function setMenuContext(container){	
 	menuContext = container;
 	if(menuContext==null){
 		menuContext = getCurrentModal();
@@ -69,13 +69,21 @@ function nextOption(){
 	console.log(optionSelected);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	menuOptions.removeClass('optionSelected');
-	menuOptions.eq(newOptionSelected).addClass('optionSelected');
-	optionSelected = newOptionSelected;
+	menuOptions.eq(newOptionSelected).addClass('optionSelected');	
+	optionSelected = newOptionSelected;	
+
+	/*obtengo el valor*/	
+	console.log("data-audio:"+menuOptions.eq(newOptionSelected).attr("data-textAudio"));
+	playTextToSpeech(menuOptions.eq(newOptionSelected).attr("data-textAudio"));
+
 }
 function setMenuOption (index) {
 	menuOptions.removeClass('optionSelected');
 	menuOptions.eq(index).addClass('optionSelected');
 	optionSelected = index;
+
+	console.log("data-audio:"+menuOptions.attr("data-textAudio"));
+	playTextToSpeech(menuOptions.attr("data-textAudio"));
 }
 function blinkSignal(signal){
 	var btn = $("#signal"+signal); 

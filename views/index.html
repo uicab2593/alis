@@ -1,13 +1,16 @@
 <% include header.html %>
+<script>
+  localStorage.setItem("audio",true);
+</script>
 <div class="menuContext text-center">
   <div class="row">
     <div class="col-xs-4 col-xs-offset-2">
-      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default'>
+      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-textAudio="Dictado">
         <img src="/images/escritura_modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default'>
+      <a href='' class='btn menuOption btn-default' data-textAudio="Necesidades, básicas">
         <img src="/images/necesidades_modulo.png">
       </a>
     </div>
@@ -15,17 +18,17 @@
   <hr>
   <div class="row">
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default'>
+      <a href='' class='btn menuOption btn-default' data-textAudio="Notificaciones">
         <img src="/images/notifications-modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default'>
+      <a href='' class='btn menuOption btn-default' data-textAudio="Entretenimiento">
         <img src="/images/entretenimiento_modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default'>
+      <a href='' class='btn menuOption btn-default' data-textAudio="Mensajes guardados">
         <img src="/images/mensajesg_modulo.png">
       </a>
     </div>
@@ -36,7 +39,7 @@
     <div class="text-center">
       <div class="text-center">
         <h3>Doble click para desactivar el audio o espera para continuar</h3>
-        <a id='disableAudio' href="/dictado" class='menuOption optionSelected btn btn-defaut'>
+        <a id='disableAudio' href="/dictado" class='menuOption optionSelected btn btn-defaut' data-textAudio="Doble Click para desactivar el audio, o espera para continuar;">
             <img src="/images/config_no_audio.png" >
         </a>
         <br>
