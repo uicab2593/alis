@@ -1,5 +1,4 @@
 var msg = [''];
-var currentWord = 0;
 var keyboardMenuModal;
 var keyboardTimer;
 var textArea;
@@ -21,16 +20,18 @@ $(document).ready(function(){
 	});
 	$("#finishWord").click(function(){		
 		msg.push('');
-		currentWord = msg.length-1;
 		setMsg();
 		// closeCurrentModal(startKeyboard);
 		closeCurrentModal();
 	});
 	$("#finishMessage").click(function(){		
-		closeCurrentModal(function(){alert('mensaje terminado')});
+		closeCurrentModal();
 	});
 	$("#deleteWord").click(function(){
-		msg[currentWord]='';
+		if(msg[msg.length-1]==''){
+			msg.pop();
+		}
+		msg[msg.length-1]='';
 		setMsg();
 		closeCurrentModal();
 		// closeCurrentModal(startKeyboard);
@@ -42,8 +43,11 @@ $(document).ready(function(){
 		confirmSuggestModal.modal('show');
 	});
 	$("#confirmSuggest .modal-body button").click(function(){
-		msg[currentWord]=$(this).data('word');
+		msg[msg.length-1]=$(this).data('word');
+		msg.push('');
 		setMsg();
+		$("#showSuggests").addClass('disabled').removeClass('optionSelected');
+		$("#finishWord").addClass('disabled').removeClass('optionSelected');
 		closeCurrentModal(closeCurrentModal); //cierra 2 modales		
 	});
 	// $("#keyboardMenuModal .returnButton").click(function(){
@@ -64,13 +68,14 @@ function pushKey () {
 	clearTimeout(keyboardTimer);
 	onKeyboard=false;
 	var key = keyboardKeys[keyOrderSelected];
-	msg[currentWord]+=key.data('key');
+	msg[msg.length-1]+=key.data('key');
 	setMsg();
-	if(setSuggest()){
-		$("#showSuggests").removeClass('disabled');
-	}else{
-		$("#showSuggests").addClass('disabled');
-	}
+	// activa o desactiva boton sugerencias
+	if(setSuggest()) $("#showSuggests").removeClass('disabled');
+	else $("#showSuggests").addClass('disabled');
+	// activa o desactiva boton terminar palabra
+	if(msg[msg.length-1]=='') $("#finishWord").addClass('disabled');
+	else $("#finishWord").removeClass('disabled');
 	keyboardMenuModal.modal('show');
 	setMenuContext(keyboardMenuModal);
 	setMenuOption(0);
@@ -102,6 +107,6 @@ function setMsg () {
 	textArea.html(msg.join(' '));
 }
 function setSuggest () {
-	var word = msg['currentWord'];
+	var word = msg[msg.length-1];
 	return true;
 }
