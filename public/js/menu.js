@@ -40,6 +40,7 @@ function setMenuContext(container){
 	if(menuContext==null){
 		menuContext = $(".menuContext").eq(0);
 	}
+	console.log(menuContext);
 	menuOptions = menuContext.find('.menuOption').not('.disabled');
 	optionSelected = -1;
 	menuOptions.each(function(i,o){
@@ -97,7 +98,7 @@ function getCurrentModal(){
 				highest=zindex;
 				best_modal = open_modals.eq(index);
 			}	
-		});		
+		});
 		return best_modal;
 	}
 	return null;

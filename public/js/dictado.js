@@ -7,21 +7,22 @@ var keyOrderSelected=0;
 var keyboard;
 var keyboardKeys;
 var onKeyboard;
-var suggestModal;
+var suggestsModal;
 $(document).ready(function(){
-	suggestModal = $("#suggestModal");
+	suggestsModal = $("#suggestsModal");
 	textArea = $("#textArea");
 	keyboardMenuModal = $("#keyboardMenuModal");
 	keyboard = $("#keyboard");
 	loadArrayKeys();
-	$("#showSuggest").click(function(){		
-		suggestModal.modal('show');
+	$("#showSuggests").click(function(){		
+		suggestsModal.modal('show');
 	});
 	$("#finishWord").click(function(){		
 		msg.push('');
 		currentWord = msg.length-1;
 		setMsg();
-		closeCurrentModal(startKeyboard);
+		// closeCurrentModal(startKeyboard);
+		closeCurrentModal();
 	});
 	$("#finishMessage").click(function(){		
 		closeCurrentModal(function(){alert('mensaje terminado')});
@@ -29,16 +30,22 @@ $(document).ready(function(){
 	$("#deleteWord").click(function(){
 		msg[currentWord]='';
 		setMsg();
-		closeCurrentModal(startKeyboard);
+		closeCurrentModal();
+		// closeCurrentModal(startKeyboard);
 	});
-	$("#keyboardMenuModal .returnButton").click(function(){
-		setTimeout(startKeyboard,500);
+	$("#suggestsModal").on('click','.menuOption',function(){
+		msg[currentWord]=$(this).data('word');
+		setMsg();
+		closeCurrentModal(closeCurrentModal);//cierra los 2 modales
 	});
+	// $("#keyboardMenuModal .returnButton").click(function(){
+		// setTimeout(startKeyboard,500);
+	// });
 });
 signal1 = function (){
 	if(onKeyboard){
 		pushKey();
-	}else if(optionSelected==-1){
+	}else if(getCurrentModal()==null){
 		startKeyboard();
 	}else{
 		blinkSignal(1);
@@ -88,5 +95,5 @@ function setMsg () {
 }
 function setSuggest () {
 	var word = msg['currentWord'];
-	return false;
+	return true;
 }
