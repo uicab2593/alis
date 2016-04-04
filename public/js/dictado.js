@@ -25,7 +25,9 @@ $(document).ready(function(){
 		closeCurrentModal();
 	});
 	$("#finishMessage").click(function(){		
-		closeCurrentModal();
+		closeCurrentModal(function(){
+			$("#outputMenuModal").modal('show');
+		});
 	});
 	$("#deleteWord").click(function(){
 		if(msg[msg.length-1]==''){
@@ -50,18 +52,26 @@ $(document).ready(function(){
 		$("#finishWord").addClass('disabled').removeClass('optionSelected');
 		closeCurrentModal(closeCurrentModal); //cierra 2 modales		
 	});
-	// $("#keyboardMenuModal .returnButton").click(function(){
-		// setTimeout(startKeyboard,500);
-	// });
+
+	$("#showMonitorPublic").click(function(){
+		var text = msg.join(' ');
+		socket.emit('message',text);
+		console.log(text);
+		$("#monitorPublicModal h2").text(text);
+	});
+
+	setTimeout("playTextToSpeech('Haz click para comenzar el dictado')",500);	
 });
+var auxSignal1 = signal1;
 signal1 = function (){
 	if(onKeyboard){
 		pushKey();
 	}else if(getCurrentModal()==null){
 		startKeyboard();
 	}else{
-		blinkSignal(1);
-		nextOption();		
+		auxSignal1();
+		// blinkSignal(1);
+		// nextOption();		
 	}
 }
 function pushKey () {
@@ -70,15 +80,24 @@ function pushKey () {
 	var key = keyboardKeys[keyOrderSelected];
 	msg[msg.length-1]+=key.data('key');
 	setMsg();
-	// activa o desactiva boton sugerencias
-	if(setSuggest()) $("#showSuggests").removeClass('disabled');
-	else $("#showSuggests").addClass('disabled');
-	// activa o desactiva boton terminar palabra
-	if(msg[msg.length-1]=='') $("#finishWord").addClass('disabled');
-	else $("#finishWord").removeClass('disabled');
-	keyboardMenuModal.modal('show');
-	setMenuContext(keyboardMenuModal);
-	setMenuOption(0);
+	var getSuggestsCallback = function(data){
+		var suggests = data[1]; 
+		if(suggests.length>0){
+			// activa o desactiva boton sugerencias
+			$("#showSuggests").removeClass('disabled');
+			setSuggests(suggests);
+		}
+		else{
+			$("#showSuggests").addClass('disabled');
+		}
+		// activa o desactiva boton terminar palabra
+		if(msg[msg.length-1]=='') $("#finishWord").addClass('disabled');
+		else $("#finishWord").removeClass('disabled');
+		keyboardMenuModal.modal('show');
+		setMenuContext(keyboardMenuModal);
+		setMenuOption(0);		
+	};
+	playSugerencias(msg[msg.length-1],getSuggestsCallback);
 }
 function loadArrayKeys () {
 	auxKeyboardKeys = $("#keyboard .keyOption");
@@ -94,19 +113,28 @@ function startKeyboard() {
 	keyboardKeys[keyOrderSelected].removeClass('optionSelected');
 	keyOrderSelected=0;
 	keyboardKeys[keyOrderSelected].addClass('optionSelected');
-	keyboardTimer = setInterval(nextKey,1000);
+	keyboardTimer = setInterval(nextKey,1500);	
+	playTextToSpeech('A');
 }
 function nextKey () {
-	console.log(keyOrderSelected);
-	keyboardKeys[keyOrderSelected].removeClass('optionSelected');
-	// console.log(keyOrderSelected);
+	// console.log(keyOrderSelected+' - '+keyboardKeys[keyOrderSelected].data('key'));
+	keyboardKeys[keyOrderSelected].removeClass('optionSelected');	
 	keyOrderSelected = (keyOrderSelected+1)%keyboardKeys.length;
 	keyboardKeys[keyOrderSelected].addClass('optionSelected');
+	playTextToSpeech(keyboardKeys[keyOrderSelected].data('key'));
 }
 function setMsg () {
-	textArea.html(msg.join(' '));
+	textArea.html(msg.join(' '));	
 }
-function setSuggest () {
-	var word = msg[msg.length-1];
-	return true;
+function waitFunc() {
+    if (!GlobalFlag) {
+        console.log('--->');
+    }
+}
+function setSuggests (suggests) {
+	var htmlButtons = '';
+	for(var i in suggests){
+		if(i<5) htmlButtons+="<button type='button' class='menuOption btn btn-default btn-xs' data-word='"+suggests[i]+"'>"+suggests[i]+"</button>";
+	}
+	suggestsModal.find('.modal-body').html(htmlButtons);
 }

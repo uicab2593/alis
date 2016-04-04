@@ -1,6 +1,7 @@
 var menuContext=null;
 var menuOptions;
 var optionSelected = -1;
+var socket;
 var signal1 = function(){};
 var signal2 = function(){};
 var signal3 = function(){};
@@ -23,16 +24,16 @@ $(document).ready(function(){
 	$("#testSignal2").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal2();});
 	$("#testSignal3").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal3();});
 
-	var socket = io();
+	socket = io();
 	socket.on('signal', function(signal){
 		console.log(signal);
 		var signal = parseInt(signal);
 	 	if(signal==1) signal1();
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
-	});	
+	});		
 });
-function setMenuContext(container){
+function setMenuContext(container){	
 	menuContext = container;
 	if(menuContext==null){
 		menuContext = getCurrentModal();
@@ -40,7 +41,7 @@ function setMenuContext(container){
 	if(menuContext==null){
 		menuContext = $(".menuContext").eq(0);
 	}
-	console.log(menuContext);
+	// console.log(menuContext);
 	menuOptions = menuContext.find('.menuOption').not('.disabled');
 	optionSelected = -1;
 	menuOptions.each(function(i,o){
@@ -48,8 +49,11 @@ function setMenuContext(container){
 	});
 }
 signal1 = function (){
+	console.log('signal1');
 	blinkSignal(1);
-	nextOption();
+	// si solo hay una opcion, puede dar un click para seleccionar
+	if(menuOptions.length==1) signal2();
+	else nextOption();
 }
 signal2 = function (){
 	blinkSignal(2);
@@ -69,14 +73,27 @@ signal3 = function (){
 function nextOption(){
 	console.log(optionSelected);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
+	var currentModal = getCurrentModal();
+	if(currentModal!=null){
+		// debe hacer scroll al boton en caso de que sean muchas opciones
+		currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));
+	}
 	menuOptions.removeClass('optionSelected');
-	menuOptions.eq(newOptionSelected).addClass('optionSelected');
-	optionSelected = newOptionSelected;
+	menuOptions.eq(newOptionSelected).addClass('optionSelected');	
+	optionSelected = newOptionSelected;	
+
+	/*obtengo el valor*/	
+	console.log("data-audio:"+menuOptions.eq(newOptionSelected).attr("data-textAudio"));
+	playTextToSpeech(menuOptions.eq(newOptionSelected).attr("data-textAudio"));
+
 }
 function setMenuOption (index) {
 	menuOptions.removeClass('optionSelected');
 	menuOptions.eq(index).addClass('optionSelected');
 	optionSelected = index;
+
+	console.log("data-audio:"+menuOptions.attr("data-textAudio"));
+	playTextToSpeech(menuOptions.attr("data-textAudio"));
 }
 function blinkSignal(signal){
 	var btn = $("#signal"+signal); 
@@ -109,4 +126,53 @@ function closeCurrentModal(callback){
 	m.on('hidden.bs.modal',function(){
 		setTimeout(callback,330);//espera los 3ms de efecto de css
 	}).modal('hide');
+}
+function playSugerencias(strVal,callback){  	
+  	//alert('hola--->'+strVal);  	  	
+    //http://suggestqueries.google.com/complete/search?hl=es&output=toolbar&q=Hola
+    $.ajax({
+		  url: 'http://suggestqueries.google.com/complete/search?client=chrome&q='+strVal,
+		  type: 'GET',
+		  dataType: 'jsonp',
+		  async:false,
+		  success: callback,		    
+		  // success: function (data) {		    
+		  // 	// console.log(data);
+		  //   $.each(data[1], function(key, val) {		    	   
+		  //       result.push(val);
+		  //   });
+		  //   // console.log('ajax ok');		    
+		  //   // result=data[1];
+		  // },
+		  error: function(jqXHR, textStatus, errorThrown){		   
+		  	console.log('err.');
+		  }
+		});
+}
+
+function playTextToSpeech(strVal){
+	// console.log('----->TEXT:'+strVal);
+	//console.log(localStorage.getItem("audio"));
+
+	if(localStorage.getItem("audio")!='false'){
+		responsiveVoice.cancel();
+		responsiveVoice.speak(strVal,"Spanish Female");
+	}
+}
+$.fn.scrollTo = function( target, options, callback ){
+  if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
+  var settings = $.extend({
+    scrollTarget  : target,
+    offsetTop     : 50,
+    duration      : 500,
+    easing        : 'swing'
+  }, options);
+  return this.each(function(){
+    var scrollPane = $(this);
+    var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+    var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+    scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
+      if (typeof callback == 'function') { callback.call(this); }
+    });
+  });
 }
