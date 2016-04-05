@@ -56,8 +56,17 @@ $(document).ready(function(){
 	$("#showMonitorPublic").click(function(){
 		var text = msg.join(' ');
 		socket.emit('message',text);
-		console.log(text);
-		$("#monitorPublicModal h2").text(text);
+		$("#monitorModal h3").text("Mensaje en pantalla");
+		$("#monitorModal h2").text(text);
+		$("#monitorModal").modal('show');
+		playTextToSpeech("Mensaje en pantalla, "+text);
+	});
+	$("#showMonitorPrivate").click(function(){
+		var text = msg.join(' ');
+		$("#monitorModal h3").text("Mensaje:");
+		$("#monitorModal h2").text(text);
+		$("#monitorModal").modal('show');
+		playTextToSpeech("Mensaje, "+text);
 	});
 
 	setTimeout("playTextToSpeech('Haz click para comenzar el dictado')",500);	
@@ -70,6 +79,21 @@ signal1 = function (){
 		startKeyboard();
 	}else{
 		auxSignal1();
+		// blinkSignal(1);
+		// nextOption();		
+	}
+}
+var auxSignal2 = signal2;
+signal2 = function(){
+	if(onKeyboard){
+		clearTimeout(keyboardTimer);
+		keyboardMenuModal.modal('show');		
+	}else if(getCurrentModal()==null){
+		clearTimeout(keyboardTimer);
+		keyboardMenuModal.modal('show');		
+		// keyboardMenuModal.modal('show');
+	}else{
+		auxSignal2();
 		// blinkSignal(1);
 		// nextOption();		
 	}
@@ -93,9 +117,9 @@ function pushKey () {
 		// activa o desactiva boton terminar palabra
 		if(msg[msg.length-1]=='') $("#finishWord").addClass('disabled');
 		else $("#finishWord").removeClass('disabled');
-		keyboardMenuModal.modal('show');
-		setMenuContext(keyboardMenuModal);
-		setMenuOption(0);		
+		// keyboardMenuModal.modal('show');
+		// setMenuContext(keyboardMenuModal);
+		// setMenuOption(0);		
 	};
 	playSugerencias(msg[msg.length-1],getSuggestsCallback);
 }
@@ -116,6 +140,14 @@ function startKeyboard() {
 	keyboardTimer = setInterval(nextKey,1500);	
 	playTextToSpeech('A');
 }
+function jumpKeyOption(keys) {
+	clearTimeout(keyboardTimer);
+	keyboardKeys[keyOrderSelected].removeClass('optionSelected');
+	keyOrderSelected = (keyOrderSelected+keys)%keyboardKeys.length;
+	keyboardKeys[keyOrderSelected].addClass('optionSelected');
+	playTextToSpeech(keyboardKeys[keyOrderSelected].data('key'));	
+	keyboardTimer = setInterval(nextKey,1500);	
+}
 function nextKey () {
 	// console.log(keyOrderSelected+' - '+keyboardKeys[keyOrderSelected].data('key'));
 	keyboardKeys[keyOrderSelected].removeClass('optionSelected');	
@@ -134,7 +166,7 @@ function waitFunc() {
 function setSuggests (suggests) {
 	var htmlButtons = '';
 	for(var i in suggests){
-		if(i<5) htmlButtons+="<button type='button' class='menuOption btn btn-default btn-xs' data-word='"+suggests[i]+"'>"+suggests[i]+"</button>";
+		if(i<5) htmlButtons+="<button type='button' data-textAudio='"+suggests[i]+"' class='menuOption btn btn-default btn-xs' data-word='"+suggests[i]+"'>"+suggests[i]+"</button>";
 	}
 	suggestsModal.find('.modal-body').html(htmlButtons);
 }

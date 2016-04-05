@@ -93,19 +93,19 @@
 <!-- modal de finalizar mensajes -->
 <div id='outputMenuModal' class="modal fade menuContext">
 	<div class="modal-body text-center">
-		<button id='showMonitor' data-target='#monitorMenuModal' data-toggle='modal' type='button' class='btn btn-default menuOption'>
+		<button id='showMonitor' data-target='#monitorMenuModal' data-toggle='modal' type='button' data-textAudio='Mostrar' class='btn btn-default menuOption'>
 			<img src="/images/mostrar.png" >
 			<span>Mostrar</span>
 		</button>
 		<br>
 		<br>
-		<button id='sendTelegram' type='button' class='btn btn-default menuOption'>
+		<button id='sendTelegram' type='button' class='btn btn-default menuOption' data-textAudio='Enviar'>
         	<img src="/images/telegram.png" >
         	<span>Enviar</span>
 		</button>
 		<br>
 		<br>
-		<button id='saveMessage' type='button' class='btn btn-default menuOption'>
+		<button id='saveMessage' type='button' class='btn btn-default menuOption' data-textAudio='Guardar'>
 			<img src="/images/guardar.png" >
 			<span>Guardar</span>
 		</button>
@@ -119,13 +119,13 @@
 <!-- modal de salidas de pantalla -->
 <div id='monitorMenuModal' class="modal fade menuContext">
 	<div class="modal-body text-center">
-		<button id='showMonitorPublic' data-toggle='modal' data-target='#monitorPublicModal' type='button' class='btn btn-default menuOption'>
+		<button id='showMonitorPublic' data-textAudio="Mostrar público" type='button' class='btn btn-default menuOption'>
 			<img src="/images/public.png" >
-			<span>Monitor Publico</span>
+			<span>Monitor Público</span>
 		</button>
 		<br>
 		<br>
-		<button id='showMonitorPrivate' type='button' class='btn btn-default menuOption'>
+		<button id='showMonitorPrivate' type='button' class='btn btn-default menuOption' data-textAudio="Mostrar privado">
         	<img src="/images/private.png" >
         	<span>Mensaje Privado</span>
 		</button>
@@ -136,10 +136,10 @@
 	    </div>
   </div>
 </div>
-<div id='monitorPublicModal' class="menuContext modal fade">
+<div id='monitorModal' class="menuContext modal fade">
 	<div class="modal-body bg-primary text-center">
 		<h3>Mensaje en pantalla:</h3>
-		<h2 >Este mensaje se esta mostrando en pantalla ahora mismo</h2>
+		<h2></h2>
 		<button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
 	</div>
 </div>

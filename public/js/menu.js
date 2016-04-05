@@ -13,6 +13,7 @@ $(document).ready(function(){
 	$.fn.modal.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
 
 	$(document.body).on('hidden.bs.modal','.modal',function (e) {
+		$(this).find('.menuOption').removeClass('optionSelected');
 		setMenuContext();
 	});
 	$(document.body).on('shown.bs.modal','.modal',function (e) {
@@ -47,6 +48,8 @@ function setMenuContext(container){
 	menuOptions.each(function(i,o){
 		if($(o).hasClass('optionSelected')) optionSelected = i;
 	});
+	console.log(menuOptions.eq(optionSelected).attr('data-textAudio'));
+	if(optionSelected!=-1 && menuOptions.eq(optionSelected).attr('data-textAudio')) playTextToSpeech(menuOptions.eq(optionSelected).attr('data-textAudio'));
 }
 signal1 = function (){
 	console.log('signal1');
