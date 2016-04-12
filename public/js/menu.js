@@ -29,6 +29,7 @@ $(document).ready(function(){
 	socket.on('signal', function(signal){
 		console.log(signal);
 		var signal = parseInt(signal);
+		if(menuContext==null) setMenuContext();
 	 	if(signal==1) signal1();
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
@@ -148,7 +149,7 @@ function playSugerencias(strVal,callback){
 		  //   // result=data[1];
 		  // },
 		  error: function(jqXHR, textStatus, errorThrown){		   
-		  	console.log('err.');
+		  		console.log('err.');
 		  }
 		});
 }

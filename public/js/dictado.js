@@ -87,9 +87,11 @@ var auxSignal2 = signal2;
 signal2 = function(){
 	if(onKeyboard){
 		clearTimeout(keyboardTimer);
-		keyboardMenuModal.modal('show');		
+		onKeyboard=false;
+		keyboardMenuModal.modal('show');
 	}else if(getCurrentModal()==null){
 		clearTimeout(keyboardTimer);
+		onKeyboard=false;
 		keyboardMenuModal.modal('show');		
 		// keyboardMenuModal.modal('show');
 	}else{
@@ -122,6 +124,7 @@ function pushKey () {
 		// setMenuOption(0);		
 	};
 	playSugerencias(msg[msg.length-1],getSuggestsCallback);
+	startKeyboard();
 }
 function loadArrayKeys () {
 	auxKeyboardKeys = $("#keyboard .keyOption");
@@ -137,7 +140,7 @@ function startKeyboard() {
 	keyboardKeys[keyOrderSelected].removeClass('optionSelected');
 	keyOrderSelected=0;
 	keyboardKeys[keyOrderSelected].addClass('optionSelected');
-	keyboardTimer = setInterval(nextKey,1500);	
+	keyboardTimer = setInterval(nextKey,2000);	
 	playTextToSpeech('A');
 }
 function jumpKeyOption(keys) {
@@ -146,7 +149,7 @@ function jumpKeyOption(keys) {
 	keyOrderSelected = (keyOrderSelected+keys)%keyboardKeys.length;
 	keyboardKeys[keyOrderSelected].addClass('optionSelected');
 	playTextToSpeech(keyboardKeys[keyOrderSelected].data('key'));	
-	keyboardTimer = setInterval(nextKey,1500);	
+	keyboardTimer = setInterval(nextKey,2000);	
 }
 function nextKey () {
 	// console.log(keyOrderSelected+' - '+keyboardKeys[keyOrderSelected].data('key'));
