@@ -11,6 +11,9 @@ var http = require('http');
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server)
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('databases/alisdb');
+
 // settings
 
 // set our default template engine to "jade"
@@ -23,14 +26,6 @@ app.set('views', __dirname + '/views');
 
 // define a custom res.message() method
 // which stores messages in the session
-app.response.message = function(msg){
-  // reference `req.session` via the `this.req` reference
-  var sess = this.req.session;
-  // simply add the msg to an array for later
-  sess.messages = sess.messages || [];
-  sess.messages.push(msg);
-  return this;
-};
 
 // log
 if (!module.parent) app.use(logger('dev'));
@@ -51,29 +46,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // allow overriding methods in query (?_method=put)
 app.use(methodOverride('_method'));
-
-// expose the "messages" local variable when views are rendered
-app.use(function(req, res, next){
-  var msgs = req.session.messages || [];
-
-  // expose "messages" local variable
-  res.locals.messages = msgs;
-
-  // expose "hasMessages"
-  res.locals.hasMessages = !! msgs.length;
-
-  /* This is equivalent:
-   res.locals({
-     messages: msgs,
-     hasMessages: !! msgs.length
-   });
-  */
-
-  next();
-  // empty or "flush" the messages so they
-  // don't build up
-  req.session.messages = [];
-});
 
 // load controllers
 require('./lib/boot')(app, { verbose: !module.parent });

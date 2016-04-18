@@ -1,3 +1,4 @@
+var msgToShow;
 var menuContext=null;
 var menuOptions;
 var optionSelected = -1;
@@ -5,21 +6,24 @@ var socket;
 var signal1 = function(){};
 var signal2 = function(){};
 var signal3 = function(){};
-// var callbackSignal1 = function(){};
-// var callbackSignal2 = function(){};
-// var callbackSignal3 = function(){};
+
 $(document).ready(function(){
 	$.fn.modalmanager.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;color:#fff'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
 	$.fn.modal.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
 
 	$(document.body).on('hidden.bs.modal','.modal',function (e) {
 		$(this).find('.menuOption').removeClass('optionSelected');
+		if($(this).data('onclose')) window[$(this).data('onclose')]($(this));
 		setMenuContext();
 	});
 	$(document.body).on('shown.bs.modal','.modal',function (e) {
+		if($(this).data('onopen')) window[$(this).data('onopen')]($(this));
 		setMenuContext();
 	});
-
+	$("button[data-msg]").click(function(){
+		msgToShow = $(this).data('msg');
+		$("#outputMenuModal").modal('show');
+	});
 	// para pruebas
 	$("#testSignal1").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal1();});
 	$("#testSignal2").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal2();});
@@ -33,27 +37,26 @@ $(document).ready(function(){
 	 	if(signal==1) signal1();
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
-	});		
+	 	else if(signal==4){
+	 		playSugerencias("Botón sincronizado");
+	 		alert('Botón sincronizado');
+	 	}
+	});
 });
 function setMenuContext(container){	
 	menuContext = container;
-	if(menuContext==null){
-		menuContext = getCurrentModal();
-	}
-	if(menuContext==null){
-		menuContext = $(".menuContext").eq(0);
-	}
-	// console.log(menuContext);
+	if(menuContext==null) menuContext = getCurrentModal();
+	if(menuContext==null) menuContext = $(".menuContext").eq(0);
 	menuOptions = menuContext.find('.menuOption').not('.disabled');
+	menuOptions.removeClass('optionSelected');
 	optionSelected = -1;
-	menuOptions.each(function(i,o){
-		if($(o).hasClass('optionSelected')) optionSelected = i;
-	});
-	console.log(menuOptions.eq(optionSelected).attr('data-textAudio'));
-	if(optionSelected!=-1 && menuOptions.eq(optionSelected).attr('data-textAudio')) playTextToSpeech(menuOptions.eq(optionSelected).attr('data-textAudio'));
+	if(menuContext.data('audio')) playTextToSpeech(menuContext.data('audio'));
+	if(menuContext.data('default-option')!=null){
+		optionSelected = parseInt(menuContext.data('default-option'));
+		setMenuOption(optionSelected);
+	}
 }
 signal1 = function (){
-	console.log('signal1');
 	blinkSignal(1);
 	// si solo hay una opcion, puede dar un click para seleccionar
 	if(menuOptions.length==1) signal2();
@@ -62,6 +65,7 @@ signal1 = function (){
 signal2 = function (){
 	blinkSignal(2);
 	if(optionSelected>=0){
+		console.log(menuOptions.eq(optionSelected));
 		menuOptions.eq(optionSelected).click();
 	}
 }
@@ -75,29 +79,19 @@ signal3 = function (){
 	}
 }
 function nextOption(){
-	console.log(optionSelected);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	var currentModal = getCurrentModal();
-	if(currentModal!=null){
-		// debe hacer scroll al boton en caso de que sean muchas opciones
-		currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));
-	}
+	if(currentModal!=null) currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));// debe hacer scroll al botón en caso de que sean muchas opciones
 	menuOptions.removeClass('optionSelected');
 	menuOptions.eq(newOptionSelected).addClass('optionSelected');	
 	optionSelected = newOptionSelected;	
-
-	/*obtengo el valor*/	
-	console.log("data-audio:"+menuOptions.eq(newOptionSelected).attr("data-textAudio"));
-	playTextToSpeech(menuOptions.eq(newOptionSelected).attr("data-textAudio"));
-
+	playTextToSpeech(menuOptions.eq(newOptionSelected).data('audio'));
 }
 function setMenuOption (index) {
 	menuOptions.removeClass('optionSelected');
 	menuOptions.eq(index).addClass('optionSelected');
 	optionSelected = index;
-
-	console.log("data-audio:"+menuOptions.attr("data-textAudio"));
-	playTextToSpeech(menuOptions.attr("data-textAudio"));
+	playTextToSpeech(menuOptions.data('audio'));
 }
 function blinkSignal(signal){
 	var btn = $("#signal"+signal); 
@@ -131,37 +125,49 @@ function closeCurrentModal(callback){
 		setTimeout(callback,330);//espera los 3ms de efecto de css
 	}).modal('hide');
 }
+function closeAllModals () {
+	$(".modal").modal('hide');
+}
 function playSugerencias(strVal,callback){  	
-  	//alert('hola--->'+strVal);  	  	
-    //http://suggestqueries.google.com/complete/search?hl=es&output=toolbar&q=Hola
-    $.ajax({
+	$.ajax({
 		  url: 'http://suggestqueries.google.com/complete/search?client=chrome&q='+strVal,
 		  type: 'GET',
 		  dataType: 'jsonp',
 		  async:false,
 		  success: callback,		    
-		  // success: function (data) {		    
-		  // 	// console.log(data);
-		  //   $.each(data[1], function(key, val) {		    	   
-		  //       result.push(val);
-		  //   });
-		  //   // console.log('ajax ok');		    
-		  //   // result=data[1];
-		  // },
-		  error: function(jqXHR, textStatus, errorThrown){		   
-		  		console.log('err.');
+		  error: function(jqXHR, textStatus, errorThrown){
+		  	console.log('err.');
 		  }
 		});
 }
-
+function showMonitorPublic () {
+	socket.emit('message',msgToShow);
+	$("#monitorModal h3").text("Mensaje en pantalla");
+	$("#monitorModal h2").text(msgToShow);
+	$("#monitorModal").modal('show');
+	playTextToSpeech("Mensaje en pantalla, "+msgToShow);
+}
+function showMonitorPrivate () {
+	$("#monitorModal h3").text("Mensaje:");
+	$("#monitorModal h2").text(msgToShow);
+	$("#monitorModal").modal('show');
+	playTextToSpeech("Mensaje, "+msgToShow);
+}
 function playTextToSpeech(strVal){
-	// console.log('----->TEXT:'+strVal);
-	//console.log(localStorage.getItem("audio"));
-
 	if(localStorage.getItem("audio")!='false'){
 		responsiveVoice.cancel();
 		responsiveVoice.speak(strVal,"Spanish Female");
+		if(responsiveVoice.getResponsiveVoice("Spanish Female").mappedProfile==null){
+			// segundo intento
+			setTimeout(function(){
+				responsiveVoice.cancel();
+				responsiveVoice.speak(strVal,"Spanish Female");				
+			},500)
+		}
 	}
+}
+function closeMonitorModal(modal){
+	socket.emit('message','');
 }
 $.fn.scrollTo = function( target, options, callback ){
   if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }

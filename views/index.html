@@ -2,44 +2,44 @@
 <script>
   localStorage.setItem("audio",true);
 </script>
-<div class="menuContext text-center">
+<div class="menuContext text-center" data-audio='Menú principal'>
   <div class="row">
     <div class="col-xs-4 col-xs-offset-2">
-      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-textAudio="Dictado">
+      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Dictado">
         <img src="/images/escritura_modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-textAudio="Necesidades, básicas">
+      <button data-msg='Quiero comer' class='btn menuOption btn-default' data-audio="Necesidades básicas">
         <img src="/images/necesidades_modulo.png">
-      </a>
+      </button>
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-textAudio="Notificaciones">
+      <a href='' class='btn menuOption btn-default' data-audio="Notificaciones">
         <img src="/images/notifications-modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-textAudio="Entretenimiento">
+      <a href='' class='btn menuOption btn-default' data-audio="Entretenimiento">
         <img src="/images/entretenimiento_modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-textAudio="Mensajes guardados">
+      <a href='' class='btn menuOption btn-default' data-audio="Mensajes guardados">
         <img src="/images/mensajesg_modulo.png">
       </a>
     </div>
   </div>
 </div>
-<div id="audioConfigModal" class="modal fade menuContext" tabindex="-1">
+<div id="audioConfigModal" data-onopen='openAudioConfigModal' data-onclose='closeAudioConfigModal' data-default-option='0' class="modal fade menuContext" tabindex="-1">
   <div class="modal-body">
     <div class="text-center">
       <div class="text-center">
         <h3>Doble click para desactivar el audio o espera para continuar</h3>
-        <a id='disableAudio' href="/dictado" class='menuOption optionSelected btn btn-defaut' data-textAudio="Doble Click para desactivar el audio, o espera para continuar;">
+        <a onclick='disableAudio(this)' href="#" class='menuOption optionSelected btn btn-defaut' data-audio="Click para desactivar el audio, o espera para continuar;">
             <img src="/images/config_no_audio.png" >
         </a>
         <br>

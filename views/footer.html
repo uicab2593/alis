@@ -1,4 +1,71 @@
 </div>
+<!-- modal de finalizar mensajes -->
+<div id='outputMenuModal' class="modal fade menuContext">
+	<div class="modal-body text-center">
+		<button data-target='#monitorMenuModal' data-toggle='modal' type='button' data-audio='Mostrar' class='btn btn-default menuOption'>
+			<img src="/images/mostrar.png" >
+			<span>Mostrar</span>
+		</button>
+		<br>
+		<br>
+		<button id='sendTelegram' type='button' class='btn btn-default menuOption' data-audio='Enviar'>
+        	<img src="/images/telegram.png" >
+        	<span>Enviar</span>
+		</button>
+		<br>
+		<br>
+		<button id='saveMessage' type='button' class='btn btn-default menuOption' data-audio='Guardar'>
+			<img src="/images/guardar.png" >
+			<span>Guardar</span>
+		</button>
+	</div>
+	<div class="modal-footer">
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    </div>
+  </div>
+</div>
+<!-- modal de salidas de pantalla -->
+<div id='monitorMenuModal' class="modal fade menuContext">
+	<div class="modal-body text-center">
+		<button onclick='showMonitorPublic()' data-audio="Mostrar público" type='button' class='btn btn-default menuOption'>
+			<img src="/images/public.png" >
+			<span>Monitor Público</span>
+		</button>
+		<br>
+		<br>
+		<button onclick='showMonitorPrivate()' type='button' class='btn btn-default menuOption' data-audio="Mostrar privado">
+        	<img src="/images/private.png" >
+        	<span>Mensaje Privado</span>
+		</button>
+	</div>
+	<div class="modal-footer">
+	    <div class="text-left">
+	        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+	    </div>
+  </div>
+</div>
+<div id='monitorModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
+	<div class="modal-body bg-default text-center">
+		<h3>Mensaje en pantalla:</h3>
+		<h2></h2>
+		<!-- <hr> -->
+<!-- 		<div class="row">
+			<div class="col-xs-6">
+				<button type='button' onclick="newMessage()" class='menuOption btn btn-info' data-audio='Iniciar nuevo mensaje'>Iniciar nuevo mensaje</button>
+			</div>
+			<div class="col-xs-6">
+				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='Continuar mensaje'>Continuar mensaje</button>
+			</div>
+		</div> -->
+		<br>
+	</div>
+	<div class="modal-footer">
+		<div class="text-center">
+			<button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+		</div>
+	</div>
+</div>
 <script src='/jquery/dist/jquery.min.js'></script>
 <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
 <!-- <script src='/Materialize/dist/js/materialize.min.js'></script> -->
