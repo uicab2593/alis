@@ -31,7 +31,7 @@ signal1 = function (){
 	}else{
 		auxSignal1();
 		// blinkSignal(1);
-		// nextOption();		
+		// nextOption();
 	}
 }
 var auxSignal2 = signal2;
@@ -95,6 +95,7 @@ function pushKey () {
 	startKeyboard();
 }
 function startKeyboard() {
+	clearTimeout(keyboardTimer);
 	onKeyboard  = true;
 	keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected=0;
@@ -121,7 +122,8 @@ function nextKey () {
 	keyboardTimer = setTimeout(nextKey,1500);
 }
 function setMsg () {
-	textArea.html(msg.join(' '));	
+	textArea.html(msg.join(' '));
+	text = msg.join(' ');
 }
 function waitFunc() {
     if (!GlobalFlag) {
@@ -131,7 +133,7 @@ function waitFunc() {
 function setSuggests (suggests) {
 	var htmlButtons = '';
 	for(var i in suggests){
-		if(i<5) htmlButtons+="<button type='button' data-audio='"+suggests[i]+"' class='menuOption btn btn-default btn-xs' data-word='"+suggests[i]+"'>"+suggests[i]+"</button>";
+		if(i<5) htmlButtons+="<button type='button' data-audio='"+suggests[i]+"' onclick='selectSuggest(this)' class='menuOption btn btn-default btn-xs' data-word='"+suggests[i]+"'>"+suggests[i]+"</button>";
 	}
 	suggestsModal.find('.modal-body').html(htmlButtons);
 }
@@ -149,9 +151,10 @@ function finishWord () {
 	msg.push('');
 	setMsg();
 	// closeCurrentModal(startKeyboard);
-	closeCurrentModal();	
+	closeCurrentModal();
 }
 function finishMessage () {
+	msgToShow = msg.join(' ');
 	closeCurrentModal(function(){
 		$("#outputMenuModal").modal('show');
 	});	

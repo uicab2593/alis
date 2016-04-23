@@ -33,7 +33,7 @@
 	<a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
 </div>
 <!-- modal al seleccionar letra -->
-<div id='keyboardMenuModal' class="modal fade menuContext">
+<div id='keyboardMenuModal' data-audio='Opciones de mensaje' class="modal fade menuContext">
 	<div class="modal-body text-center">
 		<button type='button' id='showSuggests' data-toggle='modal' data-target='#suggestsModal' class='btn btn-default menuOption' data-audio="Sugerencias">
 			<img src="/images/sugerencias.png" >
@@ -41,19 +41,19 @@
 		</button>
 		<br>
 		<br>
-		<button id='finishWord' type='button' class='btn btn-default menuOption' data-audio="Terminar palabra">
+		<button id='finishWord' onclick="finishWord()" type='button' class='btn btn-default menuOption' data-audio="Terminar palabra">
         	<img src="/images/terminar_palabra.png" >
         	<span>Terminar P</span>
 		</button>
 		<br>
 		<br>
-		<button id='finishMessage' type='button' class='btn btn-default menuOption' data-audio="Finalizar mensaje">
+		<button onclick="finishMessage()" type='button' class='btn btn-default menuOption' data-audio="Finalizar mensaje">
 			<img src="/images/finalizar_mensaje.png" >
 			<span>Finalizar M</span>
 		</button>
 		<br>
 		<br>
-		<button id='deleteWord' type='button' class='btn btn-default menuOption' data-audio="Eliminar palabra">
+		<button onclick="deleteWord()" type='button' class='btn btn-default menuOption' data-audio="Eliminar palabra">
         	<img src="/images/eliminar_palabra.png" >
         	<span>Eliminar P</span>
 		</button>
