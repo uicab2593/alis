@@ -34,3 +34,6 @@ header .navbar .navbar-nav>li>a{padding: 11px}
 #keyboard .keyOption:active,#keyboard .keyOption:focus{background: white;border-color: black}
 #keyboard .keyOption.optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
 #suggestsModal .modal-body button{width: 100%;font-size: 40px;padding: 0}
+.msgToDiv{margin-left: 35px}
+.msgSendModalSuccess{background: #B0FBCF}
+.msgSendModalWarnning{background: #F1E3AF}

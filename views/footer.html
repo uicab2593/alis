@@ -8,7 +8,7 @@
 		</button>
 		<br>
 		<br>
-		<button id='sendTelegram' type='button' class='btn btn-default menuOption' data-audio='Enviar'>
+		<button onclick="selectContact()" data-target='#selectContactModal' id='sendTelegram' type='button' class='btn btn-default menuOption' data-audio='Enviar'>
         	<img src="/images/telegram.png" >
         	<span>Enviar</span>
 		</button>
@@ -58,6 +58,47 @@
 				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='Continuar mensaje'>Continuar mensaje</button>
 			</div>
 		</div> -->
+		<br>
+	</div>
+	<div class="modal-footer">
+		<div class="text-center">
+			<button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+		</div>
+	</div>
+</div>
+<!-- modal de salidas de pantalla -->
+<div id='selectContactModal' class="modal fade menuContext">
+	<div class="modal-body text-center">
+		<button onclick='getChatID()' data-audio="Jesús" type='button' class='btn btn-default menuOption' data-chat="-110544744">
+			<img src="/images/person.png" >
+			<span>JESUS</span>
+		</button>
+		<button onclick='getChatID()' data-audio="Uicab" type='button' class='btn btn-default menuOption' data-chat="-125660087">
+			<img src="/images/person.png" >
+			<span>UICAB</span>
+		</button>
+		<br>
+		<br>
+		<button onclick='getChatID()' type='button' class='btn btn-default menuOption' data-audio="Cristian" data-chat="-133017007">
+        	<img src="/images/person.png" >
+        	<span>CRISTHIAN</span>
+		</button>
+		<button onclick='getChatID()' type='button' class='btn btn-default menuOption' data-audio="David" data-chat="-110544744">
+        	<img src="/images/person.png" >
+        	<span>DAVID</span>
+		</button>
+	</div>
+	<div class="modal-footer">
+	    <div class="text-left">
+	        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+	    </div>
+  </div>
+</div>
+<div id='messageSendModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
+	<div class="modal-body bg-default text-center">
+		<h3 id="tittleModal"></h3>
+		<h3 class="text-left msgToDiv"><b>Para:</b><span id="msgTo"></span></h3>
+		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgText"></span></h3>		
 		<br>
 	</div>
 	<div class="modal-footer">

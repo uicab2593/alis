@@ -36,6 +36,7 @@ signal1 = function (){
 }
 var auxSignal2 = signal2;
 signal2 = function(){
+	console.log("señal 2 .....");
 	if(onKeyboard){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
@@ -154,6 +155,7 @@ function finishWord () {
 	closeCurrentModal();
 }
 function finishMessage () {
+	console.log("finishMessage.......");
 	msgToShow = msg.join(' ');
 	closeCurrentModal(function(){
 		$("#outputMenuModal").modal('show');
