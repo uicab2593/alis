@@ -1,0 +1,118 @@
+<% include ../header.html %>
+<%
+	var keys =[
+		['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' ],
+		[ 'k', 'l', 'm', 'n','ñ', 'o', 'p', 'q'],
+		['r','s','t','u','v','w','x','y','z']
+	];
+%>
+<div class='menuAuto menuContext' >
+  <div class="well">
+  	<p class='alert text-center h3'>Haz click para comenzar el dictado</p>
+    <p id="textArea" class='text-uppercase'>|</p>
+	<div id="keyboard">
+			<% aux = 0; %>
+		<% for(var f in keys){ %>
+		<div class='text-center'>
+			<% for(var key in keys[f]){ %>
+				<button data-key='<%= keys[f][key] %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
+					<%= keys[f][key] %>
+				</button>
+			<% aux++; } %>
+		</div>
+		<% } %>
+		<div class="text-center">
+			<% for(var n=0;n<10;n++){ %>
+				<button data-key='<%= n %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
+					<%= n %>
+				</button>
+			<% } %>
+		</div>
+	</div>
+</div>
+	<a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
+</div>
+<!-- modal al seleccionar letra -->
+<div id='keyboardMenuModal' data-audio='Opciones de mensaje' class="modal fade menuContext">
+	<div class="modal-body text-center">
+		<button type='button' id='showSuggests' data-toggle='modal' data-target='#suggestsModal' class='btn btn-default menuOption' data-audio="Sugerencias">
+			<img src="/images/sugerencias.png" >
+			<span>Sugerencias</span>
+		</button>
+		<br>
+		<br>
+		<button id='finishWord' onclick="finishWord()" type='button' class='btn btn-default menuOption' data-audio="Terminar palabra">
+        	<img src="/images/terminar_palabra.png" >
+        	<span>Terminar P</span>
+		</button>
+		<br>
+		<br>
+		<button onclick="finishMessage()" type='button' class='btn btn-default menuOption' data-audio="Finalizar mensaje">
+			<img src="/images/finalizar_mensaje.png" >
+			<span>Finalizar M</span>
+		</button>
+		<br>
+		<br>
+		<button onclick="deleteWord()" type='button' class='btn btn-default menuOption' data-audio="Eliminar palabra">
+        	<img src="/images/eliminar_palabra.png" >
+        	<span>Eliminar P</span>
+		</button>
+	</div>
+	<div class="modal-footer">
+	    <div class="text-left">
+	        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+	    </div>
+  	</div>
+</div>
+<!-- sugerencias -->
+<div id='suggestsModal' data-width='400px' class="modal fade menuContext">
+	<div class="modal-header">
+		<h3 class='modal-title'>Selecciona una sugerencia</h3>
+	</div>
+	<div class="modal-body"></div>
+	<div class="modal-footer">
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    </div>
+  </div>
+</div>
+<!-- confirmación de sugerencia -->
+<div id='confirmSuggest' data-default-option='0' class="modal fade menuContext">
+ 	<div class="modal-body text-center">
+		<h3 class='modal-title'>Confirma sugerencia</h3>
+		<h2>"HOLA"</h2>
+		<button type='button' class='btn btn-lg btn-default menuOption'><i class='fa fa-check fa-3x'></i><br>Confirmar</button>
+	</div>
+	<div class="modal-footer">
+	    <div class="text-left">
+	        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+	    </div>
+	</div>
+</div>
+<div id='dictationOutputMenuModal' class="modal fade menuContext">
+	<div class="modal-body text-center">
+		<button data-target='#dictationMonitorMenuModal' data-toggle='modal' type='button' data-audio='Mostrar' class='btn btn-default menuOption'>
+			<img src="/images/mostrar.png" >
+			<span>Mostrar</span>
+		</button>
+		<br>
+		<br>
+		<button onclick="selectContactModal()" data-target='#selectContactModal' data-toggle='modal' type='button' data-audio='Enviar' class='btn btn-default menuOption'>
+        	<img src="/images/telegram.png">
+        	<span>Enviar</span>
+		</button>		
+		<br>
+		<br>
+		<button type='button' class='btn btn-default menuOption' data-audio='Guardar'>
+			<img src="/images/guardar.png" >
+			<span>Guardar</span>
+		</button>
+	</div>
+	<div class="modal-footer">
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    </div>
+  </div>
+</div>
+<% var extraJs = 'dictado'; %>
+<% include ../footer.html %>
