@@ -1,0 +1,56 @@
+<% include header.html %>
+<div class="menuContext text-center" data-audio='Necesidades básicas'>
+<br><br>
+<br><br><br>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-2">
+      <a href='#necesidadesOutputMenuModal' data-toggle='modal' class='btn menuOption btn-default' data-necesidad="Quiero baño" data-audio="quiero baño">
+        <img src="/images/banio.png">
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <button href='#necesidadesOutputMe"nuModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Quiero moverme" data-necesidad="Quiero moverme">
+        <img src="/images/mover.png">
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-4">
+      <a href='#necesidadesOutputMenuModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Dormir" data-necesidad="Quiero ir al dormir">
+        <img src="/images/sleep.png">
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <a href='#necesidadesOutputMenuModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Agua" data-necesidad="Quiero agua">
+        <img src="/images/bottle_water.png">
+      </a>
+    </div>
+    <div class="col-xs-4">
+      <a href='#necesidadesOutputMenuModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Comida" data-necesidad="Quiero comer">
+        <img src="/images/food.png">
+      </a>
+    </div>
+  </div>
+</div>
+<div id='necesidadesOutputMenuModal' data-onopen='selectNecesidad' class="modal fade menuContext">
+  <div class="modal-body text-center">
+    <button data-target='#monitorMenuModal' data-toggle='modal' type='button' data-audio='Mostrar' class='btn btn-default menuOption'>
+      <img src="/images/mostrar.png" >
+      <span>Mostrar</span>
+    </button>
+    <br>
+    <br>
+    <button onclick="selectContactNecesidades()" data-target='#selectContactModal' id='sendTelegram' type='button' class='btn btn-default menuOption' data-audio='Enviar'>
+          <img src="/images/telegram.png" >
+          <span>Enviar</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <div class="text-left">
+        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+    </div>
+  </div>
+</div>
+<% var extraJs = 'necesidades'; %>
+<% include footer.html %>
