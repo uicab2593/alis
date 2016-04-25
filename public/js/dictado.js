@@ -75,8 +75,8 @@ function pushKey () {
 	var key = keyboardKeys.eq(keySelected);
 	msg[msg.length-1]+=key.data('key');
 	setMsg();
-	var getSuggestsCallback = function(data){
-		var suggests = data[1]; 
+	var getSuggestsCallback = function(words){
+		var suggests = words; 
 		if(suggests.length>0){
 			// activa o desactiva boton sugerencias
 			$("#showSuggests").removeClass('disabled');

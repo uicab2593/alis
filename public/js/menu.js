@@ -129,16 +129,8 @@ function closeAllModals () {
 	$(".modal").modal('hide');
 }
 function playSugerencias(strVal,callback){  	
-	$.ajax({
-		  url: 'http://suggestqueries.google.com/complete/search?client=chrome&q='+strVal,
-		  type: 'GET',
-		  dataType: 'jsonp',
-		  async:false,
-		  success: callback,		    
-		  error: function(jqXHR, textStatus, errorThrown){
-		  	console.log('err.');
-		  }
-		});
+	console.log(jQuery.param({q:strVal}));
+	$.get('/dictado/getsuggests?'+jQuery.param({q:strVal}),callback,'json');
 }
 function showMonitorPublic () {
 	socket.emit('message',msgToShow);
