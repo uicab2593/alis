@@ -15,3 +15,10 @@ function disableAudio(btn){
 	localStorage.setItem("audio",false);
 	window.location.href = $(btn).attr('href');
 }
+function openNecesidadesMenu(){
+	console.log("OPEN NECESIDADES......");
+	redirectTimer =  setTimeout(function(){
+		localStorage.setItem("audio",true);
+		window.location.href = "/necesidades";
+	},3000);	
+}

@@ -1,3 +1,8 @@
+var numbers = ['0','1','2','3','4','5','6','7','8','9'];
+var vowels = ['e','a','o','i','u'];
+var consonants = ['l','s','r','n','m','p','c','t','b','g','d','f','v','h',
+				  'j','k','ñ','y','q','w','z','x'];				  
+var optionKeys = [];
 var msg = [''];
 var keyboardMenuModal;
 var keyboardTimer;
@@ -16,7 +21,8 @@ $(document).ready(function(){
 	keyboard = $("#keyboard");
 	confirmSuggestModal = $("#confirmSuggest");
 	keyboardKeys = $("#keyboard button[data-key]");
-	setTimeout("playTextToSpeech('Haz click para comenzar el dictado')",500);	
+	setTimeout("playTextToSpeech('Haz click para comenzar el dictado')",500);		
+	getEnableKeys('');
 });
 var auxSignal1 = signal1;
 signal1 = function (){
@@ -36,7 +42,6 @@ signal1 = function (){
 }
 var auxSignal2 = signal2;
 signal2 = function(){
-	console.log("señal 2 .....");
 	if(onKeyboard){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
@@ -75,6 +80,7 @@ function pushKey () {
 	var key = keyboardKeys.eq(keySelected);
 	msg[msg.length-1]+=key.data('key');
 	setMsg();
+	getEnableKeys(key.data('key'));
 	var getSuggestsCallback = function(words){
 		var suggests = words; 
 		if(suggests.length>0){
@@ -96,14 +102,18 @@ function pushKey () {
 	startKeyboard();
 }
 function startKeyboard() {
+	console.log("startKeyboard...");
 	clearTimeout(keyboardTimer);
 	onKeyboard  = true;
 	keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected=0;
-	keyboardKeys.eq(keySelected).addClass('optionSelected');
-	keyboardTimerAux = new Date();
-	playTextToSpeech('A');
-	keyboardTimer = setTimeout(nextKey,2000);
+	console.log("--->"+optionKeys);
+	if(optionKeys.indexOf('e')>-1){
+		keyboardKeys.eq(keySelected).addClass('optionSelected');
+		keyboardTimerAux = new Date();
+		playTextToSpeech('E');
+		keyboardTimer = setTimeout(nextKey,2000);	
+	}else nextKey();	
 }
 function jumpKeyOption(keys) {
 	clearTimeout(keyboardTimer);
@@ -115,12 +125,79 @@ function jumpKeyOption(keys) {
 }
 function nextKey () {
 	// console.log(keySelected+' - '+keyboardKeys[keySelected].data('key'));
-	keyboardTimerAux = new Date();
-	keySelected = (keySelected+1)%keyboardKeys.length;
-	keyboardKeys.removeClass('optionSelected');	
-	keyboardKeys.eq(keySelected).addClass('optionSelected');
-	playTextToSpeech(keyboardKeys.eq(keySelected).data('key'));
-	keyboardTimer = setTimeout(nextKey,1500);
+	keyboardTimerAux = new Date();		
+	keySelected = (keySelected+1)%keyboardKeys.length;	
+	console.log(keyboardKeys.eq(keySelected));
+	if(keyboardKeys.eq(keySelected).hasClass('keyOption')){
+		keyboardKeys.removeClass('optionSelected');	
+		keyboardKeys.eq(keySelected).addClass('optionSelected');
+		playTextToSpeech(keyboardKeys.eq(keySelected).data('key'));		
+		keyboardTimer = setTimeout(nextKey,1500);
+	}else
+		nextKey();
+
+}
+function printEnableKeys(){
+	clearTimeout(keyboardTimer);
+	console.log("----------->");
+	keyboardKeys.removeClass('keyOption');
+	keyboardKeys.addClass('disableKey');
+	
+	console.log("--:"+msg[msg.length-1]);
+	//getEnableKeys('l');
+
+	for(var i=0; i<keyboardKeys.length; i++){					
+		for(var j=0; j<optionKeys.length; j++){			
+			if(keyboardKeys.eq(i).data('key')==optionKeys[j])
+				keyboardKeys.eq(i).addClass('keyOption');
+		}
+	}
+	
+	//keyboardKeys.ioptionsKeys.addClass('keyOption');
+	//keyboardKeys.eq(keySelected).addClass('optionSelected');
+	//for(var i=0; i<arrayKey.length; i++){
+
+	//}
+}
+
+function getEnableKeys(lastChar){	
+	switch(lastChar){
+		case 'l': optionKeys = vowels.concat(['r','d','v','f','c','g','p','t','l']).concat(numbers);
+			break;
+		case 's': optionKeys = vowels.concat(['t','p','n','c','h','q','k']).concat(numbers);
+			break;
+		case 'r': optionKeys = vowels.concat(['l','s','d','r','t','n','m','c','g','v','b']).concat(numbers);
+			break;
+		case 'g': optionKeys = vowels.concat(['l','r','n','m']).concat(numbers);
+			break;
+		case 'c': optionKeys = vowels.concat(['l','t','r','n','h']).concat(numbers);
+			break;
+		case 'd': optionKeys = vowels.concat(['r','q','n','h']).concat(numbers);
+			break;
+		case 'b': optionKeys = vowels.concat(['l','r','s','v','d','n']).concat(numbers);
+			break;
+		case 'p': optionKeys = vowels.concat(['l','r','t','s','n','m','c']).concat(numbers);
+			break;
+		case 'm': optionKeys = vowels.concat(['s','b','p','n']).concat(numbers);
+			break;
+		case 'n': optionKeys = vowels.concat(['l','t','s','d','f','g','z','h','v','c','q']).concat(numbers);
+			break;
+		case 'f','t': optionKeys = vowels.concat(['r','l']).concat(numbers);
+			break;
+		case 'h','j','ñ','z','v','y': optionKeys = vowels.concat(numbers);
+			break;
+		case 'k': optionKeys = vowels.concat(['y']).concat(numbers); 
+			break;
+		case 'q': optionKeys = ['u'].concat(numbers);
+			break;
+		case 'w': optionKeys = vowels.concat(['h']).concat(numbers); 
+			break;
+		case 'x': optionKeys = vowels.concat(['t','c']).concat(numbers); 
+			break;		
+		default: optionKeys = vowels.concat(consonants).concat(numbers);
+			break;
+	}
+	printEnableKeys();
 }
 function setMsg () {
 	textArea.html(msg.join(' '));
@@ -183,3 +260,4 @@ function confirmSuggest (btn) {
 	$("#finishWord").addClass('disabled').removeClass('optionSelected');
 	closeAllModals();
 }
+

@@ -3,6 +3,8 @@
   localStorage.setItem("audio",true);
 </script>
 <div class="menuContext text-center" data-audio='Menú principal'>
+<br><br>
+<br><br>
   <div class="row">
     <div class="col-xs-4 col-xs-offset-2">
       <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Dictado">
@@ -10,7 +12,7 @@
       </a>
     </div>
     <div class="col-xs-4">
-      <button data-msg='Quiero comer' class='btn menuOption btn-default' data-audio="Necesidades básicas">
+      <button onclick="openNecesidadesMenu()" data-toggle='modal' class='btn menuOption btn-default' data-audio="Necesidades básicas">
         <img src="/images/necesidades_modulo.png">
       </button>
     </div>
