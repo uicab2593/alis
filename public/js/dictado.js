@@ -21,8 +21,9 @@ $(document).ready(function(){
 	keyboard = $("#keyboard");
 	confirmSuggestModal = $("#confirmSuggest");
 	keyboardKeys = $("#keyboard button[data-key]");
-	setTimeout("playTextToSpeech('Haz click para comenzar el dictado')",500);		
 	getEnableKeys('');
+	$("#saveMessage").removeClass('disabled').show();
+	setMenuContext();
 });
 var auxSignal1 = signal1;
 signal1 = function (){
@@ -36,8 +37,6 @@ signal1 = function (){
 		startKeyboard();
 	}else{
 		auxSignal1();
-		// blinkSignal(1);
-		// nextOption();
 	}
 }
 var auxSignal2 = signal2;
@@ -50,20 +49,17 @@ signal2 = function(){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
 		keyboardMenuModal.modal('show');		
-		// keyboardMenuModal.modal('show');
 	}else{
 		auxSignal2();
-		// blinkSignal(1);
-		// nextOption();		
 	}
 }
 var auxSignal3 = signal3;
 signal3 = function(){
-	if(onKeyboard){
-		startKeyboard();
-	}else{
-		auxSignal3();
-	}
+	if(onKeyboard) startKeyboard();
+	else auxSignal3();
+}
+function deleteLetter(){
+	
 }
 function setKeyOption (index) {
 	clearTimeout(keyboardTimer);
@@ -81,22 +77,16 @@ function pushKey () {
 	msg[msg.length-1]+=key.data('key');
 	setMsg();
 	getEnableKeys(key.data('key'));
+	// activa o desactiva boton terminar palabra
 	var getSuggestsCallback = function(words){
 		var suggests = words; 
 		if(suggests.length>0){
 			// activa o desactiva boton sugerencias
 			$("#showSuggests").removeClass('disabled');
 			setSuggests(suggests);
-		}
-		else{
+		}else{
 			$("#showSuggests").addClass('disabled');
 		}
-		// activa o desactiva boton terminar palabra
-		if(msg[msg.length-1]=='') $("#finishWord").addClass('disabled');
-		else $("#finishWord").removeClass('disabled');
-		// keyboardMenuModal.modal('show');
-		// setMenuContext(keyboardMenuModal);
-		// setMenuOption(0);		
 	};
 	playSugerencias(msg[msg.length-1],getSuggestsCallback);
 	startKeyboard();
@@ -124,17 +114,17 @@ function jumpKeyOption(keys) {
 	keyboardTimer = setTimeout(nextKey,1500);	
 }
 function nextKey () {
-	// console.log(keySelected+' - '+keyboardKeys[keySelected].data('key'));
 	keyboardTimerAux = new Date();		
 	keySelected = (keySelected+1)%keyboardKeys.length;	
 	console.log(keyboardKeys.eq(keySelected));
 	if(keyboardKeys.eq(keySelected).hasClass('keyOption')){
+		playTextToSpeech(keyboardKeys.eq(keySelected).data('key'));		
 		keyboardKeys.removeClass('optionSelected');	
 		keyboardKeys.eq(keySelected).addClass('optionSelected');
-		playTextToSpeech(keyboardKeys.eq(keySelected).data('key'));		
 		keyboardTimer = setTimeout(nextKey,1500);
-	}else
+	}else{
 		nextKey();
+	}
 
 }
 function printEnableKeys(){
@@ -233,7 +223,7 @@ function finishWord () {
 }
 function finishMessage () {
 	console.log("finishMessage.......");
-	msgToShow = msg.join(' ');
+	currentMsg = msg.join(' ');
 	closeCurrentModal(function(){
 		$("#outputMenuModal").modal('show');
 	});	
@@ -249,7 +239,6 @@ function selectSuggest(btn) {
 	confirmSuggestModal.find("h2").text('"'+word+'"');
 	confirmSuggestModal.find('.menuOption').data('word',word);
 	confirmSuggestModal.modal('show');
-	confirmSuggestModal.find('.menuOption').addClass('optionSelected');
 	playTextToSpeech("Confirmar sugerencia, "+word);
 }
 function confirmSuggest (btn) {

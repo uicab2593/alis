@@ -13,12 +13,12 @@ function closeAudioConfigModal(modal){
 }
 function disableAudio(btn){
 	localStorage.setItem("audio",false);
-	window.location.href = $(btn).attr('href');
+	window.location.href = "/dictado";
 }
 function openNecesidadesMenu(){
-	console.log("OPEN NECESIDADES......");
-	redirectTimer =  setTimeout(function(){
+	// console.log("OPEN NECESIDADES......");
+	// redirectTimer =  setTimeout(function(){
 		localStorage.setItem("audio",true);
 		window.location.href = "/necesidades";
-	},3000);	
+	// },3000);	
 }

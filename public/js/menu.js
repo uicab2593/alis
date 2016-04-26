@@ -1,4 +1,4 @@
-var msgToShow;
+var currentMsg;
 var menuContext=null;
 var menuOptions;
 var optionSelected = -1;
@@ -21,7 +21,7 @@ $(document).ready(function(){
 		setMenuContext();
 	});
 	$("button[data-msg]").click(function(){
-		msgToShow = $(this).data('msg');
+		currentMsg = $(this).data('msg');
 		$("#outputMenuModal").modal('show');
 	});
 	// para pruebas
@@ -64,10 +64,7 @@ signal1 = function (){
 }
 signal2 = function (){
 	blinkSignal(2);
-	if(optionSelected>=0){
-		console.log(menuOptions.eq(optionSelected));
-		menuOptions.eq(optionSelected).click();
-	}
+	if(optionSelected>=0) menuOptions.eq(optionSelected).click();
 }
 signal3 = function (){
 	blinkSignal(3);
@@ -91,7 +88,7 @@ function setMenuOption (index) {
 	menuOptions.removeClass('optionSelected');
 	menuOptions.eq(index).addClass('optionSelected');
 	optionSelected = index;
-	playTextToSpeech(menuOptions.data('audio'));
+	if(menuOptions.data('audio')) playTextToSpeech(menuOptions.data('audio'));
 }
 function blinkSignal(signal){
 	var btn = $("#signal"+signal); 
@@ -133,27 +130,29 @@ function playSugerencias(strVal,callback){
 	$.get('/dictado/getsuggests?'+jQuery.param({q:strVal}),callback,'json');
 }
 function showMonitorPublic () {
-	socket.emit('message',msgToShow);
+	socket.emit('message',currentMsg);
 	$("#monitorModal h3").text("Mensaje en pantalla");
-	$("#monitorModal h2").text(msgToShow);
+	$("#monitorModal h2").text(currentMsg);
 	$("#monitorModal").modal('show');
-	playTextToSpeech("Mensaje en pantalla, "+msgToShow);
+	playTextToSpeech("Mensaje en pantalla, "+currentMsg);
 }
 function showMonitorPrivate () {
 	$("#monitorModal h3").text("Mensaje:");
-	$("#monitorModal h2").text(msgToShow);
+	$("#monitorModal h2").text(currentMsg);
 	$("#monitorModal").modal('show');
-	playTextToSpeech("Mensaje, "+msgToShow);
+	playTextToSpeech("Mensaje, "+currentMsg);
 }
-function playTextToSpeech(strVal){
+function playTextToSpeech(strVal,callback){
+	callback = callback || function(){};
+	console.log(strVal);
 	if(localStorage.getItem("audio")!='false'){
 		responsiveVoice.cancel();
-		responsiveVoice.speak(strVal,"Spanish Female");
+		responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});
 		if(responsiveVoice.getResponsiveVoice("Spanish Female").mappedProfile==null){
 			// segundo intento
 			setTimeout(function(){
 				responsiveVoice.cancel();
-				responsiveVoice.speak(strVal,"Spanish Female");				
+				responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});				
 			},500)
 		}
 	}
@@ -161,6 +160,36 @@ function playTextToSpeech(strVal){
 function closeMonitorModal(modal){
 	socket.emit('message','');
 }
+function sendMessageTelegram (btn) {
+	var btn = $(btn);
+	var idChat = btn.data('chat');
+	var toPerson = btn.data('audio');
+	$("#msgTo").text("   "+toPerson);
+	$("#msgText").text("   "+currentMsg);
+	try{		
+		if(currentMsg){
+			$.get('/dictado/sendMessageToContact?idChat='+idChat+'&msgToSend='+currentMsg);
+			$('#messageSendModal').addClass("msgSendModalSuccess");
+			$("#tittleModal").text("Mensaje enviado");		
+			playTextToSpeech("Mensaje "+currentMsg+". Enviado a "+toPerson);				
+			$('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
+		    	closeCurrentModal();
+			});
+		}		
+	}catch(err){
+		$('#messageSendModal').addClass("msgSendModalWarnning");
+		$("#tittleModal").text("Mensaje no enviado");
+		playTextToSpeech("Error, mensaje no enviado, inténtelo otra vez");
+		$('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
+	    	closeCurrentModal();
+		});
+	}
+}
+
+
+
+
+
 $.fn.scrollTo = function( target, options, callback ){
   if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
   var settings = $.extend({

@@ -17,6 +17,6 @@ function selectContactNecesidades () {
 }
 function selectNecesidad(){
 	console.log("SELECT NECESIDAD.....");
-	msgToShow = menuOptions.data('necesidad');
+	currentMsg = menuOptions.data('necesidad');
 	console.log("Mensaje:"+menuOptions.data('necesidad'));
 }
