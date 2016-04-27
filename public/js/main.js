@@ -15,10 +15,7 @@ function disableAudio(btn){
 	localStorage.setItem("audio",false);
 	window.location.href = "/dictado";
 }
-function openNecesidadesMenu(){
-	// console.log("OPEN NECESIDADES......");
-	// redirectTimer =  setTimeout(function(){
-		localStorage.setItem("audio",true);
-		window.location.href = "/necesidades";
-	// },3000);	
+function openNecesidadesMenu(){	
+	localStorage.setItem("audio",true);
+	window.location.href = "/necesidades";	
 }
