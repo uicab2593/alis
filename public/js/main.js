@@ -1,6 +1,5 @@
 var redirectTimer;
 $(document).ready(function(){
-	setMenuContext();
 });
 function openAudioConfigModal(modal){
 	redirectTimer =  setTimeout(function(){

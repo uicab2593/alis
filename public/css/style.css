@@ -19,7 +19,7 @@ header .navbar .navbar-nav>li>a{padding: 11px}
 .menuContext .menuOption{text-align: center;background: white;color: black; }
 .menuContext .menuOption span{display: block;font-size: 18px}
 .menuContext .menuOption:active,.menuContext .menuOption:focus{background: white;border-color: black}
-.menuContext .menuOption.optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
+/*.menuContext .menuOption.optionSelected{background: #2780e3 !important;}*/
 @media (min-width: 768px) {
     .navbar-centered .navbar-nav {float: none;text-align: center;}
     .navbar-centered .navbar-nav > li {float: none;}
@@ -32,7 +32,7 @@ header .navbar .navbar-nav>li>a{padding: 11px}
 #textArea{padding: 10px;background: white;font-size: 30px}
 #keyboard .keyOption{background: white;color: black; }
 #keyboard .keyOption:active,#keyboard .keyOption:focus{background: white;border-color: black}
-#keyboard .keyOption.optionSelected{background: #2780e3 !important;border-color: #2780e3 !important}
+/*#keyboard .keyOption.optionSelected{background: #2780e3 !important;}*/
 #suggestsModal .modal-body button{width: 100%;font-size: 40px;padding: 0}
 .msgToDiv{margin-left: 35px}
 .msgSendModalSuccess{background: #B0FBCF}

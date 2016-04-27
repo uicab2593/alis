@@ -1,20 +1,20 @@
 </div>
 <!-- modal de finalizar mensajes -->
-<div id='outputMenuModal' class="modal fade menuContext" data-audio="Menú de envio de mensaje">
+<div id='outputMenuModal' class="modal fade menuContext" data-audio="menu-de-envio-de-mensaje">
 	<div class="modal-body text-center">
-		<button data-target='#monitorMenuModal' data-toggle='modal' type='button' data-audio='Mostrar' class='btn btn-default menuOption'>
+		<button data-target='#monitorMenuModal' data-toggle='modal' type='button' data-audio='mostrar' class='btn btn-default menuOption'>
 			<img src="/images/mostrar.png" >
 			<span>Mostrar</span>
 		</button>
 		<br>
 		<br>
-		<button data-toggle='modal' data-target='#selectContactModal' type='button' class='btn btn-default menuOption' data-audio='Enviar'>
+		<button data-toggle='modal' data-target='#selectContactModal' type='button' class='btn btn-default menuOption' data-audio='enviar'>
         	<img src="/images/telegram.png" >
         	<span>Enviar</span>
 		</button>
 		<br>
 		<br>
-		<button id='saveMessage' style='display:none' type='button' class='btn btn-default menuOption disabled' data-audio='Guardar'>
+		<button id='saveMessage' style='display:none' type='button' class='btn btn-default menuOption disabled' data-audio='guardar'>
 			<img src="/images/guardar.png" >
 			<span>Guardar</span>
 		</button>
@@ -26,15 +26,15 @@
   </div>
 </div>
 <!-- modal de salidas de pantalla -->
-<div id='monitorMenuModal' class="modal fade menuContext" data-audio='Opciones de pantalla'>
+<div id='monitorMenuModal' class="modal fade menuContext" data-audio='opciones-de-pantalla'>
 	<div class="modal-body text-center">
-		<button onclick='showMonitorPublic()' data-audio="Monitor público" type='button' class='btn btn-default menuOption'>
+		<button onclick='showMonitorPublic()' data-audio="monitor-publico" type='button' class='btn btn-default menuOption'>
 			<img src="/images/public.png" >
 			<span>Monitor Público</span>
 		</button>
 		<br>
 		<br>
-		<button onclick='showMonitorPrivate()' type='button' class='btn btn-default menuOption' data-audio="Mensaje privado">
+		<button onclick='showMonitorPrivate()' type='button' class='btn btn-default menuOption' data-audio="mensaje-privado">
         	<img src="/images/private.png" >
         	<span>Mensaje Privado</span>
 		</button>
@@ -67,7 +67,7 @@
 	</div>
 </div>
 <!-- modal de salidas de pantalla -->
-<div id='selectContactModal' class="modal fade menuContext" data-audio="Seleccione un contacto" >
+<div id='selectContactModal' class="modal fade menuContext" data-audio="seleccione-un-contacto" >
 	<div class="modal-body text-center">
 		<button onclick='sendMessageTelegram(this)' data-audio="Jesús" type='button' class='btn btn-default menuOption' data-chat="-110544744">
 			<img src="/images/person.png" >

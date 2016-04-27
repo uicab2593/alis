@@ -23,13 +23,12 @@ $(document).ready(function(){
 	keyboardKeys = $("#keyboard button[data-key]");
 	getEnableKeys('');
 	$("#saveMessage").removeClass('disabled').show();
-	setMenuContext();
 });
 var auxSignal1 = signal1;
 signal1 = function (){
 	if(onKeyboard){
 		console.log((new Date()).getTime() - keyboardTimerAux.getTime());
-		if((new Date()).getTime() - keyboardTimerAux.getTime()<600){
+		if((new Date()).getTime() - keyboardTimerAux.getTime()<600){ //retardo del clicker
 			setKeyOption(keySelected-1<0?keyboardKeys.length-1:keySelected-1);
 		}
 		pushKey();
@@ -55,16 +54,24 @@ signal2 = function(){
 }
 var auxSignal3 = signal3;
 signal3 = function(){
-	if(onKeyboard) startKeyboard();
+	if(onKeyboard) deleteLetter();
 	else auxSignal3();
 }
 function deleteLetter(){
-	
+	if(msg.length>0){
+		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+		else msg.pop();
+		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+	}
+	setMsg();
+	startKeyboard();
 }
 function setKeyOption (index) {
 	clearTimeout(keyboardTimer);
-	keyboardKeys.removeClass('optionSelected');
-	keyboardKeys.eq(index).addClass('optionSelected');
+	toggleKey(keyboardKeys,false);
+	// keyboardKeys.removeClass('optionSelected');
+	toggleKey(keyboardKeys.eq(index),true);
+	// keyboardKeys.eq(index).addClass('optionSelected');
 	keySelected = index;
 	console.log("data-audio:"+keyboardKeys.eq(keySelected).attr("data-key"));
 	playTextToSpeech(keyboardKeys.eq(keySelected).attr("data-key"));
@@ -95,11 +102,13 @@ function startKeyboard() {
 	console.log("startKeyboard...");
 	clearTimeout(keyboardTimer);
 	onKeyboard  = true;
-	keyboardKeys.eq(keySelected).removeClass('optionSelected');
+	toggleKey(keyboardKeys,false);
+	// keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected=0;
 	console.log("--->"+optionKeys);
 	if(optionKeys.indexOf('e')>-1){
-		keyboardKeys.eq(keySelected).addClass('optionSelected');
+		toggleKey(keyboardKeys.eq(keySelected),true);
+		// keyboardKeys.eq(keySelected).addClass('optionSelected');
 		keyboardTimerAux = new Date();
 		playTextToSpeech('E');
 		keyboardTimer = setTimeout(nextKey,2000);	
@@ -107,25 +116,29 @@ function startKeyboard() {
 }
 function jumpKeyOption(keys) {
 	clearTimeout(keyboardTimer);
-	keyboardKeys.eq(keySelected).removeClass('optionSelected');
+	// keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected = (keySelected+keys)%keyboardKeys.length;
-	keyboardKeys.eq(keySelected).addClass('optionSelected');
+	// keyboardKeys.eq(keySelected).addClass('optionSelected');
 	playTextToSpeech(keyboardKeys[keySelected].data('key'));	
 	keyboardTimer = setTimeout(nextKey,1500);	
 }
 function nextKey () {
 	keyboardTimerAux = new Date();		
 	keySelected = (keySelected+1)%keyboardKeys.length;	
-	console.log(keyboardKeys.eq(keySelected));
 	if(keyboardKeys.eq(keySelected).hasClass('keyOption')){
 		playTextToSpeech(keyboardKeys.eq(keySelected).data('key'));		
-		keyboardKeys.removeClass('optionSelected');	
-		keyboardKeys.eq(keySelected).addClass('optionSelected');
+		toggleKey(keyboardKeys,false);
+		// keyboardKeys.removeClass('optionSelected');	
+		toggleKey(keyboardKeys.eq(keySelected),true);
+		// keyboardKeys.eq(keySelected).addClass('optionSelected');
 		keyboardTimer = setTimeout(nextKey,1500);
 	}else{
 		nextKey();
 	}
 
+}
+function toggleKey (keyObj,enable) {
+	keyObj.css({background: enable?"#2780e3":''});
 }
 function printEnableKeys(){
 	clearTimeout(keyboardTimer);
@@ -142,12 +155,7 @@ function printEnableKeys(){
 				keyboardKeys.eq(i).addClass('keyOption');
 		}
 	}
-	
-	//keyboardKeys.ioptionsKeys.addClass('keyOption');
-	//keyboardKeys.eq(keySelected).addClass('optionSelected');
-	//for(var i=0; i<arrayKey.length; i++){
 
-	//}
 }
 
 function getEnableKeys(lastChar){	
@@ -245,8 +253,10 @@ function confirmSuggest (btn) {
 	msg[msg.length-1]=$(btn).data('word');
 	msg.push('');
 	setMsg();
-	$("#showSuggests").addClass('disabled').removeClass('optionSelected');
-	$("#finishWord").addClass('disabled').removeClass('optionSelected');
+	$("#showSuggests").addClass('disabled');
+	toggleKey($("#showSuggests"),false);
+	$("#finishWord").addClass('disabled');
+	toggleKey($("#showSuggests,#finishWord"),false);
 	closeAllModals();
 }
 

@@ -2,17 +2,22 @@ var currentMsg;
 var menuContext=null;
 var menuOptions;
 var optionSelected = -1;
+var localAudios=false;
+var loadedAudios={};
 var socket;
+var audio;
 var signal1 = function(){};
 var signal2 = function(){};
 var signal3 = function(){};
 
 $(document).ready(function(){
+
 	$.fn.modalmanager.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;color:#fff'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
 	$.fn.modal.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
 
 	$(document.body).on('hidden.bs.modal','.modal',function (e) {
-		$(this).find('.menuOption').removeClass('optionSelected');
+		toggleOption($(this).find('.menuOption'),false);
+		// $(this).find('.menuOption').removeClass('optionSelected');
 		if($(this).data('onclose')) window[$(this).data('onclose')]($(this));
 		setMenuContext();
 	});
@@ -42,13 +47,15 @@ $(document).ready(function(){
 	 		alert('Botón sincronizado');
 	 	}
 	});
+	setMenuContext();
 });
 function setMenuContext(container){	
 	menuContext = container;
 	if(menuContext==null) menuContext = getCurrentModal();
 	if(menuContext==null) menuContext = $(".menuContext").eq(0);
 	menuOptions = menuContext.find('.menuOption').not('.disabled');
-	menuOptions.removeClass('optionSelected');
+	toggleOption(menuOptions,false);
+	// menuOptions.removeClass('optionSelected');
 	optionSelected = -1;
 	if(menuContext.data('audio')) playTextToSpeech(menuContext.data('audio'));
 	if(menuContext.data('default-option')!=null){
@@ -76,17 +83,21 @@ signal3 = function (){
 	}
 }
 function nextOption(){
+	toggleOption(menuOptions,false);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	var currentModal = getCurrentModal();
 	if(currentModal!=null) currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));// debe hacer scroll al botón en caso de que sean muchas opciones
-	menuOptions.removeClass('optionSelected');
-	menuOptions.eq(newOptionSelected).addClass('optionSelected');	
+	// menuOptions.removeClass('optionSelected');
+	toggleOption(menuOptions.eq(newOptionSelected),true);
+	// menuOptions.eq(newOptionSelected).addClass('optionSelected');	
 	optionSelected = newOptionSelected;	
 	playTextToSpeech(menuOptions.eq(newOptionSelected).data('audio'));
 }
 function setMenuOption (index) {
-	menuOptions.removeClass('optionSelected');
-	menuOptions.eq(index).addClass('optionSelected');
+	toggleOption(menuOptions,false);
+	// menuOptions.removeClass('optionSelected');
+	// menuOptions.eq(index).addClass('optionSelected');
+	toggleOption(menuOptions.eq(index),true);
 	optionSelected = index;
 	if(menuOptions.data('audio')) playTextToSpeech(menuOptions.data('audio'));
 }
@@ -144,18 +155,51 @@ function showMonitorPrivate () {
 }
 function playTextToSpeech(strVal,callback){
 	callback = callback || function(){};
-	console.log(strVal);
 	if(localStorage.getItem("audio")!='false'){
+		if(!localAudios===false){
+	    	playAudio(strVal,callback);
+		}else{
+			$.getJSON('/js/audios.json', function(data) {
+	    		localAudios = data;
+	    		playAudio(strVal,callback);
+			});
+		}
+	}else{
+		callback();
+	}
+}
+function playAudio (strVal,callback) {
+	strVal = strVal.toString().toLowerCase();
+	if(strVal in localAudios || strVal.length==1){
+		if(typeof audio!= "undefined") audio.pause();
+		if(!(strVal in loadedAudios)){
+	        loadedAudios[strVal]= document.createElement("AUDIO");
+	        loadedAudios[strVal].src = "/audios/"+strVal+".mp3";
+			// audio = document.createElement("AUDIO");
+	        // audio.src = "/audios/"+strVal+".mp3";
+		}
+
+        loadedAudios[strVal].addEventListener('ended', callback);
+        loadedAudios[strVal].play();
+        audio = loadedAudios[strVal];
+        // audio.playbackRate = 1;
+        // audio.preload = 'auto';
+        // audio.volume = 
+	}else{
 		responsiveVoice.cancel();
 		responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});
-		if(responsiveVoice.getResponsiveVoice("Spanish Female").mappedProfile==null){
+		if(!responsiveVoice.getResponsiveVoice("Spanish Female").mappedProfile==null){
+			callback();
 			// segundo intento
-			setTimeout(function(){
-				responsiveVoice.cancel();
-				responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});				
-			},500)
-		}
+			// setTimeout(function(){
+				// responsiveVoice.cancel();
+				// responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});				
+			// },500)
+		}			
 	}
+}
+function toggleOption(option,enable){
+	option.css({background: enable?"#2780e3":''});
 }
 function closeMonitorModal(modal){
 	socket.emit('message','');
@@ -185,10 +229,6 @@ function sendMessageTelegram (btn) {
 		});
 	}
 }
-
-
-
-
 
 $.fn.scrollTo = function( target, options, callback ){
   if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
