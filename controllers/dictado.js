@@ -16,4 +16,25 @@ exports.sendMessageToContact = function (req, res) {
 	var idChat = req.param("idChat");
 	var msg = req.param("msgToSend");
 	botALIS.sendMessage({chat_id: idChat, text: msg});
-}
+};
+
+exports.saveMessage = function (req, res) {
+	alisDb.getMessage(req.query.message,function(messageId){
+		console.log("REGRESO: "+messageId);		
+		if(!messageId){
+			alisDb.insertMessage(req.query.message,function(err,messages){
+				if(err) throw err;
+				return [1,"mensaje guardado"];
+			});			
+		}else
+		 	return [0,"Ya existe mesaje"];
+	});
+};
+
+exports.deleteMessage = function (req, res) {
+	alisDb.deleteMessage(req.query.messageId,function (err,result) {
+		if(err) throw err;
+		console.log("Mesaje eliminado");
+		res.json("{[1, mensaje eliminado]}");
+	})	
+};
