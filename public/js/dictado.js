@@ -259,4 +259,24 @@ function confirmSuggest (btn) {
 	toggleKey($("#showSuggests,#finishWord"),false);
 	closeAllModals();
 }
+function saveMessage(){	
+	console.log("Guardando mensaje.....");
+	try{		
+		var result = $.get('/dictado/saveMessage?message='+currentMsg.toUpperCase());
+		console.log("Resultado: "+result[0]);
+		$('#savedMessageModal').modal('show');
+		$('#savedMessageModal').addClass("msgSendModalSuccess");
+		$("#tittleModal").text("Mensaje guardado");
+		playTextToSpeech("Mensaje guardado");
+	}catch(ex){
+		$('#savedMessageModal').addClass("msgSendModalWarnning");
+		$("#tittleModal").text("Mensaje no guardado");
+		playTextToSpeech("Error, mensaje no guardado, inténtelo otra vez");
+		$('#savedMessageModal').modal("show").delay( 4000 ).hide("slow", function () {
+	    	closeCurrentModal();
+		});
+	}
 
+
+
+}

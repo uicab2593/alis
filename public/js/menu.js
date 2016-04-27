@@ -214,7 +214,7 @@ function sendMessageTelegram (btn) {
 		if(currentMsg){
 			$.get('/dictado/sendMessageToContact?idChat='+idChat+'&msgToSend='+currentMsg);
 			$('#messageSendModal').addClass("msgSendModalSuccess");
-			$("#tittleModal").text("Mensaje enviado");		
+			$("#tittleModal").text("Mensaje enviado");
 			playTextToSpeech("Mensaje "+currentMsg+". Enviado a "+toPerson);				
 			$('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
 		    	closeCurrentModal();
