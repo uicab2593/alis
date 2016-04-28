@@ -5,7 +5,7 @@ var optionSelected = -1;
 var localAudios=false;
 var loadedAudios={};
 var socket;
-var audio;
+var audio=false;
 var signal1 = function(){};
 var signal2 = function(){};
 var signal3 = function(){};
@@ -86,7 +86,12 @@ function nextOption(){
 	toggleOption(menuOptions,false);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	var currentModal = getCurrentModal();
-	if(currentModal!=null) currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));// debe hacer scroll al botón en caso de que sean muchas opciones
+	// debe hacer scroll al botón en caso de que sean muchas opciones
+	if(currentModal!=null){
+		currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));
+	}else{
+		$("body,html").scrollTo(menuOptions.eq(newOptionSelected));
+	}
 	// menuOptions.removeClass('optionSelected');
 	toggleOption(menuOptions.eq(newOptionSelected),true);
 	// menuOptions.eq(newOptionSelected).addClass('optionSelected');	
@@ -171,19 +176,19 @@ function playTextToSpeech(strVal,callback){
 function playAudio (strVal,callback) {
 	strVal = strVal.toString().toLowerCase();
 	if(strVal in localAudios || strVal.length==1){
-		if(typeof audio!= "undefined") audio.pause();
+		if(!audio===false) audio.pause();
 		if(!(strVal in loadedAudios)){
 	        loadedAudios[strVal]= document.createElement("AUDIO");
 	        loadedAudios[strVal].src = "/audios/"+strVal+".mp3";
+	        loadedAudios[strVal].playbackRate = 1;
+	        loadedAudios[strVal].preload = 'auto';
 			// audio = document.createElement("AUDIO");
 	        // audio.src = "/audios/"+strVal+".mp3";
 		}
-
         loadedAudios[strVal].addEventListener('ended', callback);
+        loadedAudios[strVal].currentTime = 0;
         loadedAudios[strVal].play();
         audio = loadedAudios[strVal];
-        // audio.playbackRate = 1;
-        // audio.preload = 'auto';
         // audio.volume = 
 	}else{
 		responsiveVoice.cancel();
@@ -205,6 +210,7 @@ function closeMonitorModal(modal){
 	socket.emit('message','');
 }
 function sendMessageTelegram (btn) {
+	console.log(currentMsg);
 	var btn = $(btn);
 	var idChat = btn.data('chat');
 	var toPerson = btn.data('audio');

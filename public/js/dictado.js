@@ -199,7 +199,7 @@ function getEnableKeys(lastChar){
 }
 function setMsg () {
 	textArea.html(msg.join(' '));
-	text = msg.join(' ');
+	currentMsg = msg.join(' ');
 }
 function waitFunc() {
     if (!GlobalFlag) {
@@ -230,11 +230,11 @@ function finishWord () {
 	closeCurrentModal();
 }
 function finishMessage () {
-	console.log("finishMessage.......");
-	currentMsg = msg.join(' ');
-	closeCurrentModal(function(){
-		$("#outputMenuModal").modal('show');
-	});	
+	// console.log("finishMessage.......");
+	// currentMsg = msg.join(' ');
+	// closeCurrentModal(function(){
+		// $("#outputMenuModal").modal('show');
+	// });	
 }
 function deleteWord () {
 	if(msg[msg.length-1]=='') msg.pop();
