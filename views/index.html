@@ -2,17 +2,17 @@
 <script>
   localStorage.setItem("audio",true);
 </script>
-<div class="menuContext text-center" data-audio='Menú principal'>
+<div class="menuContext text-center" data-audio='menu-principal'>
 <br><br>
 <br><br>
   <div class="row">
     <div class="col-xs-4 col-xs-offset-2">
-      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Dictado">
+      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="dictado">
         <img src="/images/escritura_modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <button onclick="openNecesidadesMenu()" data-toggle='modal' class='btn menuOption btn-default' data-audio="Necesidades básicas">
+      <button onclick="openNecesidadesMenu()" data-toggle='modal' class='btn menuOption btn-default' data-audio="necesidades-basicas">
         <img src="/images/necesidades_modulo.png">
       </button>
     </div>
@@ -20,23 +20,23 @@
   <hr>
   <div class="row">
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-audio="Notificaciones">
+      <a href='' class='btn menuOption btn-default' data-audio="notificaciones">
         <img src="/images/notifications-modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-audio="Entretenimiento">
+      <a href='' class='btn menuOption btn-default' data-audio="entretenimiento">
         <img src="/images/entretenimiento_modulo.png">
       </a>
     </div>
     <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-audio="Mensajes guardados">
+      <button onclick="openMessageSavedMenu()" data-toggle='modal' class='btn menuOption btn-default' data-audio="mensajes-guardados">
         <img src="/images/mensajesg_modulo.png">
-      </a>
+      </button>      
     </div>
   </div>
 </div>
-<div id="audioConfigModal" data-audio="Click para desactivar el audio, o espera para continuar" data-onopen='openAudioConfigModal' data-onclose='closeAudioConfigModal' data-default-option='0' class="modal fade menuContext" tabindex="-1">
+<div id="audioConfigModal" data-audio="click-para-desactivar-el-audio-o-espera-para-continuar" data-onopen='openAudioConfigModal' data-onclose='closeAudioConfigModal' data-default-option='0' class="modal fade menuContext" tabindex="-1">
   <div class="modal-body">
     <div class="text-center">
       <div class="text-center">

@@ -23,13 +23,12 @@ $(document).ready(function(){
 	keyboardKeys = $("#keyboard button[data-key]");
 	getEnableKeys('');
 	$("#saveMessage").removeClass('disabled').show();
-	setMenuContext();
 });
 var auxSignal1 = signal1;
 signal1 = function (){
 	if(onKeyboard){
 		console.log((new Date()).getTime() - keyboardTimerAux.getTime());
-		if((new Date()).getTime() - keyboardTimerAux.getTime()<600){
+		if((new Date()).getTime() - keyboardTimerAux.getTime()<600){ //retardo del clicker
 			setKeyOption(keySelected-1<0?keyboardKeys.length-1:keySelected-1);
 		}
 		pushKey();
@@ -55,16 +54,24 @@ signal2 = function(){
 }
 var auxSignal3 = signal3;
 signal3 = function(){
-	if(onKeyboard) startKeyboard();
+	if(onKeyboard) deleteLetter();
 	else auxSignal3();
 }
 function deleteLetter(){
-	
+	if(msg.length>0){
+		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+		else msg.pop();
+		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+	}
+	setMsg();
+	startKeyboard();
 }
 function setKeyOption (index) {
 	clearTimeout(keyboardTimer);
-	keyboardKeys.removeClass('optionSelected');
-	keyboardKeys.eq(index).addClass('optionSelected');
+	toggleKey(keyboardKeys,false);
+	// keyboardKeys.removeClass('optionSelected');
+	toggleKey(keyboardKeys.eq(index),true);
+	// keyboardKeys.eq(index).addClass('optionSelected');
 	keySelected = index;
 	console.log("data-audio:"+keyboardKeys.eq(keySelected).attr("data-key"));
 	playTextToSpeech(keyboardKeys.eq(keySelected).attr("data-key"));
@@ -95,37 +102,44 @@ function startKeyboard() {
 	console.log("startKeyboard...");
 	clearTimeout(keyboardTimer);
 	onKeyboard  = true;
-	keyboardKeys.eq(keySelected).removeClass('optionSelected');
+	toggleKey(keyboardKeys,false);
+	// keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected=0;
 	console.log("--->"+optionKeys);
+	//getEnableKeys('');
 	if(optionKeys.indexOf('e')>-1){
-		keyboardKeys.eq(keySelected).addClass('optionSelected');
+		toggleKey(keyboardKeys.eq(keySelected),true);
+		// keyboardKeys.eq(keySelected).addClass('optionSelected');
 		keyboardTimerAux = new Date();
 		playTextToSpeech('E');
 		keyboardTimer = setTimeout(nextKey,2000);	
 	}else nextKey();	
+
 }
 function jumpKeyOption(keys) {
 	clearTimeout(keyboardTimer);
-	keyboardKeys.eq(keySelected).removeClass('optionSelected');
+	// keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected = (keySelected+keys)%keyboardKeys.length;
-	keyboardKeys.eq(keySelected).addClass('optionSelected');
+	// keyboardKeys.eq(keySelected).addClass('optionSelected');
 	playTextToSpeech(keyboardKeys[keySelected].data('key'));	
 	keyboardTimer = setTimeout(nextKey,1500);	
 }
 function nextKey () {
 	keyboardTimerAux = new Date();		
 	keySelected = (keySelected+1)%keyboardKeys.length;	
-	console.log(keyboardKeys.eq(keySelected));
 	if(keyboardKeys.eq(keySelected).hasClass('keyOption')){
 		playTextToSpeech(keyboardKeys.eq(keySelected).data('key'));		
-		keyboardKeys.removeClass('optionSelected');	
-		keyboardKeys.eq(keySelected).addClass('optionSelected');
+		toggleKey(keyboardKeys,false);
+		// keyboardKeys.removeClass('optionSelected');	
+		toggleKey(keyboardKeys.eq(keySelected),true);
+		// keyboardKeys.eq(keySelected).addClass('optionSelected');
 		keyboardTimer = setTimeout(nextKey,1500);
 	}else{
 		nextKey();
-	}
-
+	}	
+}
+function toggleKey (keyObj,enable) {
+	keyObj.css({background: enable?"#2780e3":''});
 }
 function printEnableKeys(){
 	clearTimeout(keyboardTimer);
@@ -142,12 +156,7 @@ function printEnableKeys(){
 				keyboardKeys.eq(i).addClass('keyOption');
 		}
 	}
-	
-	//keyboardKeys.ioptionsKeys.addClass('keyOption');
-	//keyboardKeys.eq(keySelected).addClass('optionSelected');
-	//for(var i=0; i<arrayKey.length; i++){
 
-	//}
 }
 
 function getEnableKeys(lastChar){	
@@ -172,9 +181,21 @@ function getEnableKeys(lastChar){
 			break;
 		case 'n': optionKeys = vowels.concat(['l','t','s','d','f','g','z','h','v','c','q']).concat(numbers);
 			break;
-		case 'f','t': optionKeys = vowels.concat(['r','l']).concat(numbers);
+		case 'f': optionKeys = vowels.concat(['r','l']).concat(numbers);		
 			break;
-		case 'h','j','ñ','z','v','y': optionKeys = vowels.concat(numbers);
+		case 't': optionKeys = vowels.concat(['r','l']).concat(numbers);		
+			break;
+		case 'h': optionKeys = vowels.concat(numbers);
+			break;
+		case 'j': optionKeys = vowels.concat(numbers);
+			break;
+		case 'ñ': optionKeys = vowels.concat(numbers);
+			break;
+		case 'z': optionKeys = vowels.concat(numbers);
+			break;
+		case 'v': optionKeys = vowels.concat(numbers);
+			break;
+		case 'y': optionKeys = vowels.concat(numbers);
 			break;
 		case 'k': optionKeys = vowels.concat(['y']).concat(numbers); 
 			break;
@@ -218,12 +239,14 @@ function continueMessage(){
 function finishWord () {
 	msg.push('');
 	setMsg();
+	getEnableKeys('');
 	// closeCurrentModal(startKeyboard);
 	closeCurrentModal();
 }
 function finishMessage () {
 	console.log("finishMessage.......");
 	currentMsg = msg.join(' ');
+	getEnableKeys('');
 	closeCurrentModal(function(){
 		$("#outputMenuModal").modal('show');
 	});	
@@ -231,6 +254,7 @@ function finishMessage () {
 function deleteWord () {
 	if(msg[msg.length-1]=='') msg.pop();
 	msg[msg.length-1]='';
+	getEnableKeys('');
 	setMsg();
 	closeCurrentModal();
 }
@@ -245,22 +269,28 @@ function confirmSuggest (btn) {
 	msg[msg.length-1]=$(btn).data('word');
 	msg.push('');
 	setMsg();
-	$("#showSuggests").addClass('disabled').removeClass('optionSelected');
-	$("#finishWord").addClass('disabled').removeClass('optionSelected');
+	getEnableKeys('');
+	$("#showSuggests").addClass('disabled');
+	toggleKey($("#showSuggests"),false);
+	$("#finishWord").addClass('disabled');
+	toggleKey($("#showSuggests,#finishWord"),false);
 	closeAllModals();
 }
 function saveMessage(){	
 	console.log("Guardando mensaje.....");
 	try{		
-		var result = $.get('/dictado/saveMessage?message='+currentMsg.toUpperCase());
-		console.log("Resultado: "+result[0]);
-		$('#savedMessageModal').modal('show');
-		$('#savedMessageModal').addClass("msgSendModalSuccess");
-		$("#tittleModal").text("Mensaje guardado");
-		playTextToSpeech("Mensaje guardado");
+		$.get('/dictado/saveMessage?message='+currentMsg.toUpperCase(),function (result) {
+			console.log("Resultado: "+result[0]);
+			$('#savedMessageModal').modal('show');
+			$('#savedMessageModal').addClass("msgSendModalSuccess");
+			$("#tittleModal").text("Mensaje guardado");
+			$("#msgText").text(currentMsg.toUpperCase());
+			playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + "guardado");
+		});		
 	}catch(ex){
 		$('#savedMessageModal').addClass("msgSendModalWarnning");
 		$("#tittleModal").text("Mensaje no guardado");
+		$("#msgText").text(currentMsg.toUpperCase());
 		playTextToSpeech("Error, mensaje no guardado, inténtelo otra vez");
 		$('#savedMessageModal').modal("show").delay( 4000 ).hide("slow", function () {
 	    	closeCurrentModal();

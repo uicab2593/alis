@@ -3,76 +3,33 @@
   localStorage.setItem("audio",true);
 </script>
 
-<div class='menuAuto menuContext' data-audio='Haz click para comenzar el dictado' >
-  <div class="well">
-    <p class='alert text-center h3'>Haz click para comenzar el dictado</p>
-    <p id="textArea" class='text-uppercase'>|</p>
-  <div id="keyboard">      
+<div class='menuAuto menuContext'>
+    <div class='alert text-center h3'><b>Mensajes guardados</b></div>
+    
     <% for(var item in listMessages){ %>
-    <div class='text-center'>      
-        <button data-key='<%= item %>' type='button' class='keyOption text-uppercase btn btn-sm btn-default'>
-          <%= item.message %>
-        </button>
-    </div>
-    <% } %>    
-  </div>
-</div>
-  <a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
-</div>
-
-<div class="menuContext text-center" data-audio='Menú principal'>
-<br><br>
-<br><br>
-  <div class="row">
-    <div class="col-xs-4 col-xs-offset-2">
-      <a href='#audioConfigModal' data-toggle='modal' class='btn menuOption btn-default' data-audio="Dictado">
-        <img src="/images/escritura_modulo.png">
-      </a>
-    </div>
-    <div class="col-xs-4">
-      <button onclick="openNecesidadesMenu()" data-toggle='modal' class='btn menuOption btn-default' data-audio="Necesidades básicas">
-        <img src="/images/necesidades_modulo.png">
-      </button>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-audio="Notificaciones">
-        <img src="/images/notifications-modulo.png">
-      </a>
-    </div>
-    <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-audio="Entretenimiento">
-        <img src="/images/entretenimiento_modulo.png">
-      </a>
-    </div>
-    <div class="col-xs-4">
-      <a href='' class='btn menuOption btn-default' data-audio="Mensajes guardados">
-        <img src="/images/mensajesg_modulo.png">
-      </a>
-    </div>
-  </div>
-</div>
-<div id="audioConfigModal" data-audio="Click para desactivar el audio, o espera para continuar" data-onopen='openAudioConfigModal' data-onclose='closeAudioConfigModal' data-default-option='0' class="modal fade menuContext" tabindex="-1">
-  <div class="modal-body">
-    <div class="text-center">
-      <div class="text-center">
-        <h3>Click para desactivar el audio o espera para continuar</h3>
-        <a onclick='disableAudio(this)' href="#" class='menuOption optionSelected btn btn-defaut' >
-            <img src="/images/config_no_audio.png" >
-        </a>
-        <br>
-        <br>
-        <p><i class='fa fa-refresh fa-spin fa-3x'></i></p>
+      <div class="well menuOption" onclick="selectMessageMenu()" data-audio="<%= listMessages[item].message %>" data-msg="<%= listMessages[item].message %>" data-msgid="<%=listMessages[item].id%>" data-rownum="<%= item %>">
+        <div style="float: left;">          
+          <a href='#' style="width: 10em; height: 5em">
+            <img src="/images/message.png" style="width: 8em; height: 6em; padding-right: 2em">
+          </a>
+          <!--%= item.message %-->          
+        </div>      
+        <div class="col-xs-offset-2 text-left" style="padding-top: 0.5em">            
+            <h2><%= listMessages[item].message %></h2>
+        </div>
       </div>
-    </div>
-  </div>
+    
+
+    <% } %>
+  
+
   <div class="modal-footer">
     <div class="text-left">
-        <button type='button' class='btn-xs returnButton btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
+        <a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
     </div>
   </div>
+  
 </div>
-<% var extraJs = 'main'; %>
+<script type="text/javascript" src='/js/responsive-voice.js'></script>
+<% var extraJs = 'messages'; %>
 <% include footer.html %>
