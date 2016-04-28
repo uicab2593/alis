@@ -43,11 +43,15 @@ signal2 = function(){
 	if(onKeyboard){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
-		keyboardMenuModal.modal('show');
+		playTextToSpeech("Haz escrito, "+currentMsg,function(){
+			keyboardMenuModal.modal('show');
+		});
 	}else if(getCurrentModal()==null){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
-		keyboardMenuModal.modal('show');		
+		playTextToSpeech("Haz escrito, "+currentMsg,function(){
+			keyboardMenuModal.modal('show');
+		});
 	}else{
 		auxSignal2();
 	}
@@ -57,11 +61,18 @@ signal3 = function(){
 	if(onKeyboard) deleteLetter();
 	else auxSignal3();
 }
+function asdas() {
+	// body...
+}
 function deleteLetter(){
 	if(msg.length>0){
-		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
-		else msg.pop();
-		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+		if(msg[msg.length-1]==""){
+			msg.pop();
+			if(msg.length>0) msg[msg.length-1] = msg[msg.length-1].slice(0,-1); 
+		}
+		else{
+			msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+		}
 	}
 	setMsg();
 	startKeyboard();
@@ -257,7 +268,7 @@ function deleteWord () {
 	msg[msg.length-1]='';
 	setMsg();
 	getEnableKeys('');
-	closeCurrentModal();
+	// closeCurrentModal();
 }
 function selectSuggest(btn) {
 	var word = $(btn).data('word');

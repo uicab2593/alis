@@ -76,11 +76,8 @@ signal2 = function (){
 signal3 = function (){
 	blinkSignal(3);
 	var returnButton = menuContext.find('.returnButton');
-	if(returnButton.attr('href')){
-		window.location.href = returnButton.attr('href');
-	}else{
-		returnButton.click();
-	}
+	if(returnButton.attr('href')) window.location.href = returnButton.attr('href');
+	else returnButton.click();
 }
 function nextOption(){
 	toggleOption(menuOptions,false);
@@ -183,16 +180,13 @@ function playAudio (strVal,callback) {
 	        loadedAudios[strVal].src = "/audios/"+strVal+".mp3";
 	        loadedAudios[strVal].playbackRate = 1;
 	        loadedAudios[strVal].preload = 'auto';
-			// audio = document.createElement("AUDIO");
-	        // audio.src = "/audios/"+strVal+".mp3";
 		}
         loadedAudios[strVal].addEventListener('ended', callback);
         loadedAudios[strVal].currentTime = 0;
         loadedAudios[strVal].play();
         audio = loadedAudios[strVal];
-        // audio.volume = 
 	}else{
-		responsiveVoice.cancel();
+		if(responsiveVoice.isPlaying()) responsiveVoice.cancel();
 		responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});
 		if(!responsiveVoice.getResponsiveVoice("Spanish Female").mappedProfile==null){
 			callback();
