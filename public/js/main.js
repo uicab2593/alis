@@ -20,14 +20,10 @@ function disableAudio(btn){
 	window.location.href = "/dictado";
 }
 function openNecesidadesMenu(){
-	// console.log("OPEN NECESIDADES......");
-	// redirectTimer =  setTimeout(function(){
 		localStorage.setItem("audio",true);
 		window.location.href = "/necesidades";
-	// },3000);	
 }
 function openMessageSavedMenu(){
 	
 	console.log(listMessages);
 	window.location.href = "/messages";	
-}
