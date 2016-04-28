@@ -66,6 +66,7 @@ function deleteLetter(){
 	setMsg();
 	startKeyboard();
 }
+
 function setKeyOption (index) {
 	clearTimeout(keyboardTimer);
 	toggleKey(keyboardKeys,false);
@@ -83,8 +84,9 @@ function pushKey () {
 	var key = keyboardKeys.eq(keySelected);
 	msg[msg.length-1]+=key.data('key');
 	setMsg();
-	getEnableKeys(key.data('key'));
+	getEnableKeys(key.data('key'));	
 	// activa o desactiva boton terminar palabra
+	$("#finishWord").removeClass('disabled');
 	var getSuggestsCallback = function(words){
 		var suggests = words; 
 		if(suggests.length>0){
@@ -180,9 +182,21 @@ function getEnableKeys(lastChar){
 			break;
 		case 'n': optionKeys = vowels.concat(['l','t','s','d','f','g','z','h','v','c','q']).concat(numbers);
 			break;
-		case 'f','t': optionKeys = vowels.concat(['r','l']).concat(numbers);
+		case 'f': optionKeys = vowels.concat(['r','l']).concat(numbers);
+			break
+		case 't': optionKeys = vowels.concat(['r','l']).concat(numbers);
 			break;
-		case 'h','j','ñ','z','v','y': optionKeys = vowels.concat(numbers);
+		case 'h': optionKeys = vowels.concat(numbers);
+			break;
+		case 'j': optionKeys = vowels.concat(numbers);
+			break;
+		case 'ñ': optionKeys = vowels.concat(numbers);
+			break;
+		case 'z': optionKeys = vowels.concat(numbers);
+			break;
+		case 'v': optionKeys = vowels.concat(numbers);
+			break;
+		case 'y': optionKeys = vowels.concat(numbers);
 			break;
 		case 'k': optionKeys = vowels.concat(['y']).concat(numbers); 
 			break;
@@ -227,36 +241,53 @@ function finishWord () {
 	msg.push('');
 	setMsg();
 	// closeCurrentModal(startKeyboard);
+	getEnableKeys('');
 	closeCurrentModal();
 }
 function finishMessage () {
+<<<<<<< HEAD
 	// console.log("finishMessage.......");
 	// currentMsg = msg.join(' ');
 	// closeCurrentModal(function(){
 		// $("#outputMenuModal").modal('show');
 	// });	
+=======
+	console.log("finishMessage.......");
+	currentMsg = msg.join(' ');
+	getEnableKeys('');
+	closeCurrentModal(function(){
+		$("#outputMenuModal").modal('show');
+	});	
+>>>>>>> 53785d78e7abfc0b2c004937a2bb1bfbb458d5cb
 }
 function deleteWord () {
 	if(msg[msg.length-1]=='') msg.pop();
 	msg[msg.length-1]='';
 	setMsg();
+	getEnableKeys('');
 	closeCurrentModal();
 }
 function selectSuggest(btn) {
 	var word = $(btn).data('word');
 	confirmSuggestModal.find("h2").text('"'+word+'"');
 	confirmSuggestModal.find('.menuOption').data('word',word);
-	confirmSuggestModal.modal('show');
+	confirmSuggestModal.modal('show');	
 	playTextToSpeech("Confirmar sugerencia, "+word);
 }
 function confirmSuggest (btn) {
 	msg[msg.length-1]=$(btn).data('word');
 	msg.push('');
 	setMsg();
+<<<<<<< HEAD
 	$("#showSuggests").addClass('disabled');
 	toggleKey($("#showSuggests"),false);
 	$("#finishWord").addClass('disabled');
 	toggleKey($("#showSuggests,#finishWord"),false);
+=======
+	$("#showSuggests").addClass('disabled').removeClass('optionSelected');
+	$("#finishWord").addClass('disabled').removeClass('optionSelected');
+	getEnableKeys('');
+>>>>>>> 53785d78e7abfc0b2c004937a2bb1bfbb458d5cb
 	closeAllModals();
 }
 function saveMessage(){	

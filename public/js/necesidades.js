@@ -1,7 +1,11 @@
 var msgOption;
 $(document).ready(function(){
-	setTimeout("playTextToSpeech('Haz click para navegar entre las opciones.')",500);
+	setTimeout("playTextToSpeech('Haz click para cambiar de necesidades básicas.')",500);
 });
+var auxSignal3 = signal3;
+signal3 = function(){
+	auxSignal3();
+}
 function openNecesidadesMenu () {
 	console.log("Necesidades Basicas");
 	redirectTimer =  setTimeout(function(){
