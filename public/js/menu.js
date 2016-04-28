@@ -86,14 +86,8 @@ signal3 = function (){
 function nextOption(){	
 	toggleOption(menuOptions,false);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
-	var currentModal = getCurrentModal();
-	// debe hacer scroll al botón en caso de que sean muchas opciones
-	if(currentModal!=null){
-		currentModal.parent().scrollTo(menuOptions.eq(newOptionSelected));
-	}else{
-		$("body,html").scrollTo(menuOptions.eq(newOptionSelected));
-	}
 	// menuOptions.removeClass('optionSelected');
+	scrollToOption(menuOptions.eq(newOptionSelected));
 	toggleOption(menuOptions.eq(newOptionSelected),true);
 	optionSelected = newOptionSelected;	
 	playTextToSpeech(menuOptions.eq(newOptionSelected).data('audio'));
@@ -128,11 +122,18 @@ function getNextMessages(newOptionSelected){
 		}
 	}	
 }
+function scrollToOption (option) {
+	// debe hacer scroll al botón en caso de que sean muchas opciones
+	var currentModal = getCurrentModal();
+	if(currentModal!=null) currentModal.parent().scrollTo(option);
+	else $("body,html").scrollTo(option);
+}
 function setMenuOption (index) {
 	toggleOption(menuOptions,false);
 	// menuOptions.removeClass('optionSelected');
 	// menuOptions.eq(index).addClass('optionSelected');	
 	toggleOption(menuOptions.eq(index),true);
+	scrollToOption(menuOptions.eq(index));
 	optionSelected = index;
 	if(menuOptions.data('audio')) playTextToSpeech(menuOptions.data('audio'));
 }

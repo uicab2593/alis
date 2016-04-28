@@ -272,7 +272,7 @@ function selectSuggest(btn) {
 function confirmSuggest (btn) {
 	msg[msg.length-1]=$(btn).data('word');
 	msg.push('');
-	setMsg();	
+	setMsg();
 	$("#showSuggests").addClass('disabled');
 	toggleKey($("#showSuggests"),false);
 	$("#finishWord").addClass('disabled');
