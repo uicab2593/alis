@@ -1,3 +1,4 @@
+var listMessages =[];
 var currentMsg;
 var menuContext=null;
 var menuOptions;
@@ -79,15 +80,44 @@ signal3 = function (){
 	if(returnButton.attr('href')) window.location.href = returnButton.attr('href');
 	else returnButton.click();
 }
-function nextOption(){
+function nextOption(){	
 	toggleOption(menuOptions,false);
 	var newOptionSelected = (optionSelected+1)%menuOptions.length;
 	// menuOptions.removeClass('optionSelected');
 	scrollToOption(menuOptions.eq(newOptionSelected));
 	toggleOption(menuOptions.eq(newOptionSelected),true);
-	// menuOptions.eq(newOptionSelected).addClass('optionSelected');	
 	optionSelected = newOptionSelected;	
 	playTextToSpeech(menuOptions.eq(newOptionSelected).data('audio'));
+	setTimeout(function (argument) {
+		getNextMessages(newOptionSelected);
+	},900);
+		
+}
+function getNextMessages(newOptionSelected){
+	var rownum = menuOptions.eq(newOptionSelected).data('rownum')+1;
+	if (rownum%5==0 || rownum==menuOptions.length) {		
+		//console.log("SET MENU OPTION:"+menuOptions.eq(newOptionSelected).data('msgid'));
+		//console.log("LAST ID:"+(menuOptions.eq(newOptionSelected).data('rownum')+1));
+		setTimeout($.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(newOptionSelected).data('msgid'),function (listMsgs) {
+			menuOptions.addClass('disabled').hide();
+			for(var item in listMsgs){
+				menuOptions.eq(item).removeClass('disabled').show();
+				menuOptions.eq(item).data('msgid', listMsgs[item].id);
+				menuOptions.eq(item).data('msg', listMsgs[item].message);
+				menuOptions.eq(item).find("h2").text(listMsgs[item].message);
+				menuOptions.eq(item).data('audio',listMsgs[item].message);
+
+
+			}
+			setMenuContext();
+		}),1000);			
+		if(rownum%5!=0){
+			setTimeout(function (argument) {
+				window.location.href = "/messages";
+				console.log("REPINTAR LISTA DE MENSAJES");
+			},2700);			
+		}
+	}	
 }
 function scrollToOption (option) {
 	// debe hacer scroll al botón en caso de que sean muchas opciones
@@ -98,7 +128,7 @@ function scrollToOption (option) {
 function setMenuOption (index) {
 	toggleOption(menuOptions,false);
 	// menuOptions.removeClass('optionSelected');
-	// menuOptions.eq(index).addClass('optionSelected');
+	// menuOptions.eq(index).addClass('optionSelected');	
 	toggleOption(menuOptions.eq(index),true);
 	scrollToOption(menuOptions.eq(index));
 	optionSelected = index;
@@ -157,6 +187,7 @@ function showMonitorPrivate () {
 	playTextToSpeech("Mensaje, "+currentMsg);
 }
 function playTextToSpeech(strVal,callback){
+	console.log(strVal);
 	callback = callback || function(){};
 	if(localStorage.getItem("audio")!='false'){
 		if(!localAudios===false){

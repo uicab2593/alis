@@ -19,7 +19,7 @@ exports.sendMessageToContact = function (req, res) {
 };
 
 exports.saveMessage = function (req, res) {
-	alisDb.getMessage(req.query.message,function(messageId){
+	alisDb.getMessageId(req.query.message,function(messageId){
 		console.log("REGRESO: "+messageId);		
 		if(!messageId){
 			alisDb.insertMessage(req.query.message,function(err,messages){
@@ -29,12 +29,4 @@ exports.saveMessage = function (req, res) {
 		}else
 		 	return [0,"Ya existe mesaje"];
 	});
-};
-
-exports.deleteMessage = function (req, res) {
-	alisDb.deleteMessage(req.query.messageId,function (err,result) {
-		if(err) throw err;
-		console.log("Mesaje eliminado");
-		res.json("{[1, mensaje eliminado]}");
-	})	
 };

@@ -18,6 +18,10 @@
 			<img src="/images/guardar.png" >
 			<span>Guardar</span>
 		</button>
+		<button id='deleteMessage' onclick='deleteMessage()' style='display:none' type='button' class='btn btn-default menuOption disabled' data-audio='Eliminar mensaje'>		
+			<img src="/images/eliminar_palabra.png" >
+			<span>ELIMINAR M.</span>
+		</button>
 	</div>
 	<div class="modal-footer">
     <div class="text-left">
@@ -110,8 +114,8 @@
 
 <div id='savedMessageModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
 	<div class="modal-body bg-default text-center">
-		<h3 id="tittleModal"></h3>
-		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgText"></span></h3>		
+		<h3 id="tittleModalMG"></h3>
+		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgTextMG"></span></h3>		
 		
 		<br>
 	</div>

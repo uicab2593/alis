@@ -119,6 +119,7 @@ function startKeyboard() {
 	// keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected=0;
 	console.log("--->"+optionKeys);
+	//getEnableKeys('');
 	if(optionKeys.indexOf('e')>-1){
 		toggleKey(keyboardKeys.eq(keySelected),true);
 		// keyboardKeys.eq(keySelected).addClass('optionSelected');
@@ -126,6 +127,7 @@ function startKeyboard() {
 		playTextToSpeech('E');
 		keyboardTimer = setTimeout(nextKey,2000);	
 	}else nextKey();	
+
 }
 function jumpKeyOption(keys) {
 	clearTimeout(keyboardTimer);
@@ -147,8 +149,7 @@ function nextKey () {
 		keyboardTimer = setTimeout(nextKey,1500);
 	}else{
 		nextKey();
-	}
-
+	}	
 }
 function toggleKey (keyObj,enable) {
 	keyObj.css({background: enable?"#2780e3":''});
@@ -251,6 +252,7 @@ function continueMessage(){
 function finishWord () {
 	msg.push('');
 	setMsg();
+	getEnableKeys('');
 	// closeCurrentModal(startKeyboard);
 	getEnableKeys('');
 	closeCurrentModal();
@@ -266,6 +268,7 @@ function finishMessage () {
 function deleteWord () {
 	if(msg[msg.length-1]=='') msg.pop();
 	msg[msg.length-1]='';
+	getEnableKeys('');
 	setMsg();
 	getEnableKeys('');
 	// closeCurrentModal();
@@ -291,15 +294,18 @@ function confirmSuggest (btn) {
 function saveMessage(){	
 	console.log("Guardando mensaje.....");
 	try{		
-		var result = $.get('/dictado/saveMessage?message='+currentMsg.toUpperCase());
-		console.log("Resultado: "+result[0]);
-		$('#savedMessageModal').modal('show');
-		$('#savedMessageModal').addClass("msgSendModalSuccess");
-		$("#tittleModal").text("Mensaje guardado");
-		playTextToSpeech("Mensaje guardado");
+		$.get('/dictado/saveMessage?message='+currentMsg.toUpperCase(),function (result) {
+			console.log("Resultado: "+result[0]);
+			$('#savedMessageModal').modal('show');
+			$('#savedMessageModal').addClass("msgSendModalSuccess");
+			$("#tittleModal").text("Mensaje guardado");
+			$("#msgText").text(currentMsg.toUpperCase());
+			playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + "guardado");
+		});		
 	}catch(ex){
 		$('#savedMessageModal').addClass("msgSendModalWarnning");
 		$("#tittleModal").text("Mensaje no guardado");
+		$("#msgText").text(currentMsg.toUpperCase());
 		playTextToSpeech("Error, mensaje no guardado, inténtelo otra vez");
 		$('#savedMessageModal').modal("show").delay( 4000 ).hide("slow", function () {
 	    	closeCurrentModal();
