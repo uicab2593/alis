@@ -245,20 +245,12 @@ function finishWord () {
 	closeCurrentModal();
 }
 function finishMessage () {
-<<<<<<< HEAD
-	// console.log("finishMessage.......");
-	// currentMsg = msg.join(' ');
-	// closeCurrentModal(function(){
-		// $("#outputMenuModal").modal('show');
-	// });	
-=======
 	console.log("finishMessage.......");
 	currentMsg = msg.join(' ');
 	getEnableKeys('');
 	closeCurrentModal(function(){
 		$("#outputMenuModal").modal('show');
 	});	
->>>>>>> 53785d78e7abfc0b2c004937a2bb1bfbb458d5cb
 }
 function deleteWord () {
 	if(msg[msg.length-1]=='') msg.pop();
@@ -278,16 +270,11 @@ function confirmSuggest (btn) {
 	msg[msg.length-1]=$(btn).data('word');
 	msg.push('');
 	setMsg();
-<<<<<<< HEAD
 	$("#showSuggests").addClass('disabled');
 	toggleKey($("#showSuggests"),false);
 	$("#finishWord").addClass('disabled');
 	toggleKey($("#showSuggests,#finishWord"),false);
-=======
-	$("#showSuggests").addClass('disabled').removeClass('optionSelected');
-	$("#finishWord").addClass('disabled').removeClass('optionSelected');
 	getEnableKeys('');
->>>>>>> 53785d78e7abfc0b2c004937a2bb1bfbb458d5cb
 	closeAllModals();
 }
 function saveMessage(){	
