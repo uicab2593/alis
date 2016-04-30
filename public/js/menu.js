@@ -174,6 +174,7 @@ function playSugerencias(strVal,callback){
 	$.get('/dictado/getsuggests?'+jQuery.param({q:strVal}),callback,'json');
 }
 function showMonitorPublic () {
+	// aqui me quede°!!! 
 	socket.emit('message',currentMsg);
 	$("#monitorModal h3").text("Mensaje en pantalla");
 	$("#monitorModal h2").text(currentMsg);
@@ -233,13 +234,22 @@ function toggleOption(option,enable){
 	option.css({background: enable?"#2780e3":''});
 }
 function closeMonitorModal(modal){
+	modal.find(".monitorTitle").text('');
 	socket.emit('message','');
 }
 function sendMessageTelegram (btn) {
-	console.log(currentMsg);
 	var btn = $(btn);
 	var idChat = btn.data('chat');
 	var toPerson = btn.data('audio');
+
+	$("#monitorModal .monitorTitle._1").text("Mensaje:");
+	$("#monitorModal .monitorTitle._2").text(currentMsg);
+	$("#monitorModal .monitorTitle._3").text("Enviado a:");
+	$("#monitorModal .monitorTitle._4").text(toPerson);
+	$("#monitorModal").modal('show');
+	playTextToSpeech("Mensaje, "+currentMsg);
+
+	console.log(currentMsg);
 	$("#msgTo").text("   "+toPerson);
 	$("#msgText").text("   "+currentMsg);
 	try{		
