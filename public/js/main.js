@@ -23,8 +23,7 @@ function openNecesidadesMenu(){
 		localStorage.setItem("audio",true);
 		window.location.href = "/necesidades";
 }
-function openMessageSavedMenu(){
-	
+function openMessageSavedMenu(){+	
 	console.log(listMessages);
 	window.location.href = "/messages";	
 }

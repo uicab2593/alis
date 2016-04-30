@@ -9,8 +9,11 @@
 %>
 <div class='menuAuto menuContext' data-audio='haz-click-para-comenzar-el-dictado' >
   <div class="well">
-  	<p class='alert text-center h3'>Haz click para comenzar el dictado</p>
-    <p id="textArea" class='text-uppercase'>|</p>
+  	<p class='text-center h3'>Haz click para comenzar el dictado</p>
+    <p id="textArea" class='text-uppercase'>
+    	<span id='boxMsg'></span>
+    	<span id='pointer'>|</span>
+    </p>
 	<div id="keyboard">
 			<% aux = 0; %>
 		<% for(var f in keys){ %>
@@ -31,7 +34,9 @@
 		</div>
 	</div>
 </div>
+<div class="text-center">
 	<a href="/" class='btn btn-danger returnButton'><i class='fa fa-2x fa-share fa-rotate-180'></i></a>
+</div>
 </div>
 <!-- modal al seleccionar letra -->
 <div id='keyboardMenuModal' data-audio='opciones-de-mensaje' class="modal fade menuContext">

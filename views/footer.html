@@ -49,19 +49,27 @@
 	    </div>
   </div>
 </div>
-<div id='monitorModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
+<div id='monitorModal' data-onclose='closeMonitorModal' class="menuContext modal fade bg-success">
 	<div class="modal-body bg-default text-center">
-		<h3>Mensaje en pantalla:</h3>
-		<h2></h2>
-		<!-- <hr> -->
-<!-- 		<div class="row">
+		<div class='text-uppercase'>
+		<h3 class='monitorTitle _1'></h3>
+		<h2 class='monitorTitle _2'></h2>
+		<h3 class='monitorTitle _3'></h3>
+		<h2 class='monitorTitle _4'></h2>
+		</div>
+		<br>
+		<br>
+		<div class="row">
 			<div class="col-xs-6">
-				<button type='button' onclick="newMessage()" class='menuOption btn btn-info' data-audio='Iniciar nuevo mensaje'>Iniciar nuevo mensaje</button>
+				<button type='button' onclick="newMessage()" class='menuOption btn btn-info' data-audio='crear-nuevo-mensaje'>Crear nuevo mensaje</button>
 			</div>
 			<div class="col-xs-6">
-				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='Continuar mensaje'>Continuar mensaje</button>
+				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='continuar-mensaje'>Continuar mensaje</button>
 			</div>
-		</div> -->
+			<div class="col-xs-6">
+				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='continuar-mensaje'>Regresar al inicio</button>
+			</div>
+		</div>
 		<br>
 	</div>
 	<div class="modal-footer">
@@ -98,11 +106,12 @@
 	    </div>
   </div>
 </div>
-<div id='messageSendModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
+
+<div id='savedMessageModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
 	<div class="modal-body bg-default text-center">
-		<h3 id="tittleModal"></h3>
-		<h3 class="text-left msgToDiv"><b>Para:</b><span id="msgTo"></span></h3>
-		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgText"></span></h3>		
+		<h3 id="tittleModalMG"></h3>
+		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgTextMG"></span></h3>		
+		
 		<br>
 	</div>
 	<div class="modal-footer">
@@ -112,12 +121,9 @@
 	</div>
 </div>
 
-<div id='savedMessageModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
-	<div class="modal-body bg-default text-center">
-		<h3 id="tittleModalMG"></h3>
-		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgTextMG"></span></h3>		
-		
-		<br>
+<div id='errorModal' class="menuContext modal fade">
+	<div class="modal-body">
+		<h3></h3>
 	</div>
 	<div class="modal-footer">
 		<div class="text-center">

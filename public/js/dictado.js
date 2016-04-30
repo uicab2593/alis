@@ -7,22 +7,25 @@ var msg = [''];
 var keyboardMenuModal;
 var keyboardTimer;
 var keyboardTimerAux;
-var textArea;
+var boxMsg;
 var keySelected=0;
 var keyboard;
 var keyboardKeys;
 var onKeyboard;
 var suggestsModal;
 var confirmSuggestModal;
+var pointer;
 $(document).ready(function(){
 	suggestsModal = $("#suggestsModal");
-	textArea = $("#textArea");
+	boxMsg = $("#boxMsg");
 	keyboardMenuModal = $("#keyboardMenuModal");
 	keyboard = $("#keyboard");
 	confirmSuggestModal = $("#confirmSuggest");
 	keyboardKeys = $("#keyboard button[data-key]");
 	getEnableKeys('');
 	$("#saveMessage").removeClass('disabled').show();
+	pointer = $("#pointer");
+	togglePointer();
 });
 var auxSignal1 = signal1;
 signal1 = function (){
@@ -43,11 +46,15 @@ signal2 = function(){
 	if(onKeyboard){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
-		keyboardMenuModal.modal('show');
+		playTextToSpeech("Haz escrito, "+currentMsg,function(){
+			keyboardMenuModal.modal('show');
+		});
 	}else if(getCurrentModal()==null){
 		clearTimeout(keyboardTimer);
 		onKeyboard=false;
-		keyboardMenuModal.modal('show');		
+		playTextToSpeech("Haz escrito, "+currentMsg,function(){
+			keyboardMenuModal.modal('show');
+		});
 	}else{
 		auxSignal2();
 	}
@@ -57,11 +64,18 @@ signal3 = function(){
 	if(onKeyboard) deleteLetter();
 	else auxSignal3();
 }
+function asdas() {
+	// body...
+}
 function deleteLetter(){
 	if(msg.length>0){
-		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
-		else msg.pop();
-		if(msg[msg.length-1]!="") msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+		if(msg[msg.length-1]==""){
+			msg.pop();
+			if(msg.length>0) msg[msg.length-1] = msg[msg.length-1].slice(0,-1); 
+		}
+		else{
+			msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
+		}
 	}
 	setMsg();
 	startKeyboard();
@@ -213,7 +227,7 @@ function getEnableKeys(lastChar){
 	printEnableKeys();
 }
 function setMsg () {
-	textArea.html(msg.join(' '));
+	boxMsg.html(msg.join('&nbsp;'));
 	currentMsg = msg.join(' ');
 }
 function waitFunc() {
@@ -260,7 +274,7 @@ function deleteWord () {
 	getEnableKeys('');
 	setMsg();
 	getEnableKeys('');
-	closeCurrentModal();
+	// closeCurrentModal();
 }
 function selectSuggest(btn) {
 	var word = $(btn).data('word');
@@ -299,7 +313,5 @@ function saveMessage(){
 	    	closeCurrentModal();
 		});
 	}
-
-
-
 }
+function togglePointer(){ pointer.fadeIn(500).delay(250).fadeOut(500, togglePointer); }
