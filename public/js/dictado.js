@@ -7,22 +7,25 @@ var msg = [''];
 var keyboardMenuModal;
 var keyboardTimer;
 var keyboardTimerAux;
-var textArea;
+var boxMsg;
 var keySelected=0;
 var keyboard;
 var keyboardKeys;
 var onKeyboard;
 var suggestsModal;
 var confirmSuggestModal;
+var pointer;
 $(document).ready(function(){
 	suggestsModal = $("#suggestsModal");
-	textArea = $("#textArea");
+	boxMsg = $("#boxMsg");
 	keyboardMenuModal = $("#keyboardMenuModal");
 	keyboard = $("#keyboard");
 	confirmSuggestModal = $("#confirmSuggest");
 	keyboardKeys = $("#keyboard button[data-key]");
 	getEnableKeys('');
 	$("#saveMessage").removeClass('disabled').show();
+	pointer = $("#pointer");
+	togglePointer();
 });
 var auxSignal1 = signal1;
 signal1 = function (){
@@ -224,7 +227,7 @@ function getEnableKeys(lastChar){
 	printEnableKeys();
 }
 function setMsg () {
-	textArea.html(msg.join(' '));
+	boxMsg.html(msg.join('&nbsp;'));
 	currentMsg = msg.join(' ');
 }
 function waitFunc() {
@@ -311,7 +314,5 @@ function saveMessage(){
 	    	closeCurrentModal();
 		});
 	}
-
-
-
 }
+function togglePointer(){ pointer.fadeIn(500).delay(250).fadeOut(500, togglePointer); }

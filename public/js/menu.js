@@ -1,3 +1,5 @@
+var monitorModal;
+var errorModal;
 var listMessages =[];
 var currentMsg;
 var menuContext=null;
@@ -12,6 +14,8 @@ var signal2 = function(){};
 var signal3 = function(){};
 
 $(document).ready(function(){
+	monitorModal = $("#monitorModal");
+	errorModal = $("#errorModal");
 
 	$.fn.modalmanager.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;color:#fff'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
 	$.fn.modal.defaults['spinner'] = "<div class='loading-spinner fade in text-center' style='width: 200px; margin-left: -100px;'><i class='fa fa-refresh fa-spin fa-4x'></i></div>";
@@ -44,8 +48,7 @@ $(document).ready(function(){
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
 	 	else if(signal==4){
-	 		playSugerencias("Botón sincronizado");
-	 		alert('Botón sincronizado');
+			showAlert(true,"Bóton Sincronizado",'boton-sincronizado');
 	 	}
 	});
 	setMenuContext();
@@ -174,21 +177,19 @@ function playSugerencias(strVal,callback){
 	$.get('/dictado/getsuggests?'+jQuery.param({q:strVal}),callback,'json');
 }
 function showMonitorPublic () {
-	// aqui me quede°!!! 
 	socket.emit('message',currentMsg);
-	$("#monitorModal h3").text("Mensaje en pantalla");
-	$("#monitorModal h2").text(currentMsg);
-	$("#monitorModal").modal('show');
+	monitorModal.find(".monitorTitle._1").text("Mensaje en pantalla");
+	monitorModal.find(".monitorTitle._2").text(currentMsg);
+	monitorModal.modal('show');
 	playTextToSpeech("Mensaje en pantalla, "+currentMsg);
 }
 function showMonitorPrivate () {
-	$("#monitorModal h3").text("Mensaje:");
-	$("#monitorModal h2").text(currentMsg);
-	$("#monitorModal").modal('show');
+	monitorModal.find(".monitorTitle._1").text("Mensaje");
+	monitorModal.find(".monitorTitle._2").text(currentMsg);
+	monitorModal.modal('show');
 	playTextToSpeech("Mensaje, "+currentMsg);
 }
 function playTextToSpeech(strVal,callback){
-	console.log(strVal);
 	callback = callback || function(){};
 	if(localStorage.getItem("audio")!='false'){
 		if(!localAudios===false){
@@ -205,8 +206,9 @@ function playTextToSpeech(strVal,callback){
 }
 function playAudio (strVal,callback) {
 	strVal = strVal.toString().toLowerCase();
+	if(!audio===false) audio.pause();
+	if(responsiveVoice.isPlaying()) responsiveVoice.cancel();
 	if(strVal in localAudios || strVal.length==1){
-		if(!audio===false) audio.pause();
 		if(!(strVal in loadedAudios)){
 	        loadedAudios[strVal]= document.createElement("AUDIO");
 	        loadedAudios[strVal].src = "/audios/"+strVal+".mp3";
@@ -218,7 +220,6 @@ function playAudio (strVal,callback) {
         loadedAudios[strVal].play();
         audio = loadedAudios[strVal];
 	}else{
-		if(responsiveVoice.isPlaying()) responsiveVoice.cancel();
 		responsiveVoice.speak(strVal,"Spanish Female",{onend:callback});
 		if(!responsiveVoice.getResponsiveVoice("Spanish Female").mappedProfile==null){
 			callback();
@@ -241,35 +242,41 @@ function sendMessageTelegram (btn) {
 	var btn = $(btn);
 	var idChat = btn.data('chat');
 	var toPerson = btn.data('audio');
-
-	$("#monitorModal .monitorTitle._1").text("Mensaje:");
-	$("#monitorModal .monitorTitle._2").text(currentMsg);
-	$("#monitorModal .monitorTitle._3").text("Enviado a:");
-	$("#monitorModal .monitorTitle._4").text(toPerson);
-	$("#monitorModal").modal('show');
-	playTextToSpeech("Mensaje, "+currentMsg);
-
-	console.log(currentMsg);
-	$("#msgTo").text("   "+toPerson);
-	$("#msgText").text("   "+currentMsg);
-	try{		
-		if(currentMsg){
-			$.get('/dictado/sendMessageToContact?idChat='+idChat+'&msgToSend='+currentMsg);
-			$('#messageSendModal').addClass("msgSendModalSuccess");
-			$("#tittleModal").text("Mensaje enviado");
-			playTextToSpeech("Mensaje "+currentMsg+". Enviado a "+toPerson);				
-			$('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
-		    	closeCurrentModal();
-			});
-		}		
-	}catch(err){
-		$('#messageSendModal').addClass("msgSendModalWarnning");
-		$("#tittleModal").text("Mensaje no enviado");
-		playTextToSpeech("Error, mensaje no enviado, inténtelo otra vez");
-		$('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
-	    	closeCurrentModal();
+	monitorModal.find(".monitorTitle._1").text("Mensaje:");
+	monitorModal.find(".monitorTitle._2").text(currentMsg);
+	monitorModal.find(".monitorTitle._3").text("Enviado a:");
+	monitorModal.find(".monitorTitle._4").text(toPerson);
+	if(currentMsg){
+		playTextToSpeech("enviando");
+		$(document.body).modalmanager('loading');
+		$.get('/dictado/sendMessageToContact?idChat='+idChat+'&msgToSend='+currentMsg,function(r){
+			if(r.success){
+				playTextToSpeech("Mensaje, "+currentMsg+". Enviado a "+toPerson);
+				monitorModal.modal('show');				
+			}else{
+				showAlert(false,"Error, mensaje no enviado","error-mensaje-no-enviado");
+			}
+			// $('#messageSendModal').addClass("msgSendModalSuccess");
+			// $("#tittleModal").text("Mensaje enviado");
+			// playTextToSpeech("Mensaje "+currentMsg+". Enviado a "+toPerson);				
+			// $('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
+		    	// closeCurrentModal();
+			// });
+		},'json').fail(function(){
+			showAlert(false,"Error, mensaje no enviado","error-mensaje-no-enviado");
+			// playTextToSpeech("Error, mensaje no enviado, inténtelo otra vez");
+			// $('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
+		    	// closeCurrentModal();
+			// });			
 		});
 	}
+}
+function showAlert(success,msg,audio) {
+	errorModal.find('h3').text(msg);
+	errorModal.data('audio',audio);
+	if(success) errorModal.removeClass('bg-error').addClass('bg-success');
+	else errorModal.removeClass('bg-success').addClass('bg-error');
+	errorModal.modal('show');
 }
 
 $.fn.scrollTo = function( target, options, callback ){

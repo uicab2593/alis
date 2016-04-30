@@ -15,7 +15,10 @@ exports.getsuggests = function(req, res){
 exports.sendMessageToContact = function (req, res) {
 	var idChat = req.param("idChat");
 	var msg = req.param("msgToSend");
-	botALIS.sendMessage({chat_id: idChat, text: msg});
+	botALIS.sendMessage({chat_id: idChat, text: msg}).then(function(r){
+		r = JSON.parse(r);
+		res.json({success:r.ok});
+	});
 };
 
 exports.saveMessage = function (req, res) {
