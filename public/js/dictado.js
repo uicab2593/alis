@@ -283,14 +283,13 @@ function confirmSuggest (btn) {
 function saveMessage(){	
 	console.log("Guardando mensaje.....");
 	try{		
-		$.get('/dictado/saveMessage?message='+currentMsg.toUpperCase(),function (result) {
-			console.log("Resultado: "+result[0]);
-			$('#savedMessageModal').modal('show');
-			$('#savedMessageModal').addClass("msgSendModalSuccess");
-			$("#tittleModal").text("Mensaje guardado");
-			$("#msgText").text(currentMsg.toUpperCase());
-			playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + "guardado");
-		});		
+		$.get('/dictado/saveMessage?message='+currentMsg.toUpperCase());
+		console.log("Resultado: "+result[0]);
+		$('#savedMessageModal').modal('show');
+		$('#savedMessageModal').addClass("msgSendModalSuccess");
+		$("#tittleModal").text("Mensaje guardado");
+		$("#msgText").text(currentMsg.toUpperCase());
+		playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + "guardado");
 	}catch(ex){
 		$('#savedMessageModal').addClass("msgSendModalWarnning");
 		$("#tittleModal").text("Mensaje no guardado");

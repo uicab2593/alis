@@ -27,3 +27,4 @@ function openMessageSavedMenu(){
 	
 	console.log(listMessages);
 	window.location.href = "/messages";	
+}
