@@ -16,11 +16,12 @@ exports.getsuggests = function(req, res){
 };
 
 exports.sendMessageToContact = function (req, res) {
-	var idChat = req.param("idChat");
-	var msg = req.param("msgToSend");
+	var idChat = req.query.idChat;
+	var msg = req.query.msgToSend;
 	botALIS.sendMessage({chat_id: idChat, text: msg}).then(function(r){
-		r = JSON.parse(r);
-		res.json({success:r.ok});
+		// r = JSON.parse(r);
+		res.json({success:true});
+		// res.json({success:false});
 	});
 };
 
@@ -34,5 +35,12 @@ exports.saveMessage = function (req, res) {
 			});			
 		}else
 		 	return [0,"Ya existe mesaje"];
+	});
+};
+
+exports.test = function (req,res) {
+	botALIS.getUpdates().then(function(r){
+		console.log(r);
+		res.json('ya');
 	});
 };

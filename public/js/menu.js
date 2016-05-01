@@ -35,7 +35,13 @@ $(document).ready(function(){
 		$("#outputMenuModal").modal('show');
 	});
 	// para pruebas
-	$("#testSignal1").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal1();});
+	$("#testSignal1").click(function(e){
+		e.preventDefault();
+		setTimeout(function(){
+			if(menuContext==null) setMenuContext();
+			signal1();
+		},600);
+	});
 	$("#testSignal2").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal2();});
 	$("#testSignal3").click(function(e){e.preventDefault();if(menuContext==null) setMenuContext(); signal3();});
 
