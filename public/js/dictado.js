@@ -117,7 +117,11 @@ function pushKey () {
 			$("#showSuggests").removeClass('disabled');
 			setSuggests(suggests);
 		}else{
-			$("#showSuggests").addClass('disabled');
+			$("#showSuggests").data('audio','no hay sugerencias');
+			$("#showSuggests").attr("data-target", "#");
+			//$("#showSuggests").data('toggle','#');
+
+			//$("#showSuggests").addClass('disabled');
 		}
 	};
 	playSugerencias(msg[msg.length-1],getSuggestsCallback);
