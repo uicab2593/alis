@@ -99,8 +99,6 @@ function nextOption(){
 function getNextMessages(newOptionSelected){
 	var rownum = menuOptions.eq(newOptionSelected).data('rownum')+1;
 	if (rownum%5==0 || rownum==menuOptions.length) {		
-		//console.log("SET MENU OPTION:"+menuOptions.eq(newOptionSelected).data('msgid'));
-		//console.log("LAST ID:"+(menuOptions.eq(newOptionSelected).data('rownum')+1));
 		setTimeout($.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(newOptionSelected).data('msgid'),function (listMsgs) {
 			menuOptions.addClass('disabled').hide();
 			for(var item in listMsgs){
@@ -109,7 +107,6 @@ function getNextMessages(newOptionSelected){
 				menuOptions.eq(item).data('msg', listMsgs[item].message);
 				menuOptions.eq(item).find("h2").text(listMsgs[item].message);
 				menuOptions.eq(item).data('audio',listMsgs[item].message);
-
 
 			}
 			setMenuContext();

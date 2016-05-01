@@ -3,26 +3,20 @@ var currentMsgId=-1;
 $(document).ready(function(){
 	setTimeout("playTextToSpeech('Haz click para navegar entre los mensajes.')",300);
 	$("#deleteMessage").removeClass('disabled').show();
-	//document.scrollTo(menuOptions.eq(newOptionSelected))
 	console.log(menuOptions);
 });
-
 function selectMessageMenu(){
 	$("#outputMenuModal").modal('show');		
 	currentMsg = menuOptions.eq(optionSelected).data('msg');
 	currentMsgId = 	menuOptions.eq(optionSelected).data('msgid')
 }
-
 function deleteMessage(){
-	console.log("eliminando mensajes");
-	//var msgId = menuOptions.eq(optionSelected).data('msgid');
-	console.log("ID:"+currentMsgId);
-	$.get('/messages/deleteMessage?messageId='+currentMsgId,function (argument) {
+	$.get('/messages/deleteMessage?msgId='+currentMsgId,function (argument) {
 		try{			
 			$('#savedMessageModal').addClass("msgSendModalSuccess");
 			$("#tittleModalMG").text("Mensaje eliminado");
 			$("#msgTextMG").text(currentMsg.toUpperCase());
-			playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + "eliminado");
+			playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + " eliminado");
 			$('#savedMessageModal').modal("show").delay( 4000 ).hide("slow", function () {
 		    	closeCurrentModal();
 		    	window.location.href = "/messages";
