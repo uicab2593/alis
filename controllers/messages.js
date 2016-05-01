@@ -4,19 +4,17 @@ exports.index = function(req, res){
 	var listMessages;	
 	if(req.query.lmsg) lmsg = req.query.lmsg;
 	alisDb.getMessagesLimit(0,lmsg,function(messages){
-		listMessages = messages;
-		res.render('messages',{listMessages});
+		res.render('messages',{listMessages:messages});
 	});	
 };
 exports.nextMessage = function(req, res){
 	alisDb.getMessagesLimit(req.query.lastMsgId,lmsg,function(messages){
-		listMessages = messages;	
-		res.json(listMessages);
+		res.json({listMessages:messages});
 	});		
 };
 exports.getMessages = function (req, res) {
 	alisDb.getMessages(function(messages){
-		res.render('messages',{messages});
+		res.render('messages',{messages:messages});
 	});
 }
 exports.deleteMessage = function (req, res) {

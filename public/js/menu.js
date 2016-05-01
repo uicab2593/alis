@@ -108,7 +108,8 @@ function getNextMessages(){
 	console.log(optionSelected);
 	var rownum = menuOptions.eq(optionSelected).data('rownum');
 	if (rownum==6 || rownum==menuOptions.length) {
-		setTimeout($.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(optionSelected).data('msgid'),function (listMsgs) {
+		setTimeout(function(){
+			$.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(optionSelected).data('msgid'),function (listMsgs) {
 			menuOptions.addClass('disabled').hide();
 			if(listMsgs.length>0){
 				for(var item in listMsgs){
@@ -122,12 +123,13 @@ function getNextMessages(){
 				$('#plusMsg').removeClass('disabled').show();
 				setMenuContext();
 			}else{
-				playTextToSpeech("Ya no hay más mensajes");
+				playTextToSpeech("no-existen-mas-mensajes");
 				setTimeout(function (argument) {					
 					location.reload();
 				},4000);			
 			}
-		}),1000);								
+			},'json');
+		},1000);								
 	}	
 }
 function scrollToOption (option) {
