@@ -26,10 +26,12 @@ $(document).ready(function(){
 	$("#saveMessage").removeClass('disabled').show();
 	pointer = $("#pointer");
 	togglePointer();
+	$("#monitorModal .text-center button").removeClass('disabled').show();
 });
 var auxSignal1 = signal1;
-signal1 = function (){	
-	if(onKeyboard){		
+signal1 = function (){
+	if(onKeyboard){
+		// console.log((new Date()).getTime() - keyboardTimerAux.getTime());
 		if((new Date()).getTime() - keyboardTimerAux.getTime()<600){ //retardo del clicker
 			setKeyOption(keySelected-1<0?keyboardKeys.length-1:keySelected-1);
 		}
@@ -43,15 +45,13 @@ signal1 = function (){
 var auxSignal2 = signal2;
 signal2 = function(){
 	if(onKeyboard){
-		clearTimeout(keyboardTimer);
-		onKeyboard=false;
-		playTextToSpeech("Haz escrito, "+currentMsg,function(){
+		stopDictation();
+		sayCurrentMsg(function(){
 			keyboardMenuModal.modal('show');
 		});
 	}else if(getCurrentModal()==null){
-		clearTimeout(keyboardTimer);
-		onKeyboard=false;
-		playTextToSpeech("Haz escrito, "+currentMsg,function(){
+		stopDictation();
+		sayCurrentMsg(function(){
 			keyboardMenuModal.modal('show');
 		});
 	}else{
@@ -63,10 +63,12 @@ signal3 = function(){
 	if(onKeyboard) deleteLetter();
 	else auxSignal3();
 }
-function asdas() {
-	// body...
+function sayCurrentMsg(callback) {
+	callback = callback || function(){};
+	playTextToSpeech("Haz escrito, "+currentMsg,callback);	
 }
 function deleteLetter(){
+	stopDictation();
 	if(msg.length>0){
 		if(msg[msg.length-1]==""){
 			msg.pop();
@@ -75,11 +77,16 @@ function deleteLetter(){
 		else{
 			msg[msg.length-1] = msg[msg.length-1].slice(0,-1);
 		}
+		setMsg();
+		playTextToSpeech("letra-eliminada",function(){
+			sayCurrentMsg();
+		});
 	}
-	setMsg();
-	startKeyboard();
 }
-
+function stopDictation () {
+	clearTimeout(keyboardTimer);
+	onKeyboard = false;
+}
 function setKeyOption (index) {
 	clearTimeout(keyboardTimer);
 	toggleKey(keyboardKeys,false);
@@ -92,8 +99,7 @@ function setKeyOption (index) {
 	keyboardTimer = setTimeout(nextKey,1500);
 }
 function pushKey () {
-	clearTimeout(keyboardTimer);
-	onKeyboard=false;
+	stopDictation();
 	var key = keyboardKeys.eq(keySelected);
 	if(msg.length>0)
 		msg[msg.length-1]+=key.data('key');
@@ -246,11 +252,9 @@ function newMessage(){
 	msg = [''];
 	setMsg();
 	closeAllModals();
-	socket.emit('message','');
 }
 function continueMessage(){
 	closeAllModals();
-	socket.emit('message','');
 }
 function finishWord () {
 	msg.push('');

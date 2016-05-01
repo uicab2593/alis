@@ -1,7 +1,7 @@
 var monitorModal;
 var errorModal;
 var listMessages =[];
-var currentMsg;
+var currentMsg="";
 var menuContext=null;
 var menuOptions;
 var optionSelected = -1;
@@ -70,7 +70,8 @@ function setMenuContext(container){
 signal1 = function (){
 	blinkSignal(1);
 	// si solo hay una opcion, puede dar un click para seleccionar
-	if(menuOptions.length==0) signal2();
+	//if(menuOptions.length==0) signal2();
+	if(optionSelected==0 && menuOptions.length==1) signal2();
 	else nextOption();
 }
 signal2 = function (){
@@ -178,10 +179,12 @@ function playSugerencias(strVal,callback){
 	$.get('/dictado/getsuggests?'+jQuery.param({q:strVal}),callback,'json');
 }
 function showMonitorPublic () {
-	socket.emit('message',currentMsg);
 	monitorModal.find(".monitorTitle._1").text("Mensaje en pantalla");
 	monitorModal.find(".monitorTitle._2").text(currentMsg);
 	monitorModal.modal('show');
+	$.get('/monitor/saveInHistory',{msg:currentMsg},function(){
+		socket.emit('pushmessage',true);
+	});
 	playTextToSpeech("Mensaje en pantalla, "+currentMsg);
 }
 function showMonitorPrivate () {
@@ -237,7 +240,6 @@ function toggleOption(option,enable){
 }
 function closeMonitorModal(modal){
 	modal.find(".monitorTitle").text('');
-	socket.emit('message','');
 }
 function sendMessageTelegram (btn) {
 	var btn = $(btn);

@@ -18,7 +18,7 @@
 			<img src="/images/guardar.png" >
 			<span>Guardar</span>
 		</button>
-		<button id='deleteMessage' onclick='deleteMessage()' style='display:none' type='button' class='btn btn-default menuOption disabled' data-audio='Eliminar mensaje'>		
+		<button id='deleteMessage' onclick='deleteMessage()' style='display:none' type='button' class='btn btn-default menuOption disabled' data-audio='eliminar-mensaje'>		
 			<img src="/images/eliminar_palabra.png" >
 			<span>ELIMINAR M.</span>
 		</button>
@@ -59,16 +59,21 @@
 		</div>
 		<br>
 		<br>
-		<div class="row">
-			<div class="col-xs-6">
-				<button type='button' onclick="newMessage()" class='menuOption btn btn-info' data-audio='crear-nuevo-mensaje'>Crear nuevo mensaje</button>
-			</div>
-			<div class="col-xs-6">
-				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='continuar-mensaje'>Continuar mensaje</button>
-			</div>
-			<div class="col-xs-6">
-				<button type='button' onclick='continueMessage()' class='menuOption btn btn-info' data-audio='continuar-mensaje'>Regresar al inicio</button>
-			</div>
+		<div class="text-center">
+			<button style='display:none' type='button' onclick='continueMessage()' class='menuOption btn btn-info disabled' data-audio='continuar-mensaje'>
+				<img src="/images/escritura_modulo.png">
+				<span>Continuar mensaje</span>
+			</button>
+			<br>
+			<button style='display:none' type='button' onclick="newMessage()" class='menuOption btn btn-info disabled' data-audio='crear-nuevo-mensaje'>
+				<img src="/images/nuevo_mensaje.png">
+				<span>Nuevo mensaje</span>
+			</button>
+			<br>
+			<button type='button' onclick='closeAllModals()' class='menuOption btn btn-info' data-audio='regresar-al-inicio'>
+				<i class='fa fa-2x fa-share fa-rotate-180'></i>
+				<span>Regresar al inicio</span>
+			</button>
 		</div>
 		<br>
 	</div>
@@ -110,8 +115,9 @@
 <div id='savedMessageModal' data-onclose='closeMonitorModal' class="menuContext modal fade">
 	<div class="modal-body bg-default text-center">
 		<h3 id="tittleModalMG"></h3>
-		<h3 class="text-left msgToDiv"><b>Mensaje:</b><span id="msgTextMG"></span></h3>		
-		
+		<h3 class="text-left msgToDiv">
+			<b>Mensaje:</b><span id="msgTextMG"></span>
+		</h3>
 		<br>
 	</div>
 	<div class="modal-footer">
@@ -134,13 +140,13 @@
 
 
 <script src='/jquery/dist/jquery.min.js'></script>
+<script src='/jquery-dateFormat/dist/jquery-dateFormat.min.js'></script>
 <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
-<!-- <script src='/Materialize/dist/js/materialize.min.js'></script> -->
 <script src='/js/bootstrap-modal.js'></script>
 <script src='/js/bootstrap-modalmanager.js'></script>
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src='/js/plugins.js'></script>
-<script type="text/javascript" src='/js/responsive-voice.js'></script>
+<script src='/js/plugins.js'></script>
+<script src='/js/responsive-voice.js'></script>
 <script src='/js/menu.js'></script>
 
 <% if(typeof extraJs != 'undefined'){ %>
