@@ -1,14 +1,15 @@
 var alisDb = require("../lib/db");
-var limit =5;
+var lmsg;
 exports.index = function(req, res){
 	var listMessages;	
-	alisDb.getMessagesLimit(0,limit,function(messages){		
+	if(req.query.lmsg) lmsg = req.query.lmsg;
+	alisDb.getMessagesLimit(0,lmsg,function(messages){
 		listMessages = messages;
 		res.render('messages',{listMessages});
 	});	
 };
 exports.nextMessage = function(req, res){
-	alisDb.getMessagesLimit(req.query.lastMsgId,limit,function(messages){
+	alisDb.getMessagesLimit(req.query.lastMsgId,lmsg,function(messages){
 		listMessages = messages;	
 		res.json(listMessages);
 	});		

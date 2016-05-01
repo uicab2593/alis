@@ -1,8 +1,6 @@
 var redirectTimer;
+var lmsg = 5;
 $(document).load(function(){
-	listMessages = ['HOLA 1','HOLA 2','HOLA 3','HOLA 4','HOLA 5'];
-});
-$(document).ready(function(){
 	listMessages = ['HOLA 1','HOLA 2','HOLA 3','HOLA 4','HOLA 5'];
 });
 
@@ -23,7 +21,7 @@ function openNecesidadesMenu(){
 		localStorage.setItem("audio",true);
 		window.location.href = "/necesidades";
 }
-function openMessageSavedMenu(){+	
+function openMessageSavedMenu(){
 	console.log(listMessages);
-	window.location.href = "/messages";	
+	window.location.href = "/messages?"+jQuery.param({lmsg:lmsg});	
 }

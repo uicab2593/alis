@@ -1,5 +1,6 @@
 var listMessages = [];
 var currentMsgId=-1;
+
 $(document).ready(function(){
 	setTimeout("playTextToSpeech('Haz click para navegar entre los mensajes.')",300);
 	$("#deleteMessage").removeClass('disabled').show();
