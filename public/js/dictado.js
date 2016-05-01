@@ -232,7 +232,8 @@ function getEnableKeys(lastChar){
 	}
 	printEnableKeys();
 }
-function setMsg () {		
+function setMsg () {
+	getEnableKeys(msg[msg.length-1]);
 	boxMsg.html(msg.join('&nbsp;'));
 	currentMsg = msg.join(' ');	
 }
