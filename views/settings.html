@@ -2,27 +2,42 @@
 <div class="menuContext ">
 	<h1 class='text-center'>Configuraciones</h1>
 	<div class="row">
-		<div class="col-sm-6 well">
-			<input type='text' class='form-control input-sm'>
+		<div class="col-sm-4 well">
+			<form id='settingsForm' method='post' action='/configuraciones/setSettings'>
+				<div class="form-group">
+					<label>Tiempo de salto en dictado (segundos)</label>
+					<input type='text' name='settings[dictationTimer]' class='form-control input-sm' value='<%= 'dictationTimer' in settings?settings['dictationTimer']:1.5 %>' >
+				</div>
+				<div class="form-group">
+					<button type='submit' class='btn btn-block btn-primary'>Guardar</button>
+				</div>
+			</form>
 		</div>
-		<div class="col-sm-6 well">
-			<h3>Contactos de Telegram</h3>
+		<div class="col-sm-offset-1 col-sm-7 well">
+			<h3>Contactos de Telegram <a href="#newTelegramContact" data-toggle='modal' class='btn btn-success btn-sm pull-right'><i class='fa fa-plus'></i></a></h3>
 			<table class='table table-condense table-striped table-bordered'>
 				<thead>	
 					<tr>
 						<th>Nombre</th>
 						<th>Id de chat</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
+					<% for(var i in contacts){ %>
 					<tr>
 						<td>
-							<input class='form-control input-sm' name='contactName' type='text' value='luis'>
+							<input class='form-control input-sm' name='name' type='text' value='<%= contacts[i].name %>'>
 						</td>
 						<td>
-							<input class='form-control input-sm' name='contactIdChat' type='text' value='9192929'>
+							<input class='form-control input-sm' name='idChat' type='text' value='<%= contacts[i].idChat %>'>
+						</td>
+						<td class='text-center'>
+							<a href='<%= contacts[i].id %>' class='btn btn-primary btn-xs updateContact'><i class='fa fa-save'></i></a>
+							<a href='<%= contacts[i].id %>' class='btn btn-danger btn-xs deleteContact'><i class='fa fa-trash'></i></a>
 						</td>
 					</tr>
+					<% } %>
 				</tbody>
 			</table>
 		</div>
@@ -30,13 +45,20 @@
 </div>
 <div id='newTelegramContact' class="modal">
 	<div class="modal-header">
-		<h3 class='modal-title'>Nuevo Contacto</h3>
+		<h4 class='modal-title'>Nuevo Contacto</h4>
 	</div>
 	<div class="modal-body">
 		<form method='post' action='/configuraciones/newTelegramContact'>
 			<div class="form-group">
 				<label>Nombre</label>
-				<input type='text'>
+				<input type='text' name='name' class='form-control input-sm' required>
+			</div>
+			<div class="form-group">
+				<label>Identificador de Chat</label>
+				<input type='text' name='idChat' class='form-control input-sm' required>
+			</div>
+			<div class="form-group">
+				<button type='submit' class='btn btn-primary'>Guardar</button>
 			</div>
 		</form>
 	</div>

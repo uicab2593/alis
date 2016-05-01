@@ -236,6 +236,25 @@ function toggleOption(option,enable){
 function closeMonitorModal(modal){
 	modal.find(".monitorTitle").text('');
 }
+function loadTelegramContacts () {
+	var contactsModal = $("#selectContactModal");
+	var contactsContainer = $("#selectContactModal .modal-body");
+	contactsContainer.html('');
+	$.get('/configuracion/getContacts',function(contacts){
+		var auxBtn;
+		for(var c in contacts){
+			auxBtn = $("<button/>");
+			auxBtn.attr('type','button');
+			auxBtn.attr('onclick','sendMessageTelegram(this)');
+			auxBtn.data('audio',contacts[c].name);
+			auxBtn.attr('class',"btn btn-default menuOption");
+			auxBtn.data('chat',contacts[c].idChat);
+			auxBtn.html("<img src='/images/person.png'><span>"+contacts[c].name+"</span>");
+			contactsContainer.append(auxBtn);
+		}
+		contactsModal.modal('show');
+	});
+}
 function sendMessageTelegram (btn) {
 	var btn = $(btn);
 	var idChat = btn.data('chat');
@@ -254,18 +273,8 @@ function sendMessageTelegram (btn) {
 			}else{
 				showAlert(false,"Error, mensaje no enviado","error-mensaje-no-enviado");
 			}
-			// $('#messageSendModal').addClass("msgSendModalSuccess");
-			// $("#tittleModal").text("Mensaje enviado");
-			// playTextToSpeech("Mensaje "+currentMsg+". Enviado a "+toPerson);				
-			// $('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
-		    	// closeCurrentModal();
-			// });
 		},'json').fail(function(){
 			showAlert(false,"Error, mensaje no enviado","error-mensaje-no-enviado");
-			// playTextToSpeech("Error, mensaje no enviado, inténtelo otra vez");
-			// $('#messageSendModal').modal("show").delay( 4000 ).hide("slow", function () {
-		    	// closeCurrentModal();
-			// });			
 		});
 	}
 }

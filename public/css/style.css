@@ -12,7 +12,7 @@
 body{background: #DDDDDD}
 .modal .loading-mask{z-index: 100}
 .container{max-width: 976px}
-.menuContext .btn{padding: 10px 2em}
+.menuContext button.btn{padding: 10px 2em}
 .menuContext .btn img{width: 115px;height: 115px}
 header .navbar .navbar-nav>li>a{padding: 11px}
 /*header .btn-default{color: black !important}*/

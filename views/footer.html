@@ -8,7 +8,7 @@
 		</button>
 		<br>
 		<br>
-		<button data-toggle='modal' data-target='#selectContactModal' type='button' class='btn btn-default menuOption' data-audio='enviar'>
+		<button onclick='loadTelegramContacts()' type='button' class='btn btn-default menuOption' data-audio='enviar'>
         	<img src="/images/telegram.png" >
         	<span>Enviar</span>
 		</button>
@@ -85,26 +85,7 @@
 </div>
 <!-- modal de salidas de pantalla -->
 <div id='selectContactModal' class="modal fade menuContext" data-audio="seleccione-un-contacto" >
-	<div class="modal-body text-center">
-		<button onclick='sendMessageTelegram(this)' data-audio="Jesús" type='button' class='btn btn-default menuOption' data-chat="-110544744">
-			<img src="/images/person.png" >
-			<span>JESUS</span>
-		</button>
-		<button onclick='sendMessageTelegram(this)' data-audio="Uicab" type='button' class='btn btn-default menuOption' data-chat="-125660087">
-			<img src="/images/person.png" >
-			<span>UICAB</span>
-		</button>
-		<br>
-		<br>
-		<button onclick='sendMessageTelegram(this)' type='button' class='btn btn-default menuOption' data-audio="Cristian" data-chat="-133017007">
-        	<img src="/images/person.png" >
-        	<span>CRISTHIAN</span>
-		</button>
-		<button onclick='sendMessageTelegram(this)' type='button' class='btn btn-default menuOption' data-audio="David" data-chat="-110544744">
-        	<img src="/images/person.png" >
-        	<span>DAVID</span>
-		</button>
-	</div>
+	<div class="modal-body text-center"></div>
 	<div class="modal-footer">
 	    <div class="text-left">
 	        <button type='button' class='returnButton brn-xs btn btn-danger' data-dismiss='modal'><i class='fa fa-2x fa-share fa-rotate-180'></i></button>
