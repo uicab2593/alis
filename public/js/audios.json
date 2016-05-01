@@ -1,5 +1,6 @@
 {
 	"menu-principal":"menú principal",
+	"letra-eliminada":"letra eliminada",
 	"dictado":"dictado",
 	"necesidades-basicas":"necesidades básicas",
 	"notificaciones":"notificaciones",
@@ -22,6 +23,7 @@
 	"error-mensaje-no-enviado":"error, mensaje no enviado",
 	"opciones-de-pantalla":"opciones de pantalla",
 	"opciones-de-mensaje":"opciones de mensaje",
+	"regresar-al-inicio":"regresar al inicio",
 	"monitor-publico":"monitor público",
 	"mensaje-privado":"mensaje-privado",
 	"sugerencias":"sugerencias",
@@ -30,6 +32,7 @@
 	"continuar-mensaje":"continuar mensaje",
 	"finalizar-mensaje":"finalizar mensaje",
 	"eliminar-palabra":"eliminar palabra",
+	"eliminar-mensaje":"eliminar mensaje",
 	"selecciona-una-sugerencia":"selecciona una sugerencia",
 	"seleccione-un-contacto":"seleccione un contacto",
 	"confirmar-sugerencia":"confirmar sugerencia",
