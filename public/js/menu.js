@@ -43,7 +43,7 @@ $(document).ready(function(){
 	socket.on('signal', function(signal){
 		console.log(signal);
 		var signal = parseInt(signal);
-		if(menuContext==null) setMenuContext();
+		if(menuContext==null) setMenuContext();																	
 	 	if(signal==1) signal1();
 	 	else if(signal==2) signal2();
 	 	else if(signal==3) signal3();
@@ -70,6 +70,7 @@ function setMenuContext(container){
 signal1 = function (){
 	blinkSignal(1);
 	// si solo hay una opcion, puede dar un click para seleccionar
+	//if(menuOptions.length==0) signal2();
 	if(optionSelected==0 && menuOptions.length==1) signal2();
 	else nextOption();
 }
@@ -77,7 +78,7 @@ signal2 = function (){
 	blinkSignal(2);
 	if(optionSelected>=0) menuOptions.eq(optionSelected).click();
 }
-signal3 = function (){
+signal3 = function (){	
 	blinkSignal(3);
 	var returnButton = menuContext.find('.returnButton');
 	if(returnButton.attr('href')) window.location.href = returnButton.attr('href');
@@ -91,32 +92,36 @@ function nextOption(){
 	toggleOption(menuOptions.eq(newOptionSelected),true);
 	optionSelected = newOptionSelected;	
 	playTextToSpeech(menuOptions.eq(newOptionSelected).data('audio'));
-	setTimeout(function (argument) {
+
+	/*setTimeout(function (argument) {
 		getNextMessages(newOptionSelected);
-	},900);
+	},900);*/
 		
 }
-function getNextMessages(newOptionSelected){
-	var rownum = menuOptions.eq(newOptionSelected).data('rownum')+1;
-	if (rownum%5==0 || rownum==menuOptions.length) {		
-		setTimeout($.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(newOptionSelected).data('msgid'),function (listMsgs) {
+function getNextMessages(){
+	console.log(optionSelected);
+	var rownum = menuOptions.eq(optionSelected).data('rownum');
+	if (rownum==6 || rownum==menuOptions.length) {
+		setTimeout($.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(optionSelected).data('msgid'),function (listMsgs) {
 			menuOptions.addClass('disabled').hide();
-			for(var item in listMsgs){
-				menuOptions.eq(item).removeClass('disabled').show();
-				menuOptions.eq(item).data('msgid', listMsgs[item].id);
-				menuOptions.eq(item).data('msg', listMsgs[item].message);
-				menuOptions.eq(item).find("h2").text(listMsgs[item].message);
-				menuOptions.eq(item).data('audio',listMsgs[item].message);
-
+			if(listMsgs.length>0){
+				for(var item in listMsgs){
+					menuOptions.eq(item).removeClass('disabled').show();
+					menuOptions.eq(item).data('msgid', listMsgs[item].id);
+					menuOptions.eq(item).data('msg', listMsgs[item].message);
+					menuOptions.eq(item).find("h2").text(listMsgs[item].message);
+					menuOptions.eq(item).data('audio',listMsgs[item].message);				
+					$('#plusMsg').data('msgid',listMsgs[item].id);					
+				}			
+				$('#plusMsg').removeClass('disabled').show();
+				setMenuContext();
+			}else{
+				playTextToSpeech("Ya no hay más mensajes");
+				setTimeout(function (argument) {					
+					location.reload();
+				},4000);			
 			}
-			setMenuContext();
-		}),1000);			
-		if(rownum%5!=0){
-			setTimeout(function (argument) {
-				window.location.href = "/messages";
-				console.log("REPINTAR LISTA DE MENSAJES");
-			},2700);			
-		}
+		}),1000);								
 	}	
 }
 function scrollToOption (option) {

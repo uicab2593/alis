@@ -94,14 +94,18 @@ function setKeyOption (index) {
 	toggleKey(keyboardKeys.eq(index),true);
 	// keyboardKeys.eq(index).addClass('optionSelected');
 	keySelected = index;
-	console.log("data-audio:"+keyboardKeys.eq(keySelected).attr("data-key"));
+	//console.log("data-audio:"+keyboardKeys.eq(keySelected).attr("data-key"));
 	playTextToSpeech(keyboardKeys.eq(keySelected).attr("data-key"));
 	keyboardTimer = setTimeout(nextKey,dictationTimer);
 }
 function pushKey () {
 	stopDictation();
 	var key = keyboardKeys.eq(keySelected);
-	msg[msg.length-1]+=key.data('key');
+	if(msg.length>0)
+		msg[msg.length-1]+=key.data('key');
+	else
+		msg[0]=key.data('key');
+	
 	setMsg();
 	getEnableKeys(key.data('key'));	
 	// activa o desactiva boton terminar palabra
@@ -113,20 +117,23 @@ function pushKey () {
 			$("#showSuggests").removeClass('disabled');
 			setSuggests(suggests);
 		}else{
-			$("#showSuggests").addClass('disabled');
+			$("#showSuggests").data('audio','no hay sugerencias');
+			$("#showSuggests").attr("data-target", "#");
+			//$("#showSuggests").data('toggle','#');
+
+			//$("#showSuggests").addClass('disabled');
 		}
 	};
 	playSugerencias(msg[msg.length-1],getSuggestsCallback);
 	startKeyboard();
 }
 function startKeyboard() {
-	console.log("startKeyboard...");
 	clearTimeout(keyboardTimer);
 	onKeyboard  = true;
 	toggleKey(keyboardKeys,false);
 	// keyboardKeys.eq(keySelected).removeClass('optionSelected');
 	keySelected=0;
-	console.log("--->"+optionKeys);
+	//console.log("--->"+optionKeys);
 	//getEnableKeys('');
 	if(optionKeys.indexOf('e')>-1){
 		toggleKey(keyboardKeys.eq(keySelected),true);
@@ -155,20 +162,17 @@ function nextKey () {
 		toggleKey(keyboardKeys.eq(keySelected),true);
 		// keyboardKeys.eq(keySelected).addClass('optionSelected');
 		keyboardTimer = setTimeout(nextKey,dictationTimer);
-	}else{
-		nextKey();
-	}	
+	}else nextKey();
 }
 function toggleKey (keyObj,enable) {
 	keyObj.css({background: enable?"#2780e3":''});
 }
 function printEnableKeys(){
-	clearTimeout(keyboardTimer);
-	console.log("----------->");
+	clearTimeout(keyboardTimer);	
 	keyboardKeys.removeClass('keyOption');
 	keyboardKeys.addClass('disableKey');
 	
-	console.log("--:"+msg[msg.length-1]);
+	//console.log("--:"+msg[msg.length-1]);
 	//getEnableKeys('l');
 
 	for(var i=0; i<keyboardKeys.length; i++){					
@@ -232,8 +236,9 @@ function getEnableKeys(lastChar){
 	printEnableKeys();
 }
 function setMsg () {
+	getEnableKeys(msg[msg.length-1]);
 	boxMsg.html(msg.join('&nbsp;'));
-	currentMsg = msg.join(' ');
+	currentMsg = msg.join(' ');	
 }
 function waitFunc() {
     if (!GlobalFlag) {
@@ -264,7 +269,6 @@ function finishWord () {
 	closeCurrentModal();
 }
 function finishMessage () {
-	console.log("finishMessage.......");
 	currentMsg = msg.join(' ');
 	getEnableKeys('');
 	closeCurrentModal(function(){
@@ -298,23 +302,22 @@ function confirmSuggest (btn) {
 	closeAllModals();
 }
 function saveMessage(){	
-	console.log("Guardando mensaje.....");
 	try{		
 		$.get('/dictado/saveMessage?message='+currentMsg.toUpperCase());
-		console.log("Resultado: "+result[0]);
-		$('#savedMessageModal').modal('show');
-		$('#savedMessageModal').addClass("msgSendModalSuccess");
-		$("#tittleModal").text("Mensaje guardado");
-		$("#msgText").text(currentMsg.toUpperCase());
-		playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() + "guardado");
+		showSavedMsg('Mensaje guardado',' ','msgSendModalSuccess');
 	}catch(ex){
-		$('#savedMessageModal').addClass("msgSendModalWarnning");
-		$("#tittleModal").text("Mensaje no guardado");
-		$("#msgText").text(currentMsg.toUpperCase());
-		playTextToSpeech("Error, mensaje no guardado, inténtelo otra vez");
-		$('#savedMessageModal').modal("show").delay( 4000 ).hide("slow", function () {
-	    	closeCurrentModal();
-		});
-	}
+		showSavedMsg('Mensaje no guardado','no','msgSendModalWarnning');
+		setTimeout(playTextToSpeech("Inténtelo otra vez"),2000);
+	}	
+}
+function showSavedMsg(tittle,strban,classname){
+	$('#savedMessageModal').addClass(classname);
+	$("#tittleModalMG").text(tittle);
+	$("#msgTextMG").text(currentMsg.toUpperCase());
+	playTextToSpeech("Mensaje "+ currentMsg.toUpperCase() +" "+strban+" guardado");
+	$('#savedMessageModal').modal("show").delay( 4000 ).hide("slow", function () {
+    	closeCurrentModal();
+	});
+
 }
 function togglePointer(){ pointer.fadeIn(500).delay(250).fadeOut(500, togglePointer); }

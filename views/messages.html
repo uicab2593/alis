@@ -4,23 +4,32 @@
 </script>
 
 <div class='menuAuto menuContext'>
-    <div class='alert text-center h3'><b>Mensajes guardados</b></div>
+    <p class='text-center h3'>Mensajes guardados</p><br>
     
     <% for(var item in listMessages){ %>
       <div class="well menuOption" onclick="selectMessageMenu()" data-audio="<%= listMessages[item].message %>" data-msg="<%= listMessages[item].message %>" data-msgid="<%=listMessages[item].id%>" data-rownum="<%= item %>">
-        <div style="float: left;">          
+        <div style="float: left;">
           <a href='#' style="width: 10em; height: 5em">
             <img src="/images/message.png" style="width: 8em; height: 6em; padding-right: 2em">
           </a>
           <!--%= item.message %-->          
         </div>      
-        <div class="col-xs-offset-2 text-left" style="padding-top: 0.5em">            
+        <div class="col-xs-offset-2 text-left" style="padding-top: 0.5em">
             <h2><%= listMessages[item].message %></h2>
         </div>
-      </div>
-    
-
+      </div>    
     <% } %>
+    <div id="plusMsg" class="well menuOption" onclick="getNextMessages()" data-audio="Cargar más mensajes" data-msg="<%= listMessages[item].message %>" data-msgid="<%=listMessages[item].id%>" data-rownum="6">
+        <div style="float: left;">
+          <a href='#' style="width: 10em; height: 5em">
+            <img src="/images/plus_image.png" style="width: 8em; height: 6em; padding-right: 2em">
+          </a>
+          <!--%= item.message %-->          
+        </div>      
+        <div class="col-xs-offset-2 text-left" style="padding-top: 0.5em">
+            <h2>CARGAR MÁS MENSAJES</h2>
+        </div>
+      </div>
   
 
   <div class="modal-footer">
