@@ -247,7 +247,7 @@ function sendMessageTelegram (btn) {
 	if(currentMsg){
 		playTextToSpeech("enviando");
 		$(document.body).modalmanager('loading');
-		$.get('/dictado/sendMessageToContact?idChat='+idChat+'&msgToSend='+currentMsg,function(r){
+		$.get('/dictado/sendMessageToContact',{idChat:idChat,msgToSend:currentMsg},function(r){
 			if(r.success){
 				playTextToSpeech("Mensaje, "+currentMsg+". Enviado a "+toPerson);
 				monitorModal.modal('show');				

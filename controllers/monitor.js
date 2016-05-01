@@ -18,7 +18,7 @@ exports.saveInHistory = function(req, res){
 };
 
 exports.test = function(req, res){
-	alisDb.insertInHistory('hola mensaje 2',function(){
-		res.json('ya');
-	});
+	// alisDb.deleteTelegramContact(1,function(){
+		res.json("ya");
+	// });
 };
