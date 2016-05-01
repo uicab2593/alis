@@ -96,7 +96,7 @@ function setKeyOption (index) {
 	keySelected = index;
 	//console.log("data-audio:"+keyboardKeys.eq(keySelected).attr("data-key"));
 	playTextToSpeech(keyboardKeys.eq(keySelected).attr("data-key"));
-	keyboardTimer = setTimeout(nextKey,1500);
+	keyboardTimer = setTimeout(nextKey,dictationTimer);
 }
 function pushKey () {
 	stopDictation();
@@ -140,7 +140,7 @@ function startKeyboard() {
 		// keyboardKeys.eq(keySelected).addClass('optionSelected');
 		keyboardTimerAux = new Date();
 		playTextToSpeech('E');
-		keyboardTimer = setTimeout(nextKey,2000);	
+		keyboardTimer = setTimeout(nextKey,dictationTimer+500);	
 	}else nextKey();	
 
 }
@@ -150,7 +150,7 @@ function jumpKeyOption(keys) {
 	keySelected = (keySelected+keys)%keyboardKeys.length;
 	// keyboardKeys.eq(keySelected).addClass('optionSelected');
 	playTextToSpeech(keyboardKeys[keySelected].data('key'));	
-	keyboardTimer = setTimeout(nextKey,1500);	
+	keyboardTimer = setTimeout(nextKey,dictationTimer);	
 }
 function nextKey () {
 	keyboardTimerAux = new Date();		
@@ -161,9 +161,8 @@ function nextKey () {
 		// keyboardKeys.removeClass('optionSelected');	
 		toggleKey(keyboardKeys.eq(keySelected),true);
 		// keyboardKeys.eq(keySelected).addClass('optionSelected');
-		keyboardTimer = setTimeout(nextKey,1500);
+		keyboardTimer = setTimeout(nextKey,dictationTimer);
 	}else nextKey();
-	
 }
 function toggleKey (keyObj,enable) {
 	keyObj.css({background: enable?"#2780e3":''});

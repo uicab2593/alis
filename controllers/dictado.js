@@ -3,7 +3,10 @@ var bot = require('telegram-bot-bootstrap');
 var botALIS = new bot('210304290:AAFymxNSeZs6ilUPCsYrPCDJxhQmeQhdo18');
 
 exports.index = function(req, res){
-  res.render('dictado/index');
+	alisDb.getSettings(function(settings){
+		console.log(settings);
+		res.render('dictado/index',{dictationTimer:settings.dictationTimer});
+	});
 };
 
 exports.getsuggests = function(req, res){

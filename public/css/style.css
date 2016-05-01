@@ -12,7 +12,7 @@
 body{background: #DDDDDD}
 .modal .loading-mask{z-index: 100}
 .container{max-width: 976px}
-.menuContext .btn{padding: 10px 2em}
+.menuContext button.btn{padding: 10px 2em}
 .menuContext .btn img{width: 115px;height: 115px}
 header .navbar .navbar-nav>li>a{padding: 11px}
 /*header .btn-default{color: black !important}*/
@@ -44,3 +44,4 @@ header .navbar .navbar-nav>li>a{padding: 11px}
 
 #messagesContainer a{font-size: 25px;text-align: left !important;padding: 10px 1em}
 #messagesContainer span{text-align: right !important;font-size: 16px;display: block;}
+.option-dark{background: rgba(4, 94, 166, 0.64); color: white; border-radius: 7px}

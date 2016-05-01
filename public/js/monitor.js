@@ -25,7 +25,7 @@ function loadHistory (append,offset) {
 			if (!append) messagesContainer.html('');
 			for(var i in messages){
 				auxDate = $.format.date(messages[i].date,'dd/MMM hh:mm a');
-				messagesContainer.append("<a href='/monitor/check' class='btn btn-block btn-primary' >"+messages[i].message+"<span>"+auxDate.toLocaleString()+"</span></a>");
+				messagesContainer.append("<a href='/monitor/check' class='btn btn-block option-dark' >"+messages[i].message+"<span>"+auxDate.toLocaleString()+"</span></a>");
 			}
 		}else{
 			showAlert(true,"No existen mas mensajes");
