@@ -116,6 +116,8 @@ function pushKey () {
 			// activa o desactiva boton sugerencias
 			$("#showSuggests").removeClass('disabled');
 			setSuggests(suggests);
+			$("#showSuggests").data('audio','sugerencias');
+			$("#showSuggests").attr("data-target", "#suggestsModal");
 		}else{
 			$("#showSuggests").data('audio','no hay sugerencias');
 			$("#showSuggests").attr("data-target", "#");
