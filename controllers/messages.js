@@ -9,7 +9,8 @@ exports.index = function(req, res){
 };
 exports.nextMessage = function(req, res){
 	alisDb.getMessagesLimit(req.query.lastMsgId,lmsg,function(messages){
-		res.json({listMessages:messages});
+		listMessages = messages;	
+		res.json(listMessages);
 	});		
 };
 exports.getMessages = function (req, res) {

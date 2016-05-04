@@ -109,6 +109,7 @@ function getNextMessages(){
 	var rownum = menuOptions.eq(optionSelected).data('rownum');
 	if (rownum==6 || rownum==menuOptions.length) {
 		setTimeout(function(){
+			console.log(menuOptions.eq(optionSelected).data('msgid'));
 			$.get('/messages/nextMessage?lastMsgId='+menuOptions.eq(optionSelected).data('msgid'),function (listMsgs) {
 			menuOptions.addClass('disabled').hide();
 			if(listMsgs.length>0){
