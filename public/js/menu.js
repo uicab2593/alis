@@ -34,10 +34,6 @@ $(document).ready(function(){
 		currentMsg = $(this).data('msg');
 		$("#outputMenuModal").modal('show');
 	});
-	// para pruebas
-	$(document.body).keydown(function(e){
-		console.log(e);
-	});
 
 	socket = io();
 	socket.on('signal', function(signal){

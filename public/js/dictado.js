@@ -32,7 +32,7 @@ var auxSignal1 = signal1;
 signal1 = function (){
 	if(onKeyboard){
 		// console.log((new Date()).getTime() - keyboardTimerAux.getTime());
-		if((new Date()).getTime() - keyboardTimerAux.getTime()<600){ //retardo del clicker
+		if((new Date()).getTime() - keyboardTimerAux.getTime()<clickTimeout){ //retardo del clicker
 			setKeyOption(keySelected-1<0?keyboardKeys.length-1:keySelected-1);
 		}
 		pushKey();
