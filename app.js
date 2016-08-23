@@ -63,6 +63,7 @@ app.use(function(req, res, next){
   res.status(404).render('404', { url: req.originalUrl });
 });
 
-require('./lib/telnet')(io);
+var tcpCon = require('./lib/telnet');
+tcpCon.run(io);
 
 server.listen(3000);

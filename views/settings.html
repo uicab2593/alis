@@ -9,6 +9,10 @@
 					<input type='text' name='settings[dictationTimer]' class='form-control input-sm' value='<%= 'dictationTimer' in settings?settings['dictationTimer']:1.5 %>' >
 				</div>
 				<div class="form-group">
+					<label>Tiempo de retardo DOBLE CLICK (segundos)</label>
+					<input type='text' name='settings[dbClickTimer]' class='form-control input-sm' value='<%= 'dbClickTimer' in settings?settings['dbClickTimer']:1.5 %>' >
+				</div>
+				<div class="form-group">
 					<button type='submit' class='btn btn-block btn-primary'>Guardar</button>
 				</div>
 			</form>
