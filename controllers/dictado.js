@@ -19,9 +19,13 @@ exports.sendMessageToContact = function (req, res) {
 	var idChat = req.query.idChat;
 	var msg = req.query.msgToSend;
 	botALIS.sendMessage({chat_id: idChat, text: msg}).then(function(r){
-		// r = JSON.parse(r);
-		res.json({success:true});
-		// res.json({success:false});
+		r = JSON.parse(r);
+			//if(err) res.json({success:false});
+			//console.log("RESPUESTA:"+r.ok);
+			if(r.ok)
+				res.json({success:true});
+			else
+				res.json({success:false});
 	});
 };
 
