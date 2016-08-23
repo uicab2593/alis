@@ -1,18 +1,21 @@
 var alisDb = require("../lib/db");
+var telnetCon = require("../lib/telnet");
 
 exports.index = function(req, res){
 	// obtener contactos de telegram
 	alisDb.getTelegramContacts(function(contacts){
 		alisDb.getSettings(function(settings){
 			var sets = {};
-			for(var i in settings) sets[settings[i].tag] = settings[i].value;
-			res.render('settings',{contacts:contacts,settings:sets});
+			res.render('settings',{contacts:contacts,settings:settings});
 		});
 	});
 };
 
 exports.setSettings = function(req, res){
 	var settings = req.query.settings;
+	if (typeof telnetCon.socket!= 'undefined') {
+		telnetCon.socket.write(settings.dbClickTimer);
+	}
 	alisDb.updateSettings(settings,function(){
 		res.json({success:true});
 	});

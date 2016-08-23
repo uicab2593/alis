@@ -37,6 +37,7 @@ $(document).ready(function(){
 
 	socket = io();
 	socket.on('signal', function(signal){
+		$(document.body).focus();
 		console.log(signal);
 		var signal = parseInt(signal);
 		if(menuContext==null) setMenuContext();																	
@@ -45,6 +46,9 @@ $(document).ready(function(){
 	 	else if(signal==3) signal3();
 	 	else if(signal==4){
 			showAlert(true,"Bóton Sincronizado",'boton-sincronizado');
+	 	}
+	 	else if(signal==5){
+			showAlert(true,"Tiempo de doble clic actualizado",'tiempo-de-doble-clic-actualizado');
 	 	}
 	});
 	setMenuContext();
